@@ -1,0 +1,77 @@
+{
+  "nav": {
+    "home": "Pagrindinis",
+    "techniques": "Technikos",
+    "about": "Apie",
+    "language": "Kalba"
+  },
+  "home": {
+    "hero": {
+      "title": "Senovinė Išmintis\nŠiuolaikinei Sąmonei",
+      "subtitle": "Kuratoriškai atrinkta kvėpavimo, meditacijos, jogos, kundalini ir energijos praktikų biblioteka — keliai į išplėstą sąmonę.",
+      "cta": "Naršyti Technikas"
+    },
+    "categories": {
+      "title": "Naršyti pagal Praktiką",
+      "subtitle": "Šeši keliai, vienas tikslas — jūsų būties pilnatvė."
+    },
+    "featured": {
+      "title": "Rekomenduojamos Praktikos",
+      "subtitle": "Atrinkt technikos pradėti jūsų kelionei."
+    },
+    "philosophy": {
+      "title": "Kas yra ConsciousEnergy?",
+      "what": {
+        "title": "Kas",
+        "text": "Gyva senovinių tradicijų praktikų biblioteka — kvėpavimas, meditacija, joga, kundalini, čakrų darbas ir energijos kultivavimas."
+      },
+      "why": {
+        "title": "Kodėl",
+        "text": "Šiuolaikinis gyvenimas atitolina mus nuo vidinio pasaulio. Šios praktikos atnaujina tą ryšį — su dabartimi, gyvybingumu ir giliausiais sąmonės sluoksniais."
+      },
+      "how": {
+        "title": "Kaip",
+        "text": "Kiekviena technika pateikiama su aiškiais žingsniais, nauda, kontraindikacijomis ir išminties tradicija, iš kurios ji kilusi. Praktikuokite saugiai ir autentiškai."
+      }
+    }
+  },
+  "techniques": {
+    "title": "Technikų Biblioteka",
+    "subtitle": "Naršykite {count} praktikų kvėpavimo, meditacijos, jogos ir kitose srityse.",
+    "search": "Ieškoti technikų...",
+    "filter": {
+      "all": "Visos",
+      "category": "Kategorija",
+      "difficulty": "Sunkumas",
+      "beginner": "Pradedantysis",
+      "intermediate": "Vidutinis",
+      "advanced": "Pažengęs",
+      "clear": "Išvalyti filtrus"
+    },
+    "empty": "Nė viena technika neatitinka jūsų filtrų.",
+    "duration": "Trukmė",
+    "difficulty": "Sunkumas",
+    "tradition": "Tradicija",
+    "benefits": "Nauda",
+    "contraindications": "Kontraindikacijos",
+    "steps": "Kaip Praktikuoti",
+    "tips": "Patarimai",
+    "science": "Mokslinė Perspektyva",
+    "related": "Susijusios Praktikos"
+  },
+  "about": {
+    "title": "Apie ConsciousEnergy",
+    "mission": {
+      "title": "Mūsų Misija",
+      "text": "ConsciousEnergy egzistuoja tam, kad senovinės transformacinės praktikos būtų prieinamos visiems. Tikime, kad kvėpavimas, meditacija, joga ir energijos darbas nėra ezoteriniai smalsavimai — tai humanistinės gerovės, savęs pažinimo ir išplėstos sąmonės technologijos, išbandytos laiko."
+    },
+    "disclaimer": {
+      "title": "Svarbus Atsakomybės Atsisakymas",
+      "text": "Šios svetainės praktikos skirtos tik švietimo tikslams. Jos nėra medicininės konsultacijos, diagnozės ar gydymo pakaitalas. Prieš pradedant naują praktiką, ypač jei turite medicininę būklę, visada konsultuokitės su kvalifikuotu sveikatos priežiūros specialistu. Kai kurios čia pateiktos praktikos gali būti intensyvios — prašome atidžiai perskaityti kontraindikacijas."
+    }
+  },
+  "footer": {
+    "disclaimer": "Tai nėra medicininė konsultacija. Praktikuokite sąmoningai.",
+    "copyright": "ConsciousEnergy"
+  }
+}

@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+/* ─── Design Tokens ───────────────────────────────────────── */
+@theme inline {
+  /* Forest Greens */
+  --color-forest-900: #1a3d2b;
+  --color-forest-700: #2d6a4f;
+  --color-forest-500: #52a07a;
+  --color-forest-200: #b7dfc9;
+  --color-forest-50:  #f0f9f4;
+
+  /* Earth / Warm Browns */
+  --color-earth-900: #3d2010;
+  --color-earth-700: #7c5c3e;
+  --color-earth-500: #a67c5b;
+  --color-earth-200: #d4b896;
+  --color-earth-50:  #faf5ee;
+
+  /* Gold Accent */
+  --color-gold-600:  #b5831a;
+  --color-gold-400:  #c9a227;
+  --color-gold-200:  #e8d48b;
+  --color-gold-50:   #fdf8e7;
+
+  /* Cream Surfaces */
+  --color-cream:      #fdfaf5;
+  --color-cream-dark: #f5efe4;
+
+  /* Category Accents */
+  --color-breathwork:    #2d6a4f;
+  --color-meditation:    #4a4580;
+  --color-yoga:          #7c5c3e;
+  --color-kundalini:     #c17a24;
+  --color-chakras:       #6b3fa0;
+  --color-energy:        #6b8f71;
+
+  /* Text */
+  --color-text-primary:   #1c1a17;
+  --color-text-secondary: #5c5447;
+  --color-text-muted:     #8c8070;
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'Lora', Georgia, serif;
+  --font-ui:      'DM Sans', system-ui, sans-serif;
+}
+
+/* ─── Base ────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-earth-50);
+  color: var(--color-text-primary);
+  font-family: var(--font-ui);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  line-height: 1.2;
+  color: var(--color-text-primary);
+}
+
+/* ─── Prose / Article Content ─────────────────────────────── */
+.prose {
+  font-family: var(--font-body);
+  line-height: 1.8;
+  color: var(--color-text-secondary);
+  max-width: 65ch;
+}
+
+.prose h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.prose h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose p {
+  margin-bottom: 1.25rem;
+}
+
+.prose ul, .prose ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose li {
+  margin-bottom: 0.5rem;
+}
+
+.prose strong {
+  color: var(--color-text-primary);
+  font-weight: 600;
+}
+
+.prose a {
+  color: var(--color-forest-700);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

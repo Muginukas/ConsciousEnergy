@@ -1,0 +1,77 @@
+{
+  "nav": {
+    "home": "Home",
+    "techniques": "Techniques",
+    "about": "About",
+    "language": "Language"
+  },
+  "home": {
+    "hero": {
+      "title": "Ancient Wisdom for\nModern Consciousness",
+      "subtitle": "A curated library of breathwork, meditation, yoga, kundalini, and energy practices — pathways to expanded awareness.",
+      "cta": "Explore Techniques"
+    },
+    "categories": {
+      "title": "Explore by Practice",
+      "subtitle": "Six paths, one destination — the fullness of your being."
+    },
+    "featured": {
+      "title": "Featured Practices",
+      "subtitle": "Handpicked techniques to begin your journey."
+    },
+    "philosophy": {
+      "title": "What is ConsciousEnergy?",
+      "what": {
+        "title": "What",
+        "text": "A living library of practices drawn from ancient traditions — breathwork, meditation, yoga, kundalini, chakra work, and energy cultivation."
+      },
+      "why": {
+        "title": "Why",
+        "text": "Modern life disconnects us from our inner world. These practices rebuild that bridge — to presence, to vitality, to the deepest layers of awareness."
+      },
+      "how": {
+        "title": "How",
+        "text": "Each technique is presented with clear steps, benefits, contraindications, and the wisdom tradition it comes from. Practice safely and authentically."
+      }
+    }
+  },
+  "techniques": {
+    "title": "Technique Library",
+    "subtitle": "Explore {count} practices across breathwork, meditation, yoga, and more.",
+    "search": "Search techniques...",
+    "filter": {
+      "all": "All",
+      "category": "Category",
+      "difficulty": "Difficulty",
+      "beginner": "Beginner",
+      "intermediate": "Intermediate",
+      "advanced": "Advanced",
+      "clear": "Clear filters"
+    },
+    "empty": "No techniques match your filters.",
+    "duration": "Duration",
+    "difficulty": "Difficulty",
+    "tradition": "Tradition",
+    "benefits": "Benefits",
+    "contraindications": "Contraindications",
+    "steps": "How to Practice",
+    "tips": "Tips",
+    "science": "Scientific Perspective",
+    "related": "Related Practices"
+  },
+  "about": {
+    "title": "About ConsciousEnergy",
+    "mission": {
+      "title": "Our Mission",
+      "text": "ConsciousEnergy exists to make ancient transformative practices accessible to everyone. We believe that breathwork, meditation, yoga, and energy work are not esoteric curiosities — they are humanity's most time-tested technologies for well-being, self-understanding, and expanded consciousness."
+    },
+    "disclaimer": {
+      "title": "Important Disclaimer",
+      "text": "The practices on this website are for educational purposes only. They are not a substitute for medical advice, diagnosis, or treatment. Always consult a qualified healthcare professional before beginning any new practice, especially if you have a medical condition. Some practices listed here may be intense — please read contraindications carefully."
+    }
+  },
+  "footer": {
+    "disclaimer": "Not medical advice. Practice mindfully.",
+    "copyright": "ConsciousEnergy"
+  }
+}
