@@ -177,5 +177,15 @@
       "account": "Account",
       "signOut": "Sign out"
     }
+  },
+  "favorites": {
+    "add": "Add to favorites",
+    "remove": "Remove from favorites",
+    "page": {
+      "title": "Your favorites",
+      "subtitle": "Techniques you have saved for quick access.",
+      "empty": "You haven't saved any techniques yet. Browse the library and tap the heart on a technique to save it here.",
+      "browse": "Browse techniques"
+    }
   }
 }

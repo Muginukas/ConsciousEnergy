@@ -177,5 +177,15 @@
       "account": "Paskyra",
       "signOut": "Atsijungti"
     }
+  },
+  "favorites": {
+    "add": "Pridėti prie mėgstamiausių",
+    "remove": "Pašalinti iš mėgstamiausių",
+    "page": {
+      "title": "Jūsų mėgstamiausios",
+      "subtitle": "Praktikos, kurias išsaugojote greitam pasiekimui.",
+      "empty": "Kol kas neturite išsaugotų praktikų. Naršykite biblioteką ir paspauskite širdelę ant praktikos, kad ją čia išsaugotumėte.",
+      "browse": "Naršyti praktikas"
+    }
   }
 }

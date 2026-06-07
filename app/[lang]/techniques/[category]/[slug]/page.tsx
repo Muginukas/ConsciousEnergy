@@ -4,6 +4,7 @@ import { getTechniqueBySlug, getAllSlugs, getTechniquesByCategory } from '@/lib/
 import { CATEGORY_MAP, CATEGORY_SLUGS } from '@/lib/categories'
 import { CategorySlug, Locale } from '@/lib/types'
 import TechniqueCard from '@/components/technique/TechniqueCard'
+import FavoriteButton from '@/components/technique/FavoriteButton'
 import Link from 'next/link'
 import { ChevronRight, Clock, Flame, BookOpen } from 'lucide-react'
 import { MDXRemote } from 'next-mdx-remote/rsc'
@@ -121,6 +122,11 @@ export default async function TechniquePage(
                   <span style={{ color: 'var(--color-text-secondary)' }}>{technique.tradition}</span>
                 </div>
               )}
+              <FavoriteButton
+                category={category as CategorySlug}
+                slug={slug}
+                dict={dict.favorites}
+              />
             </div>
           </div>
 
