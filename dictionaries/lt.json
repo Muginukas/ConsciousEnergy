@@ -3,6 +3,7 @@
     "home": "Pagrindinis",
     "techniques": "Technikos",
     "about": "Apie",
+    "getApp": "Atsisiųsti programėlę",
     "language": "Kalba"
   },
   "home": {
@@ -73,5 +74,61 @@
   "footer": {
     "disclaimer": "Tai nėra medicininė konsultacija. Praktikuokite sąmoningai.",
     "copyright": "ConsciousEnergy"
+  },
+  "installPrompt": {
+    "message": "Įsidiekite ConsciousEnergy savo įrenginyje greitam, neprisijungus pasiekiamam praktikų naudojimui.",
+    "iosMessage": "Įsidiekite ConsciousEnergy: paspauskite bendrinimo (Share) piktogramą, tada „Add to Home Screen“.",
+    "install": "Įsidiegti",
+    "dismiss": "Ne dabar"
+  },
+  "getApp": {
+    "eyebrow": "Nemokama · Programų parduotuvė nereikalinga",
+    "title": "Pasiimkite ConsciousEnergy su savimi",
+    "subtitle": "Įsidiekite ConsciousEnergy telefone, planšetėje ar kompiuteryje. Ji atsidaro kaip bet kuri kita programėlė, veikia neprisijungus ir niekada nereikalauja programų parduotuvės.",
+    "perks": {
+      "fast": {
+        "title": "Atsidaro akimirksniu",
+        "text": "Paleidžiama tiesiai iš pagrindinio ekrano — nereikia ieškoti naršyklės skirtukų."
+      },
+      "offline": {
+        "title": "Veikia neprisijungus",
+        "text": "Atidarytos technikos lieka pasiekiamos net be interneto ryšio."
+      },
+      "home": {
+        "title": "Įsikuria jūsų įrenginyje",
+        "text": "Atsiranda šalia kitų programėlių, su savo piktograma ir langu."
+      }
+    },
+    "howTitle": "Kaip įsidiegti",
+    "howSubtitle": "Pasirinkite savo įrenginį žingsnis po žingsnio instrukcijoms.",
+    "platforms": {
+      "ios": {
+        "label": "iPhone ir iPad",
+        "steps": [
+          "Atidarykite šią svetainę „Safari“ naršyklėje.",
+          "Įrankių juostoje paspauskite bendrinimo piktogramą (kvadratą su rodykle aukštyn).",
+          "Slinkite žemyn ir paspauskite „Add to Home Screen“.",
+          "Paspauskite „Add“ — ConsciousEnergy atsiras jūsų pagrindiniame ekrane."
+        ]
+      },
+      "android": {
+        "label": "Android",
+        "steps": [
+          "Atidarykite šią svetainę „Chrome“ naršyklėje.",
+          "Viršuje dešinėje paspauskite meniu piktogramą (⋮).",
+          "Paspauskite „Install app“ arba „Add to Home screen“.",
+          "Patvirtinkite — ConsciousEnergy įdiegta ir paruošta naudoti."
+        ]
+      },
+      "desktop": {
+        "label": "Kompiuteris",
+        "steps": [
+          "Atidarykite šią svetainę „Chrome“, „Edge“ ar kitoje „Chromium“ pagrindu sukurtoje naršyklėje.",
+          "Adreso juostoje suraskite diegimo piktogramą (monitorių su rodykle žemyn).",
+          "Paspauskite ją, tada paspauskite „Install“.",
+          "ConsciousEnergy atsidarys atskirame lange ir bus pridėta prie jūsų programėlių."
+        ]
+      }
+    }
   }
 }

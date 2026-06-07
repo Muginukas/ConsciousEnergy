@@ -3,7 +3,7 @@ import Link from 'next/link'
 type Props = {
   dict: {
     footer: { disclaimer: string; copyright: string }
-    nav: { home: string; techniques: string; about: string }
+    nav: { home: string; techniques: string; about: string; getApp: string }
   }
 }
 
@@ -41,6 +41,9 @@ export default function Footer({ dict }: Props) {
           </Link>
           <Link href="/about" className="text-sm opacity-70 hover:opacity-100 transition-opacity">
             {dict.nav.about}
+          </Link>
+          <Link href="/get-the-app" className="text-sm opacity-70 hover:opacity-100 transition-opacity">
+            {dict.nav.getApp}
           </Link>
         </nav>
 

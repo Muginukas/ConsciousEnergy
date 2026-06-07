@@ -7,7 +7,7 @@ import LocaleSwitcher from './LocaleSwitcher'
 
 type Props = {
   lang: string
-  dict: { nav: { home: string; techniques: string; about: string } }
+  dict: { nav: { home: string; techniques: string; about: string; getApp: string } }
 }
 
 export default function Header({ lang, dict }: Props) {
@@ -64,6 +64,17 @@ export default function Header({ lang, dict }: Props) {
           >
             {nav.about}
           </Link>
+          <Link
+            href={`/${lang}/get-the-app`}
+            className="text-sm font-medium px-3.5 py-1.5 rounded-full transition-opacity hover:opacity-90"
+            style={{
+              backgroundColor: 'var(--color-forest-700)',
+              color: 'var(--color-cream)',
+              fontFamily: 'var(--font-ui)',
+            }}
+          >
+            {nav.getApp}
+          </Link>
           <LocaleSwitcher currentLang={lang} />
         </nav>
 
@@ -90,6 +101,14 @@ export default function Header({ lang, dict }: Props) {
           <Link href={`/${lang}`} onClick={() => setOpen(false)} className="text-sm font-medium">{nav.home}</Link>
           <Link href={`/${lang}/techniques`} onClick={() => setOpen(false)} className="text-sm font-medium">{nav.techniques}</Link>
           <Link href={`/${lang}/about`} onClick={() => setOpen(false)} className="text-sm font-medium">{nav.about}</Link>
+          <Link
+            href={`/${lang}/get-the-app`}
+            onClick={() => setOpen(false)}
+            className="text-sm font-medium"
+            style={{ color: 'var(--color-forest-700)' }}
+          >
+            {nav.getApp}
+          </Link>
           <LocaleSwitcher currentLang={lang} />
         </div>
       )}

@@ -3,6 +3,7 @@
     "home": "Home",
     "techniques": "Techniques",
     "about": "About",
+    "getApp": "Get the App",
     "language": "Language"
   },
   "home": {
@@ -73,5 +74,61 @@
   "footer": {
     "disclaimer": "Not medical advice. Practice mindfully.",
     "copyright": "ConsciousEnergy"
+  },
+  "installPrompt": {
+    "message": "Install ConsciousEnergy on your device for quick, offline access to your practices.",
+    "iosMessage": "Install ConsciousEnergy: tap the Share icon, then \"Add to Home Screen\".",
+    "install": "Install",
+    "dismiss": "Not now"
+  },
+  "getApp": {
+    "eyebrow": "Free · No app store needed",
+    "title": "Take ConsciousEnergy with you",
+    "subtitle": "Install ConsciousEnergy on your phone, tablet, or computer. It opens like any other app, works offline, and never needs an app store.",
+    "perks": {
+      "fast": {
+        "title": "Opens instantly",
+        "text": "Launches from your home screen or dock — no browser tabs to find."
+      },
+      "offline": {
+        "title": "Works offline",
+        "text": "Techniques you've opened stay available even without a connection."
+      },
+      "home": {
+        "title": "Lives on your device",
+        "text": "Sits alongside your other apps, with its own icon and window."
+      }
+    },
+    "howTitle": "How to install",
+    "howSubtitle": "Pick your device for step-by-step instructions.",
+    "platforms": {
+      "ios": {
+        "label": "iPhone & iPad",
+        "steps": [
+          "Open this website in Safari.",
+          "Tap the Share icon in the toolbar (the square with an arrow pointing up).",
+          "Scroll down and tap \"Add to Home Screen\".",
+          "Tap \"Add\" — ConsciousEnergy now appears on your home screen."
+        ]
+      },
+      "android": {
+        "label": "Android",
+        "steps": [
+          "Open this website in Chrome.",
+          "Tap the menu icon (⋮) in the top-right corner.",
+          "Tap \"Install app\" or \"Add to Home screen\".",
+          "Confirm — ConsciousEnergy is installed and ready to open anytime."
+        ]
+      },
+      "desktop": {
+        "label": "Desktop",
+        "steps": [
+          "Open this website in Chrome, Edge, or another Chromium-based browser.",
+          "Look for the install icon in the address bar (a monitor with a down arrow).",
+          "Click it, then click \"Install\".",
+          "ConsciousEnergy opens in its own window and is added to your apps."
+        ]
+      }
+    }
   }
 }
