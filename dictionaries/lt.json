@@ -130,5 +130,52 @@
         ]
       }
     }
+  },
+  "auth": {
+    "login": {
+      "title": "Sveiki sugrįžę",
+      "subtitle": "Prisijunkite, kad pasiektumėte mėgstamiausias praktikas, dienoraštį ir bendruomenę.",
+      "email": "El. paštas",
+      "password": "Slaptažodis",
+      "submit": "Prisijungti",
+      "noAccount": "Neturite paskyros?",
+      "signUpLink": "Registruotis",
+      "errors": {
+        "invalid_credentials": "Neteisingas el. paštas arba slaptažodis. Bandykite dar kartą."
+      }
+    },
+    "signUp": {
+      "title": "Susikurkite paskyrą",
+      "subtitle": "Prisijunkite prie ConsciousEnergy, kad išsaugotumėte mėgstamas praktikas, sektumėte savo kelionę ir bendrautumėte su kitais.",
+      "email": "El. paštas",
+      "password": "Slaptažodis",
+      "passwordHint": "Bent 6 simboliai.",
+      "submit": "Sukurti paskyrą",
+      "haveAccount": "Jau turite paskyrą?",
+      "signInLink": "Prisijungti",
+      "success": {
+        "check_email": "Patikrinkite savo el. paštą — išsiuntėme patvirtinimo nuorodą paskyros kūrimui užbaigti."
+      },
+      "errors": {
+        "already_registered": "Paskyra su šiuo el. paštu jau egzistuoja. Pabandykite prisijungti.",
+        "signup_failed": "Kuriant paskyrą įvyko klaida. Bandykite dar kartą."
+      }
+    },
+    "account": {
+      "title": "Jūsų paskyra",
+      "signedInAs": "Prisijungę kaip",
+      "signOut": "Atsijungti",
+      "links": {
+        "favorites": "Mėgstamiausios",
+        "journal": "Praktikos dienoraštis"
+      },
+      "comingSoon": "Greitai pasirodys, kai sukursime kitus ConsciousEnergy etapus."
+    },
+    "userMenu": {
+      "signIn": "Prisijungti",
+      "signUp": "Registruotis",
+      "account": "Paskyra",
+      "signOut": "Atsijungti"
+    }
   }
 }

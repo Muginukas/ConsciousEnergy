@@ -4,10 +4,14 @@ import Link from 'next/link'
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
 import LocaleSwitcher from './LocaleSwitcher'
+import UserMenu from './UserMenu'
 
 type Props = {
   lang: string
-  dict: { nav: { home: string; techniques: string; about: string; getApp: string } }
+  dict: {
+    nav: { home: string; techniques: string; about: string; getApp: string }
+    auth: { userMenu: { signIn: string; signUp: string; account: string; signOut: string } }
+  }
 }
 
 export default function Header({ lang, dict }: Props) {
@@ -76,6 +80,7 @@ export default function Header({ lang, dict }: Props) {
             {nav.getApp}
           </Link>
           <LocaleSwitcher currentLang={lang} />
+          <UserMenu lang={lang} dict={dict.auth.userMenu} />
         </nav>
 
         {/* Mobile menu button */}
@@ -110,6 +115,9 @@ export default function Header({ lang, dict }: Props) {
             {nav.getApp}
           </Link>
           <LocaleSwitcher currentLang={lang} />
+          <div className="pt-2" style={{ borderTop: '1px solid var(--color-earth-200)' }}>
+            <UserMenu lang={lang} dict={dict.auth.userMenu} />
+          </div>
         </div>
       )}
     </header>

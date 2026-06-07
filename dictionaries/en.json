@@ -130,5 +130,52 @@
         ]
       }
     }
+  },
+  "auth": {
+    "login": {
+      "title": "Welcome back",
+      "subtitle": "Sign in to access your favorites, practice journal, and the community.",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "noAccount": "Don't have an account?",
+      "signUpLink": "Sign up",
+      "errors": {
+        "invalid_credentials": "Incorrect email or password. Please try again."
+      }
+    },
+    "signUp": {
+      "title": "Create your account",
+      "subtitle": "Join ConsciousEnergy to save favorites, track your practice, and connect with others on the path.",
+      "email": "Email",
+      "password": "Password",
+      "passwordHint": "At least 6 characters.",
+      "submit": "Create account",
+      "haveAccount": "Already have an account?",
+      "signInLink": "Sign in",
+      "success": {
+        "check_email": "Check your inbox — we sent a confirmation link to finish creating your account."
+      },
+      "errors": {
+        "already_registered": "An account with this email already exists. Try signing in instead.",
+        "signup_failed": "Something went wrong creating your account. Please try again."
+      }
+    },
+    "account": {
+      "title": "Your account",
+      "signedInAs": "Signed in as",
+      "signOut": "Sign out",
+      "links": {
+        "favorites": "Favorites",
+        "journal": "Practice journal"
+      },
+      "comingSoon": "Coming soon as we build out the next phases of ConsciousEnergy."
+    },
+    "userMenu": {
+      "signIn": "Sign in",
+      "signUp": "Sign up",
+      "account": "Account",
+      "signOut": "Sign out"
+    }
   }
 }
