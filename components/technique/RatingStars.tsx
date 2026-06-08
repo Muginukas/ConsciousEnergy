@@ -11,6 +11,7 @@ type Dict = {
   yourRating: string
   ratings: string
   noRatings: string
+  error: string
 }
 
 type Aggregate = { avg: number; count: number }
@@ -43,6 +44,7 @@ export default function RatingStars({
   const [hoverStars, setHoverStars] = useState(0)
   const [aggregate, setAggregate] = useState<Aggregate | null>(null)
   const [pending, setPending] = useState(false)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     const supabase = createClient()
@@ -68,6 +70,7 @@ export default function RatingStars({
   async function handleRate(stars: number) {
     if (pending || !userId) return
     setPending(true)
+    setError(false)
     const previous = userStars
     setUserStars(stars)
 
@@ -75,6 +78,7 @@ export default function RatingStars({
     const result = await setRating(category, slug, stars)
     if ('error' in result) {
       setUserStars(previous)
+      setError(true)
     } else {
       setAggregate(await fetchAggregate(supabase, category, slug))
     }
@@ -125,6 +129,12 @@ export default function RatingStars({
             ))}
           </div>
         </div>
+      )}
+
+      {error && (
+        <span className="text-xs" style={{ color: 'var(--color-earth-700)', fontFamily: 'var(--font-ui)' }}>
+          {dict.error}
+        </span>
       )}
     </div>
   )

@@ -226,7 +226,8 @@
     "rating": {
       "yourRating": "Jūsų įvertinimas",
       "ratings": "įvertinimai",
-      "noRatings": "Kol kas nėra įvertinimų"
+      "noRatings": "Kol kas nėra įvertinimų",
+      "error": "Nepavyko išsaugoti įvertinimo. Bandykite dar kartą."
     },
     "comments": {
       "title": "Diskusija",
@@ -240,7 +241,8 @@
       "report": "Pranešti",
       "reported": "Pranešta",
       "you": "Jūs",
-      "member": "Bendruomenės narys"
+      "member": "Bendruomenės narys",
+      "error": "Nepavyko paskelbti komentaro. Bandykite dar kartą."
     }
   }
 }

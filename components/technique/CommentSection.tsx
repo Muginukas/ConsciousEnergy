@@ -14,6 +14,7 @@ type Dict = {
   posting: string
   signInPrompt: string
   signInLink: string
+  error: string
   empty: string
   delete: string
   report: string
@@ -44,6 +45,7 @@ export default function CommentSection({
   const [comments, setComments] = useState<Comment[] | null>(null)
   const [body, setBody] = useState('')
   const [posting, setPosting] = useState(false)
+  const [error, setError] = useState(false)
   const [reportedIds, setReportedIds] = useState<Set<string>>(new Set())
 
   useEffect(() => {
@@ -66,10 +68,13 @@ export default function CommentSection({
     if (!trimmed || posting) return
 
     setPosting(true)
+    setError(false)
     const result = await postComment(category, slug, trimmed)
     if ('comment' in result) {
       setComments((prev) => [result.comment, ...(prev ?? [])])
       setBody('')
+    } else {
+      setError(true)
     }
     setPosting(false)
   }
@@ -105,14 +110,21 @@ export default function CommentSection({
             className="rounded-lg px-4 py-3 text-sm focus:outline-none resize-none"
             style={fieldStyle}
           />
-          <button
-            type="submit"
-            disabled={posting || !body.trim()}
-            className="self-start rounded-full px-5 py-2 text-sm font-medium transition-opacity hover:opacity-90 disabled:opacity-50"
-            style={{ backgroundColor: 'var(--color-forest-700)', color: 'var(--color-cream)', fontFamily: 'var(--font-ui)' }}
-          >
-            {posting ? dict.posting : dict.post}
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              type="submit"
+              disabled={posting || !body.trim()}
+              className="self-start rounded-full px-5 py-2 text-sm font-medium transition-opacity hover:opacity-90 disabled:opacity-50"
+              style={{ backgroundColor: 'var(--color-forest-700)', color: 'var(--color-cream)', fontFamily: 'var(--font-ui)' }}
+            >
+              {posting ? dict.posting : dict.post}
+            </button>
+            {error && (
+              <span className="text-xs" style={{ color: 'var(--color-earth-700)', fontFamily: 'var(--font-ui)' }}>
+                {dict.error}
+              </span>
+            )}
+          </div>
         </form>
       ) : userId === null ? (
         <p

@@ -226,7 +226,8 @@
     "rating": {
       "yourRating": "Your rating",
       "ratings": "ratings",
-      "noRatings": "No ratings yet"
+      "noRatings": "No ratings yet",
+      "error": "Could not save your rating. Please try again."
     },
     "comments": {
       "title": "Discussion",
@@ -240,7 +241,8 @@
       "report": "Report",
       "reported": "Reported",
       "you": "You",
-      "member": "Community member"
+      "member": "Community member",
+      "error": "Could not post your comment. Please try again."
     }
   }
 }
