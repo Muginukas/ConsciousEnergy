@@ -44,7 +44,7 @@ export default function RatingStars({
   const [hoverStars, setHoverStars] = useState(0)
   const [aggregate, setAggregate] = useState<Aggregate | null>(null)
   const [pending, setPending] = useState(false)
-  const [error, setError] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const supabase = createClient()
@@ -70,7 +70,7 @@ export default function RatingStars({
   async function handleRate(stars: number) {
     if (pending || !userId) return
     setPending(true)
-    setError(false)
+    setError(null)
     const previous = userStars
     setUserStars(stars)
 
@@ -78,7 +78,7 @@ export default function RatingStars({
     const result = await setRating(category, slug, stars)
     if ('error' in result) {
       setUserStars(previous)
-      setError(true)
+      setError(result.error)
     } else {
       setAggregate(await fetchAggregate(supabase, category, slug))
     }
@@ -133,7 +133,7 @@ export default function RatingStars({
 
       {error && (
         <span className="text-xs" style={{ color: 'var(--color-earth-700)', fontFamily: 'var(--font-ui)' }}>
-          {dict.error}
+          {dict.error} ({error})
         </span>
       )}
     </div>

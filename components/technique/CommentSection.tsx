@@ -45,7 +45,7 @@ export default function CommentSection({
   const [comments, setComments] = useState<Comment[] | null>(null)
   const [body, setBody] = useState('')
   const [posting, setPosting] = useState(false)
-  const [error, setError] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const [reportedIds, setReportedIds] = useState<Set<string>>(new Set())
 
   useEffect(() => {
@@ -68,13 +68,13 @@ export default function CommentSection({
     if (!trimmed || posting) return
 
     setPosting(true)
-    setError(false)
+    setError(null)
     const result = await postComment(category, slug, trimmed)
     if ('comment' in result) {
       setComments((prev) => [result.comment, ...(prev ?? [])])
       setBody('')
     } else {
-      setError(true)
+      setError(result.error)
     }
     setPosting(false)
   }
@@ -121,7 +121,7 @@ export default function CommentSection({
             </button>
             {error && (
               <span className="text-xs" style={{ color: 'var(--color-earth-700)', fontFamily: 'var(--font-ui)' }}>
-                {dict.error}
+                {dict.error} ({error})
               </span>
             )}
           </div>
