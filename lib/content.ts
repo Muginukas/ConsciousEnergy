@@ -34,6 +34,7 @@ function fileToTechnique(
       relatedTechniques: data.relatedTechniques,
       isFeatured: data.isFeatured ?? false,
       bestFor: data.bestFor,
+      effect: data.effect,
     } as Technique
   } catch {
     // Fall back to English if locale file doesn't exist
@@ -108,6 +109,7 @@ export function getTechniqueBySlug(
     relatedTechniques: data.relatedTechniques,
     isFeatured: data.isFeatured ?? false,
     bestFor: data.bestFor,
+    effect: data.effect,
     content,
   }
 }

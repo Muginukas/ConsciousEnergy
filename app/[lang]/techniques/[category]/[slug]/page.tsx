@@ -39,6 +39,15 @@ const DIFFICULTY_COLOR: Record<string, string> = {
   advanced: '#dc2626',
 }
 
+const EFFECT_STYLE: Record<string, { bg: string; text: string }> = {
+  Calming:    { bg: '#dbeafe', text: '#1d4ed8' },
+  Focusing:   { bg: '#ccfbf1', text: '#0f766e' },
+  Balancing:  { bg: '#d1fae5', text: '#065f46' },
+  Energizing: { bg: '#fef3c7', text: '#b45309' },
+  Releasing:  { bg: '#ede9fe', text: '#6d28d9' },
+  Grounding:  { bg: '#fef0e4', text: '#92400e' },
+}
+
 export default async function TechniquePage(
   props: PageProps<'/[lang]/techniques/[category]/[slug]'>
 ) {
@@ -77,12 +86,26 @@ export default async function TechniquePage(
         <article className="lg:col-span-2">
           {/* Header */}
           <div className="mb-8">
-            <span
-              className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold mb-4"
-              style={{ backgroundColor: `${cat.color}18`, color: cat.color, fontFamily: 'var(--font-ui)' }}
-            >
-              {cat.label}
-            </span>
+            <div className="flex items-center gap-2 mb-4">
+              <span
+                className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold"
+                style={{ backgroundColor: `${cat.color}18`, color: cat.color, fontFamily: 'var(--font-ui)' }}
+              >
+                {cat.label}
+              </span>
+              {technique.effect && EFFECT_STYLE[technique.effect] && (
+                <span
+                  className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold"
+                  style={{
+                    backgroundColor: EFFECT_STYLE[technique.effect].bg,
+                    color: EFFECT_STYLE[technique.effect].text,
+                    fontFamily: 'var(--font-ui)',
+                  }}
+                >
+                  {technique.effect}
+                </span>
+              )}
+            </div>
 
             <h1
               className="text-4xl sm:text-5xl font-bold mb-4 leading-tight"

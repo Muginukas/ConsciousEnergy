@@ -3,6 +3,15 @@ import { Clock, ChevronRight } from 'lucide-react'
 import { Technique } from '@/lib/types'
 import { CATEGORY_MAP } from '@/lib/categories'
 
+const EFFECT_STYLE: Record<string, { bg: string; text: string }> = {
+  Calming:    { bg: '#dbeafe', text: '#1d4ed8' },
+  Focusing:   { bg: '#ccfbf1', text: '#0f766e' },
+  Balancing:  { bg: '#d1fae5', text: '#065f46' },
+  Energizing: { bg: '#fef3c7', text: '#b45309' },
+  Releasing:  { bg: '#ede9fe', text: '#6d28d9' },
+  Grounding:  { bg: '#fef0e4', text: '#92400e' },
+}
+
 type Props = {
   technique: Technique
   lang: string
@@ -50,13 +59,27 @@ export default function TechniqueCard({ technique, lang }: Props) {
           {category.label}
         </span>
 
-        {/* Title */}
-        <h3
-          className="text-lg font-semibold mb-2 group-hover:text-[--color-forest-700] transition-colors leading-snug"
-          style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-primary)' }}
-        >
-          {technique.title}
-        </h3>
+        {/* Title + Effect badge */}
+        <div className="flex items-start justify-between gap-2 mb-2">
+          <h3
+            className="text-lg font-semibold group-hover:text-[--color-forest-700] transition-colors leading-snug"
+            style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-primary)' }}
+          >
+            {technique.title}
+          </h3>
+          {technique.effect && EFFECT_STYLE[technique.effect] && (
+            <span
+              className="flex-shrink-0 text-xs font-semibold px-2.5 py-1 rounded-full mt-0.5"
+              style={{
+                backgroundColor: EFFECT_STYLE[technique.effect].bg,
+                color: EFFECT_STYLE[technique.effect].text,
+                fontFamily: 'var(--font-ui)',
+              }}
+            >
+              {technique.effect}
+            </span>
+          )}
+        </div>
 
         {/* Best For chips — primary descriptor when available */}
         {technique.bestFor && technique.bestFor.length > 0 ? (

@@ -25,6 +25,7 @@ export interface Technique {
   relatedTechniques?: string[]
   isFeatured?: boolean
   bestFor?: string[]
+  effect?: string
 }
 
 export interface TechniqueWithContent extends Technique {
