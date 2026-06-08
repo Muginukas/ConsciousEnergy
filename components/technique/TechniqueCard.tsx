@@ -58,16 +58,8 @@ export default function TechniqueCard({ technique, lang }: Props) {
           {technique.title}
         </h3>
 
-        {/* Overview */}
-        <p
-          className="text-sm leading-relaxed mb-3 line-clamp-2"
-          style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}
-        >
-          {technique.overview}
-        </p>
-
-        {/* Best For chips */}
-        {technique.bestFor && technique.bestFor.length > 0 && (
+        {/* Best For chips — primary descriptor when available */}
+        {technique.bestFor && technique.bestFor.length > 0 ? (
           <div className="flex flex-wrap gap-1.5 mb-4">
             {technique.bestFor.slice(0, 3).map((tag, i) => (
               <span
@@ -84,6 +76,13 @@ export default function TechniqueCard({ technique, lang }: Props) {
               </span>
             ))}
           </div>
+        ) : (
+          <p
+            className="text-sm leading-relaxed mb-4 line-clamp-1"
+            style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}
+          >
+            {technique.overview}
+          </p>
         )}
 
         {/* Meta row */}
