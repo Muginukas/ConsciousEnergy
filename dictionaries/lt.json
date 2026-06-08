@@ -221,5 +221,26 @@
       "history": "Istorija",
       "minutes": "min."
     }
+  },
+  "community": {
+    "rating": {
+      "yourRating": "Jūsų įvertinimas",
+      "ratings": "įvertinimai",
+      "noRatings": "Kol kas nėra įvertinimų"
+    },
+    "comments": {
+      "title": "Diskusija",
+      "placeholder": "Pasidalinkite savo patirtimi su šia praktika...",
+      "post": "Skelbti komentarą",
+      "posting": "Skelbiama...",
+      "signInPrompt": "Prisijunkite, kad galėtumėte dalyvauti diskusijoje.",
+      "signInLink": "Prisijungti",
+      "empty": "Kol kas nėra komentarų — būkite pirmas, pasidalinkite savo patirtimi.",
+      "delete": "Ištrinti",
+      "report": "Pranešti",
+      "reported": "Pranešta",
+      "you": "Jūs",
+      "member": "Bendruomenės narys"
+    }
   }
 }

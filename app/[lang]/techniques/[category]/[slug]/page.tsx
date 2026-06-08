@@ -6,6 +6,8 @@ import { CategorySlug, Locale } from '@/lib/types'
 import TechniqueCard from '@/components/technique/TechniqueCard'
 import FavoriteButton from '@/components/technique/FavoriteButton'
 import LogPracticeButton from '@/components/technique/LogPracticeButton'
+import RatingStars from '@/components/technique/RatingStars'
+import CommentSection from '@/components/technique/CommentSection'
 import Link from 'next/link'
 import { ChevronRight, Clock, Flame, BookOpen } from 'lucide-react'
 import { MDXRemote } from 'next-mdx-remote/rsc'
@@ -129,6 +131,14 @@ export default async function TechniquePage(
                 dict={dict.favorites}
               />
             </div>
+
+            <div className="mt-5">
+              <RatingStars
+                category={category as CategorySlug}
+                slug={slug}
+                dict={dict.community.rating}
+              />
+            </div>
           </div>
 
           {/* Benefits */}
@@ -198,6 +208,13 @@ export default async function TechniquePage(
               </p>
             </section>
           )}
+
+          <CommentSection
+            category={category as CategorySlug}
+            slug={slug}
+            lang={lang}
+            dict={dict.community.comments}
+          />
         </article>
 
         {/* Sidebar */}

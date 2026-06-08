@@ -221,5 +221,26 @@
       "history": "History",
       "minutes": "min"
     }
+  },
+  "community": {
+    "rating": {
+      "yourRating": "Your rating",
+      "ratings": "ratings",
+      "noRatings": "No ratings yet"
+    },
+    "comments": {
+      "title": "Discussion",
+      "placeholder": "Share your experience with this practice...",
+      "post": "Post comment",
+      "posting": "Posting...",
+      "signInPrompt": "Sign in to join the discussion.",
+      "signInLink": "Sign in",
+      "empty": "No comments yet — be the first to share your experience.",
+      "delete": "Delete",
+      "report": "Report",
+      "reported": "Reported",
+      "you": "You",
+      "member": "Community member"
+    }
   }
 }
