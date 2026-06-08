@@ -60,11 +60,31 @@ export default function TechniqueCard({ technique, lang }: Props) {
 
         {/* Overview */}
         <p
-          className="text-sm leading-relaxed mb-4 line-clamp-2"
+          className="text-sm leading-relaxed mb-3 line-clamp-2"
           style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}
         >
           {technique.overview}
         </p>
+
+        {/* Best For chips */}
+        {technique.bestFor && technique.bestFor.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mb-4">
+            {technique.bestFor.slice(0, 3).map((tag, i) => (
+              <span
+                key={i}
+                className="text-xs px-2 py-0.5 rounded-full"
+                style={{
+                  backgroundColor: `${category.color}12`,
+                  color: category.color,
+                  fontFamily: 'var(--font-ui)',
+                  border: `1px solid ${category.color}30`,
+                }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
 
         {/* Meta row */}
         <div className="flex items-center justify-between">

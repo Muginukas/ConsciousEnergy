@@ -11,6 +11,8 @@ export const CATEGORIES: Category[] = [
       'Sąmoningo kvėpavimo technikos energijai, ramybei ir vidinei transformacijai.',
     color: '#2D6A4F',
     icon: 'Wind',
+    intro:
+      'Breathwork is the deliberate practice of changing your breathing pattern to shift your physical and mental state — in real time. A few minutes of conscious breathing can move you from anxious to calm, exhausted to alert, or scattered to focused. These techniques draw from yoga, military training, sports science, and psychotherapy, each refined over decades or centuries of use. **New to breathwork?** Start with Box Breathing or 4-7-8 — both work immediately and require no prior experience.',
   },
   {
     slug: 'meditation',

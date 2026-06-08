@@ -5,7 +5,7 @@ import { CATEGORY_MAP, CATEGORY_SLUGS } from '@/lib/categories'
 import { CategorySlug, Locale } from '@/lib/types'
 import TechniqueCard from '@/components/technique/TechniqueCard'
 import Link from 'next/link'
-import { ChevronRight } from 'lucide-react'
+import { ChevronRight, Lightbulb } from 'lucide-react'
 import type { Metadata } from 'next'
 
 export async function generateStaticParams() {
@@ -70,6 +70,33 @@ export default async function CategoryPage(
         >
           {cat.description}
         </p>
+
+        {/* Category intro/onboarding block */}
+        {cat.intro && (
+          <div
+            className="mt-6 max-w-3xl p-5 rounded-xl flex gap-4"
+            style={{
+              backgroundColor: `${cat.color}0d`,
+              border: `1px solid ${cat.color}30`,
+            }}
+          >
+            <Lightbulb
+              size={20}
+              className="flex-shrink-0 mt-0.5"
+              style={{ color: cat.color }}
+            />
+            <p
+              className="text-sm leading-relaxed"
+              style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}
+              dangerouslySetInnerHTML={{
+                __html: cat.intro.replace(
+                  /\*\*(.+?)\*\*/g,
+                  `<strong style="color:var(--color-text-primary)">$1</strong>`
+                ),
+              }}
+            />
+          </div>
+        )}
       </div>
 
       {/* Technique grid */}

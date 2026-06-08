@@ -33,6 +33,7 @@ function fileToTechnique(
       science: data.science,
       relatedTechniques: data.relatedTechniques,
       isFeatured: data.isFeatured ?? false,
+      bestFor: data.bestFor,
     } as Technique
   } catch {
     // Fall back to English if locale file doesn't exist
@@ -106,6 +107,7 @@ export function getTechniqueBySlug(
     science: data.science,
     relatedTechniques: data.relatedTechniques,
     isFeatured: data.isFeatured ?? false,
+    bestFor: data.bestFor,
     content,
   }
 }

@@ -24,6 +24,7 @@ export interface Technique {
   science?: string
   relatedTechniques?: string[]
   isFeatured?: boolean
+  bestFor?: string[]
 }
 
 export interface TechniqueWithContent extends Technique {
@@ -39,4 +40,5 @@ export interface Category {
   color: string
   icon: string
   count?: number
+  intro?: string
 }

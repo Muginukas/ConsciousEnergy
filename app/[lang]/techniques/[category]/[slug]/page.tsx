@@ -92,11 +92,38 @@ export default async function TechniquePage(
             </h1>
 
             <p
-              className="text-lg leading-relaxed mb-6"
+              className="text-lg leading-relaxed mb-5"
               style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}
             >
               {technique.overview}
             </p>
+
+            {/* Best For */}
+            {technique.bestFor && technique.bestFor.length > 0 && (
+              <div className="flex flex-wrap items-center gap-2 mb-6">
+                <span
+                  className="text-sm font-medium"
+                  style={{ color: 'var(--color-text-muted)', fontFamily: 'var(--font-ui)' }}
+                >
+                  {t.bestFor}:
+                </span>
+                {technique.bestFor.map((tag, i) => (
+                  <span
+                    key={i}
+                    className="text-sm px-3 py-1 rounded-full"
+                    style={{
+                      backgroundColor: `${cat.color}15`,
+                      color: cat.color,
+                      fontFamily: 'var(--font-ui)',
+                      border: `1px solid ${cat.color}35`,
+                      fontWeight: 500,
+                    }}
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
 
             {/* Meta chips */}
             <div className="flex flex-wrap gap-3">
