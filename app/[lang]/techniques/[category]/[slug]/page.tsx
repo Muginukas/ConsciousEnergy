@@ -5,6 +5,7 @@ import { CATEGORY_MAP, CATEGORY_SLUGS } from '@/lib/categories'
 import { CategorySlug, Locale } from '@/lib/types'
 import TechniqueCard from '@/components/technique/TechniqueCard'
 import FavoriteButton from '@/components/technique/FavoriteButton'
+import LogPracticeButton from '@/components/technique/LogPracticeButton'
 import Link from 'next/link'
 import { ChevronRight, Clock, Flame, BookOpen } from 'lucide-react'
 import { MDXRemote } from 'next-mdx-remote/rsc'
@@ -201,6 +202,12 @@ export default async function TechniquePage(
 
         {/* Sidebar */}
         <aside className="mt-10 lg:mt-0 space-y-8">
+          <LogPracticeButton
+            category={category as CategorySlug}
+            slug={slug}
+            dict={dict.journal}
+          />
+
           {/* Tips */}
           {technique.tips && technique.tips.length > 0 && (
             <div className="p-5 rounded-xl" style={{ backgroundColor: 'var(--color-cream)', border: '1px solid var(--color-earth-200)' }}>

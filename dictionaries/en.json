@@ -187,5 +187,39 @@
       "empty": "You haven't saved any techniques yet. Browse the library and tap the heart on a technique to save it here.",
       "browse": "Browse techniques"
     }
+  },
+  "journal": {
+    "logPractice": "Log this practice",
+    "modal": {
+      "title": "Log your practice",
+      "duration": "Duration (minutes)",
+      "mood": "How do you feel?",
+      "notes": "Notes (optional)",
+      "notesPlaceholder": "Anything you noticed during this session...",
+      "save": "Save entry",
+      "saving": "Saving...",
+      "saved": "Logged — keep up the practice.",
+      "cancel": "Close",
+      "moods": {
+        "energized": "Energized",
+        "calm": "Calm",
+        "focused": "Focused",
+        "relaxed": "Relaxed",
+        "neutral": "Neutral"
+      }
+    },
+    "page": {
+      "title": "Practice journal",
+      "subtitle": "Your practice history and progress over time.",
+      "empty": "You haven't logged any practices yet. Open a technique and tap “Log this practice” after your session to start your journal.",
+      "browse": "Browse techniques",
+      "stats": {
+        "totalSessions": "Total sessions",
+        "currentStreak": "Current streak",
+        "days": "days"
+      },
+      "history": "History",
+      "minutes": "min"
+    }
   }
 }
