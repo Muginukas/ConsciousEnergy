@@ -69,7 +69,7 @@ export default async function MapPage(props: PageProps<'/[lang]/map'>) {
 
   return (
     <>
-      <VibrationMapScene lang={lang} dict={m} />
+      <VibrationMapScene lang={lang} dict={m} recommendations={recommendations} />
 
       <div className="max-w-5xl mx-auto px-4 py-12">
       <header className="mb-12 max-w-3xl">
