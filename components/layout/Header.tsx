@@ -9,7 +9,7 @@ import UserMenu from './UserMenu'
 type Props = {
   lang: string
   dict: {
-    nav: { home: string; techniques: string; about: string; getApp: string }
+    nav: { home: string; techniques: string; map: string; about: string; getApp: string }
     auth: { userMenu: { signIn: string; signUp: string; account: string; signOut: string } }
   }
 }
@@ -62,6 +62,13 @@ export default function Header({ lang, dict }: Props) {
             {nav.techniques}
           </Link>
           <Link
+            href={`/${lang}/map`}
+            className="text-sm font-medium transition-colors hover:text-[--color-forest-700]"
+            style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-ui)' }}
+          >
+            {nav.map}
+          </Link>
+          <Link
             href={`/${lang}/about`}
             className="text-sm font-medium transition-colors hover:text-[--color-forest-700]"
             style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-ui)' }}
@@ -105,6 +112,7 @@ export default function Header({ lang, dict }: Props) {
         >
           <Link href={`/${lang}`} onClick={() => setOpen(false)} className="text-sm font-medium">{nav.home}</Link>
           <Link href={`/${lang}/techniques`} onClick={() => setOpen(false)} className="text-sm font-medium">{nav.techniques}</Link>
+          <Link href={`/${lang}/map`} onClick={() => setOpen(false)} className="text-sm font-medium">{nav.map}</Link>
           <Link href={`/${lang}/about`} onClick={() => setOpen(false)} className="text-sm font-medium">{nav.about}</Link>
           <Link
             href={`/${lang}/get-the-app`}

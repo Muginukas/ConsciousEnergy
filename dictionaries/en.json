@@ -2,6 +2,7 @@
   "nav": {
     "home": "Home",
     "techniques": "Techniques",
+    "map": "Vibration Map",
     "about": "About",
     "getApp": "Get the App",
     "language": "Language"
@@ -69,6 +70,46 @@
     "disclaimer": {
       "title": "Important Disclaimer",
       "text": "The practices on this website are for educational purposes only. They are not a substitute for medical advice, diagnosis, or treatment. Always consult a qualified healthcare professional before beginning any new practice, especially if you have a medical condition. Some practices listed here may be intense — please read contraindications carefully."
+    }
+  },
+  "map": {
+    "eyebrow": "Consciousness & Energy",
+    "title": "The Vibration Map",
+    "intro": "Three classic frameworks for mapping inner states — Dr. David Hawkins’ Map of Consciousness, the sacred Solfeggio frequencies, and the seven-chakra energy system — woven into one unified map. Explore where your energy lives today, and the practices that help it rise.",
+    "scale": {
+      "heading": "The Unified Scale",
+      "caption": "Seven tiers from dense to expansive, each aligning a chakra, a Hawkins band, and a Solfeggio tone. Tap a tier to see how the models meet.",
+      "tapHint": "Select a tier to explore it.",
+      "hawkins": "Hawkins",
+      "solfeggio": "Solfeggio",
+      "chakra": "Chakra"
+    },
+    "tabs": {
+      "heading": "The Three Models",
+      "caption": "See each framework on its own, then how our unified map draws them together.",
+      "unified": "Unified",
+      "hawkins": "Hawkins",
+      "solfeggio": "Solfeggio",
+      "chakras": "Chakras",
+      "emotion": "Emotion",
+      "view": "View",
+      "process": "Process",
+      "force": "Force",
+      "power": "Power"
+    },
+    "assessment": {
+      "heading": "Where Are You Now?",
+      "intro": "Answer eight short questions to find the tier closest to your present state — and practices to support your next step. This is a reflective tool, not a diagnosis.",
+      "progress": "Question {current} of {total}",
+      "back": "Back",
+      "restart": "Take it again",
+      "resultEyebrow": "Your current tier",
+      "resultLead": "Right now your energy rests here.",
+      "recommended": "Practices to explore"
+    },
+    "disclaimer": {
+      "title": "A Map, Not a Verdict",
+      "text": "These frameworks are contemplative and symbolic, not scientific measurements. Hawkins’ calibrations and the Solfeggio frequencies are spiritual models, and the self-assessment reflects only this moment. Use the map as an invitation to practice and self-inquiry — never as a fixed judgment of your worth."
     }
   },
   "footer": {
