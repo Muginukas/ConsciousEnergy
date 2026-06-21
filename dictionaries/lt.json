@@ -2,6 +2,7 @@
   "nav": {
     "home": "Pagrindinis",
     "techniques": "Technikos",
+    "map": "Vibracijų žemėlapis",
     "about": "Apie",
     "getApp": "Atsisiųsti programėlę",
     "language": "Kalba"
@@ -69,6 +70,46 @@
     "disclaimer": {
       "title": "Svarbus Atsakomybės Atsisakymas",
       "text": "Šios svetainės praktikos skirtos tik švietimo tikslams. Jos nėra medicininės konsultacijos, diagnozės ar gydymo pakaitalas. Prieš pradedant naują praktiką, ypač jei turite medicininę būklę, visada konsultuokitės su kvalifikuotu sveikatos priežiūros specialistu. Kai kurios čia pateiktos praktikos gali būti intensyvios — prašome atidžiai perskaityti kontraindikacijas."
+    }
+  },
+  "map": {
+    "eyebrow": "Sąmonė ir energija",
+    "title": "Vibracijų žemėlapis",
+    "intro": "Trys klasikiniai vidinių būsenų žemėlapiai — dr. Davido Hawkinso sąmonės žemėlapis, šventieji Solfeggio dažniai ir septynių čakrų energijos sistema — suvienyti į vieną bendrą žemėlapį. Tyrinėk, kur šiandien gyvena tavo energija, ir praktikas, padedančias jai kilti.",
+    "scale": {
+      "heading": "Suvienyta skalė",
+      "caption": "Septynios pakopos nuo tankaus iki plataus, kiekviena sujungia čakrą, Hawkinso juostą ir Solfeggio toną. Spustelėk pakopą ir pamatyk, kaip modeliai susitinka.",
+      "tapHint": "Pasirink pakopą, kad ją tyrinėtum.",
+      "hawkins": "Hawkins",
+      "solfeggio": "Solfeggio",
+      "chakra": "Čakra"
+    },
+    "tabs": {
+      "heading": "Trys modeliai",
+      "caption": "Pamatyk kiekvieną sistemą atskirai, o tada — kaip mūsų suvienytas žemėlapis jas sujungia.",
+      "unified": "Suvienytas",
+      "hawkins": "Hawkins",
+      "solfeggio": "Solfeggio",
+      "chakras": "Čakros",
+      "emotion": "Emocija",
+      "view": "Požiūris",
+      "process": "Procesas",
+      "force": "Jėga",
+      "power": "Galia"
+    },
+    "assessment": {
+      "heading": "Kur tu esi dabar?",
+      "intro": "Atsakyk į aštuonis trumpus klausimus ir rask pakopą, artimiausią tavo dabartinei būsenai, bei praktikas kitam žingsniui. Tai apmąstymo įrankis, o ne diagnozė.",
+      "progress": "Klausimas {current} iš {total}",
+      "back": "Atgal",
+      "restart": "Pradėti iš naujo",
+      "resultEyebrow": "Tavo dabartinė pakopa",
+      "resultLead": "Šiuo metu tavo energija ilsisi čia.",
+      "recommended": "Praktikos, kurias verta tyrinėti"
+    },
+    "disclaimer": {
+      "title": "Žemėlapis, o ne nuosprendis",
+      "text": "Šios sistemos yra kontempliatyvios ir simbolinės, o ne moksliniai matavimai. Hawkinso kalibracijos ir Solfeggio dažniai yra dvasiniai modeliai, o savęs vertinimas atspindi tik šią akimirką. Naudok žemėlapį kaip kvietimą praktikuoti ir tyrinėti save — niekada kaip galutinį tavo vertės sprendimą."
     }
   },
   "footer": {
