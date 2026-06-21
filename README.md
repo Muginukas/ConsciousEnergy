@@ -29,8 +29,34 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Environment variables
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The app needs Supabase credentials at runtime (auth). See `.env.example`:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+
+For local dev, copy `.env.example` to `.env.local` and fill in the values
+(Supabase → Settings → API).
+
+## Deploy on Vercel (automatic on every push)
+
+This repo deploys via Vercel's Git integration: once connected, **every push is
+deployed automatically** — no GitHub Actions workflow needed. One-time setup:
+
+1. Go to [vercel.com/new](https://vercel.com/new) and import the
+   `Muginukas/ConsciousEnergy` GitHub repository (Vercel auto-detects Next.js —
+   no build config needed).
+2. **Project Settings → Environment Variables**: add
+   `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` for the
+   Production, Preview, and Development environments.
+3. **Project Settings → Git → Production Branch**: set it to
+   `claude/consciousness-energy-vibration-map-fwwfmc` so production deploys come
+   from this branch (other branches still get automatic preview deployments).
+4. Trigger the first deploy by pushing to that branch (or use **Redeploy** in
+   the dashboard).
+
+After this, pushing to the production branch ships to production automatically;
+pushing any other branch creates a preview URL.
+
+Check out the [Next.js deployment docs](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
