@@ -27,50 +27,6 @@ const FOL_CENTERS: Array<[number, number]> = (() => {
   return out
 })()
 
-// ── Concentric, colour-banded aura (outer violet → inner red) ──
-const AURA_BANDS = [
-  { c: '#9d6bd6', rx: 58, ry: 166 },
-  { c: '#5b3a8c', rx: 51, ry: 151 },
-  { c: '#2980b9', rx: 44, ry: 137 },
-  { c: '#27ae60', rx: 37, ry: 123 },
-  { c: '#f1c40f', rx: 30, ry: 109 },
-  { c: '#e67e22', rx: 23, ry: 96 },
-  { c: '#c0392b', rx: 16, ry: 83 },
-]
-
-// ── Toroidal surface rings (horizontal) ──
-const TORUS_RINGS = [
-  { y: 55, rx: 26 },
-  { y: 100, rx: 40 },
-  { y: 150, rx: 45 },
-  { y: 200, rx: 40 },
-  { y: 248, rx: 26 },
-]
-
-// ── Poloidal field loops: up the central axis, out & down the sides ──
-const POLOIDAL = [18, 32, 46].flatMap((w) => [
-  `M60,16 C60,90 60,230 60,304 C${60 - w},250 ${60 - w},70 60,16 Z`,
-  `M60,16 C60,90 60,230 60,304 C${60 + w},250 ${60 + w},70 60,16 Z`,
-])
-
-// ── Vortex spiral arms (squashed for funnel perspective) ──
-function spiralPath(cx: number, cy: number, turns: number, maxR: number, dir: 1 | -1, startDeg: number) {
-  const steps = Math.round(turns * 28)
-  const s0 = (startDeg * Math.PI) / 180
-  let d = ''
-  for (let i = 0; i <= steps; i++) {
-    const t = i / steps
-    const ang = s0 + dir * t * turns * 2 * Math.PI
-    const r = t * maxR
-    const x = cx + r * Math.cos(ang)
-    const y = cy + r * Math.sin(ang) * 0.5
-    d += `${i === 0 ? 'M' : 'L'}${x.toFixed(1)},${y.toFixed(1)} `
-  }
-  return d.trim()
-}
-const TOP_VORTEX = [0, 120, 240].map((a) => spiralPath(60, 20, 2.3, 23, 1, a))
-const BOTTOM_VORTEX = [0, 120, 240].map((a) => spiralPath(60, 300, 2.3, 23, -1, a))
-
 // ── Slender lightbody silhouette (rendered mainly as a luminous outline) ──
 const BODY =
   'M50,44 C43,47 40,60 43,90 L47,150 C48,164 49,172 51,180 L54,306 L59,306 L60,184 L61,306 L66,306 C68,172 69,164 70,150 L77,90 C80,60 77,47 70,44 C66,53 54,53 50,44 Z'
@@ -105,29 +61,6 @@ export default function EnergyFigure() {
           </filter>
         </defs>
 
-        {/* ── Aura: concentric, brighter colour bands (additive glow) ── */}
-        <motion.g
-          style={{ mixBlendMode: 'screen', transformBox: 'fill-box', transformOrigin: 'center' }}
-          animate={{ scale: [1, 1.035, 1], opacity: [0.92, 1, 0.92] }}
-          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          {AURA_BANDS.map((b, i) => (
-            <g key={i}>
-              <ellipse cx={60} cy={150} rx={b.rx} ry={b.ry} fill={b.c} fillOpacity={0.1} />
-              <ellipse
-                cx={60}
-                cy={150}
-                rx={b.rx}
-                ry={b.ry}
-                fill="none"
-                stroke={b.c}
-                strokeOpacity={0.55}
-                strokeWidth={0.7}
-              />
-            </g>
-          ))}
-        </motion.g>
-
         {/* ── Sacred geometry: slowly rotating Flower of Life behind the torso ── */}
         <g stroke="url(#field-grad)" strokeWidth={0.5} fill="none" opacity={0.16}>
           <motion.g
@@ -142,70 +75,6 @@ export default function EnergyFigure() {
             <circle cx={60} cy={150} r={FOL_S * 3.4} />
           </motion.g>
         </g>
-
-        {/* ── Toroidal field: outline + circulating rings + flowing loops ── */}
-        <g stroke="url(#field-grad)" fill="none" strokeLinecap="round">
-          {/* Field silhouette */}
-          <path d="M60,8 C20,40 14,118 16,160 C14,202 20,280 60,312" strokeWidth={0.8} opacity={0.65} />
-          <path d="M60,8 C100,40 106,118 104,160 C106,202 100,280 60,312" strokeWidth={0.8} opacity={0.65} />
-
-          {/* Toroidal rings — energy circling the axis (dashes travel) */}
-          {TORUS_RINGS.map((r, i) => (
-            <motion.ellipse
-              key={`r${i}`}
-              cx={60}
-              cy={r.y}
-              rx={r.rx}
-              ry={6.5}
-              strokeWidth={0.7}
-              strokeOpacity={0.7}
-              strokeDasharray="3 7"
-              animate={{ strokeDashoffset: [0, -40] }}
-              transition={{ duration: 5 + i * 0.4, repeat: Infinity, ease: 'linear' }}
-            />
-          ))}
-
-          {/* Poloidal loops — flow up the centre, down the sides */}
-          {POLOIDAL.map((d, i) => (
-            <motion.path
-              key={`p${i}`}
-              d={d}
-              strokeWidth={0.6}
-              strokeOpacity={0.5}
-              strokeDasharray="2.5 9"
-              animate={{ strokeDashoffset: [0, -60] }}
-              transition={{ duration: 7, repeat: Infinity, ease: 'linear' }}
-            />
-          ))}
-        </g>
-
-        {/* ── Vortex funnels swirling at the crown and the root ── */}
-        <motion.g
-          stroke="url(#field-grad)"
-          fill="none"
-          strokeWidth={0.7}
-          opacity={0.8}
-          style={{ transformBox: 'fill-box', transformOrigin: '60px 20px' }}
-          animate={{ rotate: 360 }}
-          transition={{ duration: 14, repeat: Infinity, ease: 'linear' }}
-        >
-          {TOP_VORTEX.map((d, i) => (
-            <path key={i} d={d} />
-          ))}
-        </motion.g>
-        <motion.g
-          stroke="url(#field-grad)"
-          fill="none"
-          strokeWidth={0.7}
-          opacity={0.8}
-          style={{ transformBox: 'fill-box', transformOrigin: '60px 300px' }}
-          animate={{ rotate: -360 }}
-          transition={{ duration: 16, repeat: Infinity, ease: 'linear' }}
-        >
-          {BOTTOM_VORTEX.map((d, i) => (
-            <path key={i} d={d} />
-          ))}
-        </motion.g>
 
         {/* ── Luminous lightbody silhouette (outline-led, professional) ── */}
         <g strokeLinejoin="round">
