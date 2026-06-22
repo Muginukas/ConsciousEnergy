@@ -13,6 +13,7 @@ import {
 import { Locale } from '@/lib/types'
 import type { Recommendation } from './SelfAssessment'
 import EnergyFigure from './EnergyFigure'
+import RealmsBackdrop from './RealmsBackdrop'
 
 type Props = {
   lang: string
@@ -164,6 +165,9 @@ export default function VibrationMapScene({ lang, dict, recommendations }: Props
           />
         ))}
       </div>
+
+      {/* Paradise above, the underworld below */}
+      <RealmsBackdrop />
 
       {/* Heading */}
       <div className="pointer-events-none absolute inset-x-0 top-0 z-30 px-6 pt-8 text-center sm:pt-10">
