@@ -5,6 +5,8 @@ import { AnimatePresence, motion } from 'framer-motion'
 import {
   HAWKINS_LEVELS,
   HawkinsLevel,
+  HAWKINS_DEPTH,
+  CHAKRA_DEPTH,
   VIBRATION_TIERS,
   VibrationTier,
 } from '@/lib/vibration'
@@ -80,6 +82,17 @@ export default function VibrationMapScene({ lang, dict, recommendations }: Props
   const locale = lang as Locale
   const lt = locale === 'lt'
   const [active, setActive] = useState<Active>(null)
+  // Which emotion/view/process row is expanded in the level panel.
+  const [openField, setOpenField] = useState<'emotion' | 'view' | 'process' | null>(null)
+
+  // Select a level/chakra and collapse any expanded field.
+  const select = (next: Active) => {
+    setOpenField(null)
+    setActive(next)
+  }
+
+  // Localised label for the "key to rise" line.
+  const ascendLabel = lt ? 'Kaip kilti' : 'Key to rise'
 
   // Hawkins levels already run 700 (top) → 20 (bottom).
   const levels = HAWKINS_LEVELS
@@ -158,7 +171,7 @@ export default function VibrationMapScene({ lang, dict, recommendations }: Props
             return (
               <button
                 key={lvl.calibration}
-                onClick={() => setActive(on ? null : { kind: 'hawkins', idx: i })}
+                onClick={() => select(on ? null : { kind: 'hawkins', idx: i })}
                 className="group flex flex-1 items-center gap-2 rounded text-left transition-all duration-200 hover:translate-x-0.5"
                 style={{ opacity: !active || on ? 1 : 0.5 }}
                 aria-pressed={on}
@@ -197,7 +210,7 @@ export default function VibrationMapScene({ lang, dict, recommendations }: Props
             return (
               <button
                 key={tier.id}
-                onClick={() => setActive(on ? null : { kind: 'chakra', id: tier.id })}
+                onClick={() => select(on ? null : { kind: 'chakra', id: tier.id })}
                 className="absolute left-1/2 z-20 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center"
                 style={{ top: `${CHAKRA_TOP[tier.level]}%`, opacity: !active || on ? 1 : 0.6 }}
                 aria-pressed={on}
@@ -245,63 +258,133 @@ export default function VibrationMapScene({ lang, dict, recommendations }: Props
             className="absolute inset-x-0 bottom-0 z-40 px-3 pb-4 sm:px-6 sm:pb-6"
           >
             <div
-              className="mx-auto max-w-md rounded-2xl p-5"
+              className="mx-auto max-h-[72svh] max-w-md overflow-y-auto rounded-2xl p-5"
               style={{
-                background: 'rgba(20, 12, 35, 0.92)',
+                background: 'rgba(20, 12, 35, 0.94)',
                 border: `1px solid ${activeLevel?.color ?? activeTier?.color ?? '#fff'}`,
                 boxShadow: `0 0 40px -8px ${activeLevel?.color ?? activeTier?.color ?? '#000'}`,
                 backdropFilter: 'blur(8px)',
               }}
             >
-              {activeLevel && (
-                <>
-                  <div className="flex items-baseline justify-between gap-3">
-                    <h3 className="text-2xl font-semibold" style={{ fontFamily: 'var(--font-display)', color: '#fff' }}>
-                      {lt ? activeLevel.nameLt : activeLevel.name}
-                    </h3>
-                    <span className="text-lg font-semibold tabular-nums" style={{ color: activeLevel.color, fontFamily: 'var(--font-ui)' }}>
-                      {activeLevel.calibration}
-                    </span>
-                  </div>
-                  <div className="mt-3 grid grid-cols-2 gap-2">
-                    <Stat label={dict.tabs.emotion} value={lt ? activeLevel.emotionLt : activeLevel.emotion} color={activeLevel.color} />
-                    <Stat label={dict.tabs.view} value={lt ? activeLevel.viewLt : activeLevel.view} color={activeLevel.color} />
-                    <Stat label={dict.tabs.process} value={lt ? activeLevel.processLt : activeLevel.process} color={activeLevel.color} />
-                    <Stat label="" value={activeLevel.band === 'power' ? dict.tabs.power : dict.tabs.force} color={activeLevel.color} />
-                  </div>
-                </>
-              )}
+              {activeLevel &&
+                (() => {
+                  const d = HAWKINS_DEPTH[activeLevel.calibration]
+                  const tier = VIBRATION_TIERS.find(
+                    (t) =>
+                      activeLevel.calibration >= t.hawkinsRange[0] &&
+                      activeLevel.calibration <= t.hawkinsRange[1],
+                  )
+                  const fields = [
+                    { key: 'emotion' as const, label: dict.tabs.emotion, value: lt ? activeLevel.emotionLt : activeLevel.emotion, note: d ? (lt ? d.emotionNoteLt : d.emotionNote) : '' },
+                    { key: 'view' as const, label: dict.tabs.view, value: lt ? activeLevel.viewLt : activeLevel.view, note: d ? (lt ? d.viewNoteLt : d.viewNote) : '' },
+                    { key: 'process' as const, label: dict.tabs.process, value: lt ? activeLevel.processLt : activeLevel.process, note: d ? (lt ? d.processNoteLt : d.processNote) : '' },
+                  ]
+                  return (
+                    <>
+                      <div className="flex items-baseline justify-between gap-3">
+                        <h3 className="text-2xl font-semibold" style={{ fontFamily: 'var(--font-display)', color: '#fff' }}>
+                          {lt ? activeLevel.nameLt : activeLevel.name}
+                        </h3>
+                        <span className="text-lg font-semibold tabular-nums" style={{ color: activeLevel.color, fontFamily: 'var(--font-ui)' }}>
+                          {activeLevel.calibration}
+                        </span>
+                      </div>
+                      <span
+                        className="mt-1 inline-block rounded-full px-2 py-0.5 text-[0.65rem] font-semibold uppercase tracking-widest"
+                        style={{ background: `${activeLevel.color}26`, color: activeLevel.color, fontFamily: 'var(--font-ui)' }}
+                      >
+                        {activeLevel.band === 'power' ? dict.tabs.power : dict.tabs.force}
+                      </span>
 
-              {activeTier && (
-                <>
-                  <span
-                    className="inline-block rounded-full px-3 py-1 text-xs font-semibold"
-                    style={{ background: `${activeTier.color}26`, color: '#fff', fontFamily: 'var(--font-ui)' }}
-                  >
-                    {lt ? activeTier.chakraLt : activeTier.chakra} · {activeTier.solfeggioHz} Hz
-                  </span>
-                  <h3 className="mt-2 text-2xl font-semibold" style={{ fontFamily: 'var(--font-display)', color: '#fff' }}>
-                    {lt ? activeTier.labelLt : activeTier.label}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.78)', fontFamily: 'var(--font-body)' }}>
-                    {lt ? activeTier.summaryLt : activeTier.summary}
-                  </p>
-                  {recommendations[activeTier.id]?.length > 0 && (
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {recommendations[activeTier.id].map((r) => (
-                        <a
-                          key={r.href}
-                          href={r.href}
-                          className="rounded-full px-3 py-1 text-xs font-medium transition-colors"
-                          style={{ background: `${activeTier.color}33`, color: '#fff', fontFamily: 'var(--font-ui)' }}
+                      {d && (
+                        <p className="mt-3 text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.82)', fontFamily: 'var(--font-body)' }}>
+                          {lt ? d.descriptionLt : d.description}
+                        </p>
+                      )}
+
+                      <div className="mt-3 flex flex-col gap-2">
+                        {fields.map((f) => (
+                          <FieldRow
+                            key={f.key}
+                            label={f.label}
+                            value={f.value}
+                            note={f.note}
+                            color={activeLevel.color}
+                            open={openField === f.key}
+                            onToggle={() => setOpenField(openField === f.key ? null : f.key)}
+                          />
+                        ))}
+                      </div>
+
+                      {d && (
+                        <p className="mt-3 text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.7)', fontFamily: 'var(--font-body)' }}>
+                          <span style={{ color: activeLevel.color, fontFamily: 'var(--font-ui)' }}>↑ {ascendLabel}: </span>
+                          {lt ? d.ascendLt : d.ascend}
+                        </p>
+                      )}
+
+                      {tier && (
+                        <button
+                          onClick={() => select({ kind: 'chakra', id: tier.id })}
+                          className="mt-4 inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium"
+                          style={{ background: `${tier.chakraColor}26`, color: '#fff', fontFamily: 'var(--font-ui)' }}
                         >
-                          {r.title} →
-                        </a>
-                      ))}
-                    </div>
-                  )}
-                </>
-              )}
+                          {lt ? tier.chakraLt : tier.chakra} · {tier.solfeggioHz} Hz →
+                        </button>
+                      )}
+                    </>
+                  )
+                })()}
+
+              {activeTier &&
+                (() => {
+                  const cd = CHAKRA_DEPTH[activeTier.id]
+                  return (
+                    <>
+                      <span
+                        className="inline-block rounded-full px-3 py-1 text-xs font-semibold"
+                        style={{ background: `${activeTier.color}26`, color: '#fff', fontFamily: 'var(--font-ui)' }}
+                      >
+                        {lt ? activeTier.chakraLt : activeTier.chakra} · {activeTier.solfeggioHz} Hz
+                      </span>
+                      <h3 className="mt-2 text-2xl font-semibold" style={{ fontFamily: 'var(--font-display)', color: '#fff' }}>
+                        {lt ? activeTier.labelLt : activeTier.label}
+                      </h3>
+                      {cd && (
+                        <p className="mt-1 text-base italic" style={{ color: activeTier.color, fontFamily: 'var(--font-display)' }}>
+                          “{lt ? cd.mantraLt : cd.mantra}”
+                        </p>
+                      )}
+                      <p className="mt-2 text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.8)', fontFamily: 'var(--font-body)' }}>
+                        {lt ? activeTier.summaryLt : activeTier.summary}
+                      </p>
+                      {cd && (
+                        <div className="mt-3 grid grid-cols-2 gap-2">
+                          <Stat label={lt ? 'Sanskritas' : 'Sanskrit'} value={cd.sanskrit} color={activeTier.color} />
+                          <Stat label={lt ? 'Bija garsas' : 'Bija sound'} value={cd.bija} color={activeTier.color} />
+                          <Stat label={lt ? 'Elementas' : 'Element'} value={lt ? cd.elementLt : cd.element} color={activeTier.color} />
+                          <Stat label={lt ? 'Liauka' : 'Gland'} value={lt ? cd.glandLt : cd.gland} color={activeTier.color} />
+                          <Stat label={lt ? 'Vieta' : 'Location'} value={lt ? cd.locationLt : cd.location} color={activeTier.color} />
+                          <Stat label="Solfeggio" value={`${activeTier.solfeggioHz} Hz`} color={activeTier.color} />
+                        </div>
+                      )}
+                      {recommendations[activeTier.id]?.length > 0 && (
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {recommendations[activeTier.id].map((r) => (
+                            <a
+                              key={r.href}
+                              href={r.href}
+                              className="rounded-full px-3 py-1 text-xs font-medium transition-colors"
+                              style={{ background: `${activeTier.color}33`, color: '#fff', fontFamily: 'var(--font-ui)' }}
+                            >
+                              {r.title} →
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                    </>
+                  )
+                })()}
             </div>
           </motion.div>
         )}
@@ -356,6 +439,67 @@ function ChakraMandala({ color, petals, active }: { color: string; petals: numbe
         <circle cx={20} cy={20} r={11.5} fill="none" stroke="#fff" strokeOpacity={0.9} strokeWidth={0.8} />
       )}
     </motion.svg>
+  )
+}
+
+/** An expandable emotion/view/process row: tap to reveal a deeper note. */
+function FieldRow({
+  label,
+  value,
+  note,
+  color,
+  open,
+  onToggle,
+}: {
+  label: string
+  value: string
+  note: string
+  color: string
+  open: boolean
+  onToggle: () => void
+}) {
+  return (
+    <div className="overflow-hidden rounded-lg" style={{ background: 'rgba(255,255,255,0.06)' }}>
+      <button
+        onClick={onToggle}
+        className="flex w-full items-center justify-between gap-3 px-3 py-2 text-left"
+        aria-expanded={open}
+      >
+        <span className="min-w-0">
+          <span className="block text-[0.65rem] uppercase tracking-wide" style={{ color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-ui)' }}>
+            {label}
+          </span>
+          <span className="block text-sm font-semibold" style={{ color, fontFamily: 'var(--font-display)' }}>
+            {value}
+          </span>
+        </span>
+        {note && (
+          <motion.span
+            className="shrink-0 text-base"
+            style={{ color }}
+            animate={{ rotate: open ? 90 : 0 }}
+            transition={{ duration: 0.2 }}
+            aria-hidden="true"
+          >
+            ›
+          </motion.span>
+        )}
+      </button>
+      <AnimatePresence initial={false}>
+        {open && note && (
+          <motion.p
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.22 }}
+            className="px-3 pb-2 text-xs leading-relaxed"
+            style={{ color: 'rgba(255,255,255,0.72)', fontFamily: 'var(--font-body)' }}
+          >
+            {note}
+          </motion.p>
+        )}
+      </AnimatePresence>
+    </div>
   )
 }
 

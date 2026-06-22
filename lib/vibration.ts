@@ -635,3 +635,370 @@ export function tierForScore(score: number): VibrationTier {
   const level = Math.min(7, Math.max(1, Math.round(score)))
   return VIBRATION_TIERS.find((t) => t.level === level) ?? VIBRATION_TIERS[0]
 }
+
+// ─── Deeper layer: drill-down content ──────────────────────────────────────
+//
+// Additive lookups (keyed by Hawkins calibration and by tier id) so the
+// interactive map can let a visitor open any level or chakra and go deeper —
+// without touching the core arrays above. Contemplative/symbolic copy, dual
+// locale, mirroring the existing convention.
+
+export interface HawkinsDepth {
+  /** A deeper portrait of the level. */
+  description: string
+  descriptionLt: string
+  /** One-line gloss expanding the emotion. */
+  emotionNote: string
+  emotionNoteLt: string
+  /** One-line gloss expanding the view of life. */
+  viewNote: string
+  viewNoteLt: string
+  /** One-line gloss expanding the life-process. */
+  processNote: string
+  processNoteLt: string
+  /** The key to rising toward the next level. */
+  ascend: string
+  ascendLt: string
+}
+
+export const HAWKINS_DEPTH: Record<number, HawkinsDepth> = {
+  700: {
+    description:
+      'The separate self dissolves into pure awareness; only the radiant presence of what is remains.',
+    descriptionLt:
+      'Atskiras „aš" ištirpsta grynoje sąmonėje; lieka tik spindinti būtis — kas yra.',
+    emotionNote: 'Beyond words — a peace too vast to name.',
+    emotionNoteLt: 'Už žodžių — ramybė, per plati įvardyti.',
+    viewNote: 'Reality is seen exactly as it is, with no story.',
+    viewNoteLt: 'Tikrovė matoma tokia, kokia yra, be jokios istorijos.',
+    processNote: 'Awareness aware of itself — sourceless and whole.',
+    processNoteLt: 'Sąmonė, suvokianti save — bešaltinė ir vientisa.',
+    ascend: 'Nothing to attain — simply abide as awareness itself.',
+    ascendLt: 'Nieko nebereikia siekti — tiesiog būk pati sąmonė.',
+  },
+  600: {
+    description:
+      'Perception of separateness ends; the world is experienced as a flowing, timeless whole.',
+    descriptionLt:
+      'Atskirumo jausmas baigiasi; pasaulis patiriamas kaip tekanti, belaikė visuma.',
+    emotionNote: 'Bliss that needs no cause and asks for nothing.',
+    emotionNoteLt: 'Palaima be priežasties, nieko neprašanti.',
+    viewNote: 'All things are seen as perfect, complete as they are.',
+    viewNoteLt: 'Viskas matoma tobula, pilna tokia, kokia yra.',
+    processNote: 'Inner light illumines experience from within.',
+    processNoteLt: 'Vidinė šviesa nušviečia patyrimą iš vidaus.',
+    ascend: 'Let even bliss be released into pure stillness.',
+    ascendLt: 'Leisk net palaimai ištirpti grynoje tyloje.',
+  },
+  540: {
+    description:
+      'An unconditional joy arises from within, independent of events — love radiating as compassion.',
+    descriptionLt:
+      'Iš vidaus kyla besąlygiškas džiaugsmas, nepriklausomas nuo įvykių — meilė, spinduliuojanti užuojauta.',
+    emotionNote: 'A steady serenity beneath all passing weather.',
+    emotionNoteLt: 'Tvari giedra po visais praeinančiais orais.',
+    viewNote: 'Life feels complete; lack falls away.',
+    viewNoteLt: 'Gyvenimas jaučiasi pilnas; stygius nubyra.',
+    processNote: 'The world is transfigured, seen as sacred.',
+    processNoteLt: 'Pasaulis persimaino, matomas kaip šventas.',
+    ascend: 'Surrender the joy itself into boundless peace.',
+    ascendLt: 'Atiduok patį džiaugsmą beribei ramybei.',
+  },
+  500: {
+    description:
+      'Love becomes a way of being, not an emotion — unconditional, forgiving, and seeing the good in all.',
+    descriptionLt:
+      'Meilė tampa būsena, o ne emocija — besąlygiška, atleidžianti, matanti gėrį visame kame.',
+    emotionNote: 'Reverence for life and for one another.',
+    emotionNoteLt: 'Pagarba gyvenimui ir vieni kitiems.',
+    viewNote: 'Existence is felt as fundamentally benign.',
+    viewNoteLt: 'Būtis jaučiama iš esmės geranoriška.',
+    processNote: 'The heart reveals what the mind cannot prove.',
+    processNoteLt: 'Širdis atskleidžia tai, ko protas neįrodo.',
+    ascend: 'Let love grow unconditional, free of all preference.',
+    ascendLt: 'Leisk meilei tapti besąlygiškai, be jokio išskyrimo.',
+  },
+  400: {
+    description:
+      'The mind masters logic and abstraction; understanding and meaning organise a coherent world.',
+    descriptionLt:
+      'Protas įvaldo logiką ir abstrakciją; supratimas ir prasmė sutvarko darnų pasaulį.',
+    emotionNote: 'The quiet satisfaction of comprehension.',
+    emotionNoteLt: 'Tylus pasitenkinimas supratus.',
+    viewNote: 'The world appears meaningful and intelligible.',
+    viewNoteLt: 'Pasaulis atrodo prasmingas ir suprantamas.',
+    processNote: 'Symbols and ideas distil raw experience.',
+    processNoteLt: 'Simboliai ir idėjos perfiltruoja gryną patyrimą.',
+    ascend: 'Step beyond the mind: let the heart lead reason.',
+    ascendLt: 'Peženk protą: leisk širdžiai vesti protą.',
+  },
+  350: {
+    description:
+      'Responsibility is owned; life is taken as it is, and forgiveness replaces blame.',
+    descriptionLt:
+      'Atsakomybė priimama; gyvenimas imamas toks, koks yra, o atleidimas pakeičia kaltinimą.',
+    emotionNote: 'Forgiveness that frees both self and others.',
+    emotionNoteLt: 'Atleidimas, išlaisvinantis ir save, ir kitus.',
+    viewNote: 'Circumstances are seen as workable, harmonious.',
+    viewNoteLt: 'Aplinkybės matomos įveikiamos, darnios.',
+    processNote: 'Transcending the need to control outcomes.',
+    processNoteLt: 'Peržengiamas poreikis valdyti pasekmes.',
+    ascend: 'Move from accepting life to actively loving it.',
+    ascendLt: 'Nuo gyvenimo priėmimo pereik prie aktyvios meilės jam.',
+  },
+  310: {
+    description:
+      'Willingness opens the door: optimism and intention turn capability into real growth.',
+    descriptionLt:
+      'Pasiryžimas atveria duris: optimizmas ir ketinimas paverčia galimybes tikru augimu.',
+    emotionNote: 'An optimism that says yes to life.',
+    emotionNoteLt: 'Optimizmas, kuris sako gyvenimui „taip".',
+    viewNote: 'The future looks hopeful and open.',
+    viewNoteLt: 'Ateitis atrodo viltinga ir atvira.',
+    processNote: 'Clear intention sets growth in motion.',
+    processNoteLt: 'Aiškus ketinimas paleidžia augimą.',
+    ascend: 'Release agendas; trust life as it is.',
+    ascendLt: 'Paleisk planus; pasitikėk gyvenimu tokiu, koks yra.',
+  },
+  250: {
+    description:
+      'A balanced neutrality settles in; outcomes no longer threaten, and trust replaces resistance.',
+    descriptionLt:
+      'Įsivyrauja pusiausvyra ir neutralumas; pasekmės nebegąsdina, pasitikėjimas pakeičia priešinimąsi.',
+    emotionNote: 'Trust that things will be alright.',
+    emotionNoteLt: 'Pasitikėjimas, kad viskas bus gerai.',
+    viewNote: 'Life feels satisfactory, free of pressure.',
+    viewNoteLt: 'Gyvenimas jaučiasi patenkinamas, be spaudimo.',
+    processNote: 'Releasing the grip on how things must be.',
+    processNoteLt: 'Paleidžiamas įsikibimas, kaip turi būti.',
+    ascend: 'Add willingness: lean in and say yes.',
+    ascendLt: 'Pridėk pasiryžimo: pasilenk pirmyn ir sakyk „taip".',
+  },
+  200: {
+    description:
+      'The pivotal threshold: force becomes power. Courage makes life feel feasible and worth engaging.',
+    descriptionLt:
+      'Lemiamas slenkstis: jėga tampa galia. Drąsa daro gyvenimą įveikiamą ir vertą įsitraukti.',
+    emotionNote: 'A quiet inner yes — affirmation of life.',
+    emotionNoteLt: 'Tylus vidinis „taip" — gyvenimo patvirtinimas.',
+    viewNote: 'Challenges look feasible, not overwhelming.',
+    viewNoteLt: 'Iššūkiai atrodo įveikiami, ne slegiantys.',
+    processNote: 'Reclaiming one’s own power to act.',
+    processNoteLt: 'Susigrąžinama sava galia veikti.',
+    ascend: 'Soften effort into trust and neutrality.',
+    ascendLt: 'Sušvelnink pastangą į pasitikėjimą ir neutralumą.',
+  },
+  175: {
+    description:
+      'Pride feels better than the lower levels, but depends on conditions and defends itself through scorn.',
+    descriptionLt:
+      'Puikybė jaučiasi geriau nei žemesni lygiai, bet priklauso nuo sąlygų ir gina save panieka.',
+    emotionNote: 'Scorn that protects a fragile self-image.',
+    emotionNoteLt: 'Panieka, sauganti trapų savęs įvaizdį.',
+    viewNote: 'The world is seen as demanding, to be met.',
+    viewNoteLt: 'Pasaulis matomas reiklus, kurį reikia įveikti.',
+    processNote: 'Inflation: the ego puffs itself up.',
+    processNoteLt: 'Išpūtimas: ego pučia save.',
+    ascend: 'Risk humility and the courage to simply try.',
+    ascendLt: 'Rizikuok nuolankumu ir drąsa tiesiog pabandyti.',
+  },
+  150: {
+    description:
+      'Anger is energising compared to apathy — a force that can build or destroy depending on where it turns.',
+    descriptionLt:
+      'Pyktis, palyginti su apatija, energizuoja — jėga, kuri gali kurti arba griauti, priklausomai nuo krypties.',
+    emotionNote: 'Hate that burns the one who holds it.',
+    emotionNoteLt: 'Neapykanta, deginanti tą, kuris ją laiko.',
+    viewNote: 'Others appear as rivals or enemies.',
+    viewNoteLt: 'Kiti atrodo kaip varžovai ar priešai.',
+    processNote: 'Aggression pushes against the world.',
+    processNoteLt: 'Agresija stumia prieš pasaulį.',
+    ascend: 'Channel the heat into courageous, useful action.',
+    ascendLt: 'Nukreipk karštį į drąsų, naudingą veiksmą.',
+  },
+  125: {
+    description:
+      'Desire drives and motivates, yet binds: craving promises satisfaction that always recedes.',
+    descriptionLt:
+      'Geismas varo ir motyvuoja, bet pančioja: troškimas žada pasitenkinimą, kuris vis atsitraukia.',
+    emotionNote: 'Craving that is never quite satisfied.',
+    emotionNoteLt: 'Troškimas, kuris niekada iki galo nenuramintas.',
+    viewNote: 'Life disappoints when wants go unmet.',
+    viewNoteLt: 'Gyvenimas nuvilia, kai norai neišsipildo.',
+    processNote: 'Enslavement to the next thing wanted.',
+    processNoteLt: 'Pavergimas kito trokštamo dalyko.',
+    ascend: 'Turn wanting into willing, energised action.',
+    ascendLt: 'Paversk norėjimą energingu pasiryžimu veikti.',
+  },
+  100: {
+    description:
+      'Fear contracts life around threat; the world feels dangerous and the self withdraws to stay safe.',
+    descriptionLt:
+      'Baimė sutraukia gyvenimą apie grėsmę; pasaulis atrodo pavojingas, ir žmogus užsisklendžia, kad apsisaugotų.',
+    emotionNote: 'Anxiety scanning for what might go wrong.',
+    emotionNoteLt: 'Nerimas, vis ieškantis, kas gali nutikti blogai.',
+    viewNote: 'The world appears frightening, full of danger.',
+    viewNoteLt: 'Pasaulis atrodo bauginantis, pilnas pavojų.',
+    processNote: 'Withdrawal — shrinking back from life.',
+    processNoteLt: 'Užsisklendimas — traukimasis nuo gyvenimo.',
+    ascend: 'Let wanting and reaching pull you forward.',
+    ascendLt: 'Leisk norui ir siekiui patraukti tave pirmyn.',
+  },
+  75: {
+    description:
+      'Grief is the weight of loss; sadness colours the world, yet it can soften the heart toward release.',
+    descriptionLt:
+      'Liūdesys — netekties svoris; jis nuspalvina pasaulį, bet gali ir suminkštinti širdį paleidimui.',
+    emotionNote: 'Regret for what is lost or undone.',
+    emotionNoteLt: 'Gailestis dėl to, kas prarasta ar nepadaryta.',
+    viewNote: 'Life looks tragic, heavy with sorrow.',
+    viewNoteLt: 'Gyvenimas atrodo tragiškas, sunkus nuo sielvarto.',
+    processNote: 'Despondency: energy sinks inward.',
+    processNoteLt: 'Nusiminimas: energija sminga į vidų.',
+    ascend: 'Let even fear stir you back toward life.',
+    ascendLt: 'Leisk net baimei pažadinti tave atgal į gyvenimą.',
+  },
+  50: {
+    description:
+      'Apathy is hopeless heaviness — the energy to care or act feels gone, and life is merely endured.',
+    descriptionLt:
+      'Apatija — beviltiškas sunkumas; energijos rūpintis ar veikti tarsi nebėra, gyvenimas tik kenčiamas.',
+    emotionNote: 'Despair that nothing can change.',
+    emotionNoteLt: 'Neviltis, kad niekas negali pasikeisti.',
+    viewNote: 'Existence feels hopeless and flat.',
+    viewNoteLt: 'Būtis jaučiasi beviltiška ir pilka.',
+    processNote: 'Abdication — giving up one’s power.',
+    processNoteLt: 'Atsisakymas — savos galios atidavimas.',
+    ascend: 'Allow grief to move the frozen energy.',
+    ascendLt: 'Leisk liūdesiui pajudinti sustingusią energiją.',
+  },
+  30: {
+    description:
+      'Guilt turns judgment inward; self-condemnation can become a quiet self-destruction.',
+    descriptionLt:
+      'Kaltė nukreipia teismą į vidų; savęs smerkimas gali tapti tyliu savęs naikinimu.',
+    emotionNote: 'Blame aimed at oneself.',
+    emotionNoteLt: 'Kaltinimas, nukreiptas į save.',
+    viewNote: 'The world feels condemning, accusing.',
+    viewNoteLt: 'Pasaulis jaučiasi smerkiantis, kaltinantis.',
+    processNote: 'Destruction turned against the self.',
+    processNoteLt: 'Naikinimas, nukreiptas prieš save.',
+    ascend: 'Let numb apathy give way to honest feeling.',
+    ascendLt: 'Leisk apatijai užleisti vietą nuoširdžiam jausmui.',
+  },
+  20: {
+    description:
+      'Shame is the densest state — close to non-existence, the self feels unworthy of life itself.',
+    descriptionLt:
+      'Gėda — tankiausia būsena, artima nebūčiai; žmogus jaučiasi nevertas paties gyvenimo.',
+    emotionNote: 'Humiliation that wishes to disappear.',
+    emotionNoteLt: 'Pažeminimas, norintis išnykti.',
+    viewNote: 'Life appears miserable and unbearable.',
+    viewNoteLt: 'Gyvenimas atrodo apgailėtinas ir nepakeliamas.',
+    processNote: 'Elimination — the pull toward erasure.',
+    processNoteLt: 'Pašalinimas — trauka į išnykimą.',
+    ascend: 'One step up: let blame become guilt, then feeling.',
+    ascendLt: 'Vienas žingsnis aukštyn: leisk kaltei virsti jausmu.',
+  },
+}
+
+export interface ChakraDepth {
+  sanskrit: string
+  mantra: string
+  mantraLt: string
+  /** Seed (bija) sound. */
+  bija: string
+  element: string
+  elementLt: string
+  gland: string
+  glandLt: string
+  location: string
+  locationLt: string
+}
+
+export const CHAKRA_DEPTH: Record<string, ChakraDepth> = {
+  survival: {
+    sanskrit: 'Muladhara',
+    mantra: 'I am',
+    mantraLt: 'Aš esu',
+    bija: 'LAM',
+    element: 'Earth',
+    elementLt: 'Žemė',
+    gland: 'Adrenals',
+    glandLt: 'Antinksčiai',
+    location: 'Base of the spine',
+    locationLt: 'Stuburo apačia',
+  },
+  desire: {
+    sanskrit: 'Svadhisthana',
+    mantra: 'I feel',
+    mantraLt: 'Aš jaučiu',
+    bija: 'VAM',
+    element: 'Water',
+    elementLt: 'Vanduo',
+    gland: 'Gonads',
+    glandLt: 'Lytinės liaukos',
+    location: 'Lower abdomen',
+    locationLt: 'Apatinis pilvas',
+  },
+  power: {
+    sanskrit: 'Manipura',
+    mantra: 'I do',
+    mantraLt: 'Aš darau',
+    bija: 'RAM',
+    element: 'Fire',
+    elementLt: 'Ugnis',
+    gland: 'Pancreas',
+    glandLt: 'Kasa',
+    location: 'Solar plexus / navel',
+    locationLt: 'Saulės rezginys / bamba',
+  },
+  heart: {
+    sanskrit: 'Anahata',
+    mantra: 'I love',
+    mantraLt: 'Aš myliu',
+    bija: 'YAM',
+    element: 'Air',
+    elementLt: 'Oras',
+    gland: 'Thymus',
+    glandLt: 'Užkrūčio liauka',
+    location: 'Center of the chest',
+    locationLt: 'Krūtinės centras',
+  },
+  truth: {
+    sanskrit: 'Vishuddha',
+    mantra: 'I speak',
+    mantraLt: 'Aš kalbu',
+    bija: 'HAM',
+    element: 'Ether / Sound',
+    elementLt: 'Eteris / Garsas',
+    gland: 'Thyroid',
+    glandLt: 'Skydliaukė',
+    location: 'Throat',
+    locationLt: 'Gerklė',
+  },
+  insight: {
+    sanskrit: 'Ajna',
+    mantra: 'I see',
+    mantraLt: 'Aš matau',
+    bija: 'OM',
+    element: 'Light',
+    elementLt: 'Šviesa',
+    gland: 'Pineal',
+    glandLt: 'Kankorėžinė liauka',
+    location: 'Brow / third eye',
+    locationLt: 'Antakių centras / trečioji akis',
+  },
+  unity: {
+    sanskrit: 'Sahasrara',
+    mantra: 'I understand',
+    mantraLt: 'Aš suprantu',
+    bija: 'Silence (AH)',
+    element: 'Thought / Cosmos',
+    elementLt: 'Mintis / Kosmosas',
+    gland: 'Pituitary',
+    glandLt: 'Hipofizė',
+    location: 'Crown of the head',
+    locationLt: 'Galvos viršus',
+  },
+}
