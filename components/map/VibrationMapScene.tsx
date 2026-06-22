@@ -10,6 +10,7 @@ import {
 } from '@/lib/vibration'
 import { Locale } from '@/lib/types'
 import type { Recommendation } from './SelfAssessment'
+import EnergyFigure from './EnergyFigure'
 
 type Props = {
   lang: string
@@ -39,6 +40,18 @@ const CHAKRA_TOP: Record<number, number> = {
   3: 41, // Solar Plexus
   2: 50, // Sacral
   1: 60, // Root
+}
+
+/** Traditional lotus-petal counts per chakra (by tier.level); the crown's
+ *  "thousand petals" render as a dense ring. */
+const PETALS: Record<number, number> = {
+  7: 16, // Crown
+  6: 2, // Third Eye
+  5: 16, // Throat
+  4: 12, // Heart
+  3: 10, // Solar Plexus
+  2: 6, // Sacral
+  1: 4, // Root
 }
 
 /** Deterministic starfield computed once at module scope (seeded mulberry32),
@@ -176,71 +189,9 @@ export default function VibrationMapScene({ lang, dict, recommendations }: Props
 
         {/* Figure stage */}
         <div className="relative">
-          {/* Crown cosmos halo */}
-          <div
-            className="pointer-events-none absolute left-1/2 top-0 h-24 w-40 -translate-x-1/2"
-            style={{
-              background: 'radial-gradient(closest-side, rgba(157,107,214,0.55), transparent 70%)',
-            }}
-          />
+          <EnergyFigure />
 
-          {/* Standing luminous silhouette */}
-          <svg
-            className="pointer-events-none absolute inset-0 h-full w-full"
-            viewBox="0 0 120 320"
-            preserveAspectRatio="xMidYMid meet"
-            aria-hidden="true"
-          >
-            <defs>
-              <linearGradient id="figure-grad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#b98ce0" />
-                <stop offset="30%" stopColor="#5a7fd4" />
-                <stop offset="52%" stopColor="#3f9d6b" />
-                <stop offset="70%" stopColor="#e0a020" />
-                <stop offset="100%" stopColor="#c0392b" />
-              </linearGradient>
-              <filter id="figure-glow" x="-40%" y="-40%" width="180%" height="180%">
-                <feGaussianBlur stdDeviation="3.2" />
-              </filter>
-            </defs>
-            <g
-              fill="url(#figure-grad)"
-              opacity="0.32"
-              stroke="url(#figure-grad)"
-              strokeWidth="0.8"
-            >
-              {/* glow pass */}
-              <g filter="url(#figure-glow)" opacity="0.6">
-                <circle cx="60" cy="24" r="14" />
-                <path d="M44,40 C36,44 33,58 36,86 L41,150 L43,176 L47,308 L57,308 L59,182 L61,182 L63,308 L73,308 L77,176 L79,150 L84,86 C87,58 84,44 76,40 C72,52 48,52 44,40 Z" />
-                <path d="M40,46 C30,58 27,92 30,132 L36,131 L43,60 Z" />
-                <path d="M80,46 C90,58 93,92 90,132 L84,131 L77,60 Z" />
-              </g>
-              {/* solid pass */}
-              <circle cx="60" cy="24" r="14" />
-              <path d="M44,40 C36,44 33,58 36,86 L41,150 L43,176 L47,308 L57,308 L59,182 L61,182 L63,308 L73,308 L77,176 L79,150 L84,86 C87,58 84,44 76,40 C72,52 48,52 44,40 Z" />
-              <path d="M40,46 C30,58 27,92 30,132 L36,131 L43,60 Z" />
-              <path d="M80,46 C90,58 93,92 90,132 L84,131 L77,60 Z" />
-            </g>
-          </svg>
-
-          {/* Earth roots below the feet */}
-          <svg
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-[16%] w-full"
-            viewBox="0 0 120 60"
-            preserveAspectRatio="xMidYMax meet"
-            aria-hidden="true"
-          >
-            <g stroke="#c0392b" strokeWidth="1.4" fill="none" strokeLinecap="round">
-              <path d="M60,0 C58,14 52,20 44,30 C38,38 36,46 34,58" opacity="0.8" />
-              <path d="M60,0 C62,14 68,20 76,30 C82,38 84,46 86,58" opacity="0.8" />
-              <path d="M60,2 C60,18 60,32 60,56" opacity="0.7" />
-              <path d="M52,18 C48,26 46,36 42,50" opacity="0.5" />
-              <path d="M68,18 C72,26 74,36 78,50" opacity="0.5" />
-            </g>
-          </svg>
-
-          {/* Chakra nodes */}
+          {/* Chakra mandalas (interactive) */}
           {VIBRATION_TIERS.map((tier) => {
             const on = active?.kind === 'chakra' && active.id === tier.id
             return (
@@ -248,25 +199,11 @@ export default function VibrationMapScene({ lang, dict, recommendations }: Props
                 key={tier.id}
                 onClick={() => setActive(on ? null : { kind: 'chakra', id: tier.id })}
                 className="absolute left-1/2 z-20 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center"
-                style={{ top: `${CHAKRA_TOP[tier.level]}%`, opacity: !active || on ? 1 : 0.55 }}
+                style={{ top: `${CHAKRA_TOP[tier.level]}%`, opacity: !active || on ? 1 : 0.6 }}
                 aria-pressed={on}
                 aria-label={lt ? tier.chakraLt : tier.chakra}
               >
-                <motion.span
-                  className="absolute inset-0 rounded-full"
-                  style={{ background: tier.chakraColor }}
-                  animate={{ scale: [0.85, 1.9], opacity: [0, 0.45, 0] }}
-                  transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: tier.level * 0.2 }}
-                />
-                <span
-                  className="relative h-7 w-7 rounded-full"
-                  style={{
-                    background: `radial-gradient(circle at 35% 30%, rgba(255,255,255,0.9) 0%, ${tier.chakraColor} 60%)`,
-                    boxShadow: `0 0 20px 4px ${tier.chakraColor}, inset 0 0 8px ${tier.chakraColor}`,
-                    outline: on ? '2px solid #fff' : 'none',
-                    outlineOffset: 2,
-                  }}
-                />
+                <ChakraMandala color={tier.chakraColor} petals={PETALS[tier.level]} active={on} />
               </button>
             )
           })}
@@ -386,6 +323,39 @@ export default function VibrationMapScene({ lang, dict, recommendations }: Props
         </motion.div>
       )}
     </section>
+  )
+}
+
+/** A small, slowly-rotating lotus mandala for a chakra node. */
+function ChakraMandala({ color, petals, active }: { color: string; petals: number; active: boolean }) {
+  return (
+    <motion.svg
+      viewBox="0 0 40 40"
+      className="h-full w-full"
+      style={{ filter: `drop-shadow(0 0 5px ${color})`, transformBox: 'fill-box', transformOrigin: 'center' }}
+      animate={{ rotate: 360 }}
+      transition={{ duration: 48, repeat: Infinity, ease: 'linear' }}
+      aria-hidden="true"
+    >
+      {Array.from({ length: petals }).map((_, i) => (
+        <ellipse
+          key={i}
+          cx={20}
+          cy={8}
+          rx={2.3}
+          ry={5.2}
+          fill={color}
+          fillOpacity={active ? 0.9 : 0.62}
+          transform={`rotate(${(i / petals) * 360} 20 20)`}
+        />
+      ))}
+      <circle cx={20} cy={20} r={7.6} fill="none" stroke={color} strokeOpacity={0.85} strokeWidth={1} />
+      <circle cx={20} cy={20} r={5.4} fill={color} style={{ filter: 'brightness(1.35)' }} />
+      <circle cx={20} cy={20} r={2.4} fill="#fff" fillOpacity={0.92} />
+      {active && (
+        <circle cx={20} cy={20} r={11.5} fill="none" stroke="#fff" strokeOpacity={0.9} strokeWidth={0.8} />
+      )}
+    </motion.svg>
   )
 }
 
