@@ -12,8 +12,6 @@ import {
 } from '@/lib/vibration'
 import { Locale } from '@/lib/types'
 import type { Recommendation } from './SelfAssessment'
-import EnergyFigure from './EnergyFigure'
-import RealmsBackdrop from './RealmsBackdrop'
 
 type Props = {
   lang: string
@@ -31,31 +29,6 @@ type Active =
   | { kind: 'hawkins'; idx: number }
   | { kind: 'chakra'; id: string }
   | null
-
-/** Anatomical vertical position (% from top of the stage) of each chakra on the
- *  standing figure — crown at the head, root at the pelvis, legs reaching down
- *  into the roots so the densest levels sit lowest. Keyed by tier.level. */
-const CHAKRA_TOP: Record<number, number> = {
-  7: 5, // Crown
-  6: 12, // Third Eye
-  5: 20, // Throat
-  4: 31, // Heart
-  3: 41, // Solar Plexus
-  2: 50, // Sacral
-  1: 60, // Root
-}
-
-/** Traditional lotus-petal counts per chakra (by tier.level); the crown's
- *  "thousand petals" render as a dense ring. */
-const PETALS: Record<number, number> = {
-  7: 16, // Crown
-  6: 2, // Third Eye
-  5: 16, // Throat
-  4: 12, // Heart
-  3: 10, // Solar Plexus
-  2: 6, // Sacral
-  1: 4, // Root
-}
 
 /** Deterministic starfield computed once at module scope (seeded mulberry32),
  *  so server and client markup agree — no hydration mismatch, no render-scope
@@ -166,9 +139,6 @@ export default function VibrationMapScene({ lang, dict, recommendations }: Props
         ))}
       </div>
 
-      {/* Paradise above, the underworld below */}
-      <RealmsBackdrop />
-
       {/* Heading */}
       <div className="pointer-events-none absolute inset-x-0 top-0 z-30 px-6 pt-8 text-center sm:pt-10">
         <p
@@ -185,10 +155,8 @@ export default function VibrationMapScene({ lang, dict, recommendations }: Props
         </h2>
       </div>
 
-      {/* ── Stage: Hawkins rail (left) + standing figure with chakras (right) ── */}
-      <div
-        className="relative z-10 mx-auto grid h-[100svh] max-w-3xl grid-cols-[1.05fr_0.95fr] gap-1 px-3 pb-16 pt-28 sm:px-6 sm:pt-32"
-      >
+      {/* ── Information: Hawkins scale (left) + chakra list (right) ── */}
+      <div className="relative z-10 mx-auto grid h-[100svh] max-w-3xl grid-cols-[1.1fr_0.9fr] gap-3 px-3 pb-16 pt-28 sm:px-6 sm:pt-32">
         {/* Hawkins rail — all 17 levels */}
         <div className="relative flex flex-col">
           {levels.map((lvl, i) => {
@@ -223,51 +191,66 @@ export default function VibrationMapScene({ lang, dict, recommendations }: Props
               </button>
             )
           })}
-        </div>
 
-        {/* Figure stage */}
-        <div className="relative">
-          <EnergyFigure />
-
-          {/* Chakra mandalas (interactive) */}
-          {VIBRATION_TIERS.map((tier) => {
-            const on = active?.kind === 'chakra' && active.id === tier.id
-            return (
-              <button
-                key={tier.id}
-                onClick={() => (on ? close() : open({ kind: 'chakra', id: tier.id }))}
-                className="absolute left-1/2 z-20 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center"
-                style={{ top: `${CHAKRA_TOP[tier.level]}%`, opacity: !active || on ? 1 : 0.6 }}
-                aria-pressed={on}
-                aria-label={lt ? tier.chakraLt : tier.chakra}
-              >
-                <ChakraYantra level={tier.level} color={tier.chakraColor} petals={PETALS[tier.level]} active={on} />
-              </button>
-            )
-          })}
-        </div>
-
-        {/* Power / Force threshold at 200 — spans the whole stage */}
-        <div
-          className="pointer-events-none absolute inset-x-3 z-20 flex items-center justify-between sm:inset-x-6"
-          style={{ top: `${thresholdTop}%` }}
-        >
-          <span
-            className="rounded-full px-2 py-0.5 text-[0.6rem] font-semibold uppercase tracking-widest"
-            style={{ background: 'rgba(255,255,255,0.12)', color: 'var(--color-forest-200)', fontFamily: 'var(--font-ui)' }}
-          >
-            ↑ {dict.tabs.power}
-          </span>
+          {/* Power / Force threshold at 200 */}
           <div
-            className="mx-2 h-px flex-1"
-            style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.65), transparent)' }}
-          />
-          <span
-            className="rounded-full px-2 py-0.5 text-[0.6rem] font-semibold uppercase tracking-widest"
-            style={{ background: 'rgba(255,255,255,0.12)', color: 'var(--color-gold-200)', fontFamily: 'var(--font-ui)' }}
+            className="pointer-events-none absolute inset-x-0 flex items-center justify-between"
+            style={{ top: `${thresholdTop}%` }}
           >
-            ↓ {dict.tabs.force}
-          </span>
+            <span
+              className="rounded-full px-2 py-0.5 text-[0.6rem] font-semibold uppercase tracking-widest"
+              style={{ background: 'rgba(255,255,255,0.12)', color: 'var(--color-forest-200)', fontFamily: 'var(--font-ui)' }}
+            >
+              ↑ {dict.tabs.power}
+            </span>
+            <div
+              className="mx-2 h-px flex-1"
+              style={{ background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent)' }}
+            />
+            <span
+              className="rounded-full px-2 py-0.5 text-[0.6rem] font-semibold uppercase tracking-widest"
+              style={{ background: 'rgba(255,255,255,0.12)', color: 'var(--color-gold-200)', fontFamily: 'var(--font-ui)' }}
+            >
+              ↓ {dict.tabs.force}
+            </span>
+          </div>
+        </div>
+
+        {/* Chakra list — 7 tiers (crown → root) */}
+        <div className="flex flex-col justify-center gap-1.5">
+          {[...VIBRATION_TIERS]
+            .sort((a, b) => b.level - a.level)
+            .map((tier) => {
+              const on = active?.kind === 'chakra' && active.id === tier.id
+              return (
+                <button
+                  key={tier.id}
+                  onClick={() => (on ? close() : open({ kind: 'chakra', id: tier.id }))}
+                  className="flex items-center gap-3 rounded-lg px-2.5 py-2 text-left transition-colors"
+                  style={{ opacity: !active || on ? 1 : 0.55, background: on ? `${tier.chakraColor}22` : 'transparent' }}
+                  aria-pressed={on}
+                >
+                  <span
+                    className="h-3 w-3 shrink-0 rounded-full"
+                    style={{ backgroundColor: tier.chakraColor, boxShadow: `0 0 8px 1px ${tier.chakraColor}` }}
+                  />
+                  <span className="min-w-0">
+                    <span
+                      className="block truncate text-sm font-semibold"
+                      style={{ color: on ? '#fff' : 'rgba(255,255,255,0.9)', fontFamily: 'var(--font-display)' }}
+                    >
+                      {lt ? tier.labelLt : tier.label}
+                    </span>
+                    <span
+                      className="block truncate text-[0.7rem]"
+                      style={{ color: 'rgba(255,255,255,0.55)', fontFamily: 'var(--font-ui)' }}
+                    >
+                      {lt ? tier.chakraLt : tier.chakra} · {tier.solfeggioHz} Hz
+                    </span>
+                  </span>
+                </button>
+              )
+            })}
         </div>
       </div>
 
@@ -454,89 +437,6 @@ export default function VibrationMapScene({ lang, dict, recommendations }: Props
         </motion.div>
       )}
     </section>
-  )
-}
-
-/** The traditional central geometry of each chakra's yantra, by tier.level. */
-function yantraShape(level: number) {
-  switch (level) {
-    case 1: // Root — square enclosing a downward triangle
-      return (
-        <>
-          <rect x={13} y={13} width={14} height={14} />
-          <path d="M14,15 L26,15 L20,26 Z" />
-        </>
-      )
-    case 2: // Sacral — circle with a crescent moon
-      return (
-        <>
-          <circle cx={20} cy={20} r={6.5} />
-          <path d="M13.5,18 A8,8 0 0 0 26.5,18" fill="none" />
-        </>
-      )
-    case 3: // Solar Plexus — downward triangle
-      return <path d="M13,14 L27,14 L20,27 Z" />
-    case 4: // Heart — hexagram (two interlocking triangles)
-      return (
-        <>
-          <path d="M20,12 L12,25 L28,25 Z" />
-          <path d="M20,28 L12,15 L28,15 Z" />
-        </>
-      )
-    case 5: // Throat — downward triangle with inner circle
-      return (
-        <>
-          <path d="M13,14 L27,14 L20,27 Z" />
-          <circle cx={20} cy={19} r={3} />
-        </>
-      )
-    case 6: // Third Eye — downward triangle
-      return <path d="M13,15 L27,15 L20,28 Z" />
-    case 7: // Crown — concentric circles around the bindu
-      return (
-        <>
-          <circle cx={20} cy={20} r={6.5} />
-          <circle cx={20} cy={20} r={3.5} />
-        </>
-      )
-    default:
-      return null
-  }
-}
-
-/** A chakra yantra: lotus petals enclosing the chakra's sacred geometry and
- *  a central bindu. Static and geometric for a refined, professional look. */
-function ChakraYantra({ level, color, petals, active }: { level: number; color: string; petals: number; active: boolean }) {
-  return (
-    <svg
-      viewBox="0 0 40 40"
-      className="h-full w-full"
-      style={{ filter: `drop-shadow(0 0 4px ${color})` }}
-      aria-hidden="true"
-    >
-      {/* Lotus petals */}
-      {Array.from({ length: petals }).map((_, i) => (
-        <ellipse
-          key={i}
-          cx={20}
-          cy={6.5}
-          rx={1.8}
-          ry={4.4}
-          fill={color}
-          fillOpacity={active ? 0.85 : 0.5}
-          transform={`rotate(${(i / petals) * 360} 20 20)`}
-        />
-      ))}
-      {/* Enclosing circle */}
-      <circle cx={20} cy={20} r={9} fill="none" stroke={color} strokeOpacity={0.8} strokeWidth={0.9} />
-      {/* Sacred geometry */}
-      <g fill={color} fillOpacity={0.18} stroke={color} strokeOpacity={0.95} strokeWidth={1} strokeLinejoin="round">
-        {yantraShape(level)}
-      </g>
-      {/* Bindu */}
-      <circle cx={20} cy={20} r={1.7} fill="#fff" fillOpacity={0.95} />
-      {active && <circle cx={20} cy={20} r={13} fill="none" stroke="#fff" strokeOpacity={0.9} strokeWidth={0.7} />}
-    </svg>
   )
 }
 
