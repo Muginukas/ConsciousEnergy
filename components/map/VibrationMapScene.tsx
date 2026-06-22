@@ -255,8 +255,8 @@ export default function VibrationMapScene({ lang, dict, recommendations }: Props
                 <motion.span
                   className="absolute inset-0 rounded-full"
                   style={{ background: tier.chakraColor }}
-                  animate={{ scale: [1, 2], opacity: [0.45, 0] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: 'easeOut', delay: tier.level * 0.2 }}
+                  animate={{ scale: [0.85, 1.9], opacity: [0, 0.45, 0] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: tier.level * 0.2 }}
                 />
                 <span
                   className="relative h-7 w-7 rounded-full"
