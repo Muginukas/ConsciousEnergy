@@ -71,6 +71,12 @@ function spiralPath(cx: number, cy: number, turns: number, maxR: number, dir: 1 
 const TOP_VORTEX = [0, 120, 240].map((a) => spiralPath(60, 20, 2.3, 23, 1, a))
 const BOTTOM_VORTEX = [0, 120, 240].map((a) => spiralPath(60, 300, 2.3, 23, -1, a))
 
+// ── Slender lightbody silhouette (rendered mainly as a luminous outline) ──
+const BODY =
+  'M50,44 C43,47 40,60 43,90 L47,150 C48,164 49,172 51,180 L54,306 L59,306 L60,184 L61,306 L66,306 C68,172 69,164 70,150 L77,90 C80,60 77,47 70,44 C66,53 54,53 50,44 Z'
+const ARM_L = 'M49,48 C42,55 39,82 41,122 L44,121 C45,88 47,62 51,50 Z'
+const ARM_R = 'M71,48 C78,55 81,82 79,122 L76,121 C75,88 73,62 69,50 Z'
+
 export default function EnergyFigure() {
   return (
     <div className="pointer-events-none absolute inset-0">
@@ -201,19 +207,31 @@ export default function EnergyFigure() {
           ))}
         </motion.g>
 
-        {/* ── Luminous standing silhouette ── */}
-        <g fill="url(#figure-grad)" opacity={0.34} stroke="url(#figure-grad)" strokeWidth={0.8}>
-          <g filter="url(#figure-glow)" opacity={0.6}>
-            <circle cx={60} cy={24} r={14} />
-            <path d="M44,40 C36,44 33,58 36,86 L41,150 L43,176 L47,308 L57,308 L59,182 L61,182 L63,308 L73,308 L77,176 L79,150 L84,86 C87,58 84,44 76,40 C72,52 48,52 44,40 Z" />
-            <path d="M40,46 C30,58 27,92 30,132 L36,131 L43,60 Z" />
-            <path d="M80,46 C90,58 93,92 90,132 L84,131 L77,60 Z" />
+        {/* ── Luminous lightbody silhouette (outline-led, professional) ── */}
+        <g strokeLinejoin="round">
+          {/* soft glow */}
+          <g filter="url(#figure-glow)" fill="url(#figure-grad)" opacity={0.4}>
+            <ellipse cx={60} cy={27} rx={8.5} ry={11} />
+            <path d={BODY} />
+            <path d={ARM_L} />
+            <path d={ARM_R} />
           </g>
-          <circle cx={60} cy={24} r={14} />
-          <path d="M44,40 C36,44 33,58 36,86 L41,150 L43,176 L47,308 L57,308 L59,182 L61,182 L63,308 L73,308 L77,176 L79,150 L84,86 C87,58 84,44 76,40 C72,52 48,52 44,40 Z" />
-          <path d="M40,46 C30,58 27,92 30,132 L36,131 L43,60 Z" />
-          <path d="M80,46 C90,58 93,92 90,132 L84,131 L77,60 Z" />
-          <path d="M60,38 L60,176" strokeWidth={0.6} opacity={0.5} />
+          {/* faint inner fill */}
+          <g fill="url(#figure-grad)" opacity={0.13}>
+            <ellipse cx={60} cy={27} rx={8.5} ry={11} />
+            <path d={BODY} />
+            <path d={ARM_L} />
+            <path d={ARM_R} />
+          </g>
+          {/* crisp luminous outline */}
+          <g fill="none" stroke="url(#figure-grad)" strokeWidth={0.9} opacity={0.72}>
+            <ellipse cx={60} cy={27} rx={8.5} ry={11} />
+            <path d={BODY} />
+            <path d={ARM_L} />
+            <path d={ARM_R} />
+          </g>
+          {/* central channel */}
+          <path d="M60,40 L60,178" fill="none" stroke="url(#figure-grad)" strokeWidth={0.6} opacity={0.45} />
         </g>
       </svg>
 

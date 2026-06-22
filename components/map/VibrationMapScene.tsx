@@ -84,11 +84,32 @@ export default function VibrationMapScene({ lang, dict, recommendations }: Props
   const [active, setActive] = useState<Active>(null)
   // Which emotion/view/process row is expanded in the level panel.
   const [openField, setOpenField] = useState<'emotion' | 'view' | 'process' | null>(null)
+  // Breadcrumb of previously-open cards, for the Back button.
+  const [history, setHistory] = useState<Active[]>([])
 
-  // Select a level/chakra and collapse any expanded field.
-  const select = (next: Active) => {
+  // Open a fresh card from the map (clears drill-down history).
+  const open = (next: Active) => {
     setOpenField(null)
+    setHistory([])
     setActive(next)
+  }
+  // Drill into a linked card, remembering where we came from.
+  const drill = (next: Active) => {
+    setOpenField(null)
+    setHistory(active ? [...history, active] : history)
+    setActive(next)
+  }
+  // Step back to the previous card.
+  const back = () => {
+    setOpenField(null)
+    setActive(history[history.length - 1] ?? null)
+    setHistory(history.slice(0, -1))
+  }
+  // Close the panel entirely.
+  const close = () => {
+    setOpenField(null)
+    setHistory([])
+    setActive(null)
   }
 
   // Localised label for the "key to rise" line.
@@ -171,7 +192,7 @@ export default function VibrationMapScene({ lang, dict, recommendations }: Props
             return (
               <button
                 key={lvl.calibration}
-                onClick={() => select(on ? null : { kind: 'hawkins', idx: i })}
+                onClick={() => (on ? close() : open({ kind: 'hawkins', idx: i }))}
                 className="group flex flex-1 items-center gap-2 rounded text-left transition-all duration-200 hover:translate-x-0.5"
                 style={{ opacity: !active || on ? 1 : 0.5 }}
                 aria-pressed={on}
@@ -210,13 +231,13 @@ export default function VibrationMapScene({ lang, dict, recommendations }: Props
             return (
               <button
                 key={tier.id}
-                onClick={() => select(on ? null : { kind: 'chakra', id: tier.id })}
+                onClick={() => (on ? close() : open({ kind: 'chakra', id: tier.id }))}
                 className="absolute left-1/2 z-20 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center"
                 style={{ top: `${CHAKRA_TOP[tier.level]}%`, opacity: !active || on ? 1 : 0.6 }}
                 aria-pressed={on}
                 aria-label={lt ? tier.chakraLt : tier.chakra}
               >
-                <ChakraMandala color={tier.chakraColor} petals={PETALS[tier.level]} active={on} />
+                <ChakraYantra level={tier.level} color={tier.chakraColor} petals={PETALS[tier.level]} active={on} />
               </button>
             )
           })}
@@ -266,6 +287,29 @@ export default function VibrationMapScene({ lang, dict, recommendations }: Props
                 backdropFilter: 'blur(8px)',
               }}
             >
+              {/* Card controls: Back (when drilled in) + Close */}
+              <div className="mb-2 flex items-center justify-between">
+                {history.length > 0 ? (
+                  <button
+                    onClick={back}
+                    className="inline-flex items-center gap-1 text-xs font-medium transition-opacity hover:opacity-100"
+                    style={{ color: 'rgba(255,255,255,0.7)', fontFamily: 'var(--font-ui)' }}
+                  >
+                    ‹ {lt ? 'Atgal' : 'Back'}
+                  </button>
+                ) : (
+                  <span />
+                )}
+                <button
+                  onClick={close}
+                  aria-label={lt ? 'Uždaryti' : 'Close'}
+                  className="flex h-7 w-7 items-center justify-center rounded-full text-lg leading-none transition-colors"
+                  style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.75)' }}
+                >
+                  ×
+                </button>
+              </div>
+
               {activeLevel &&
                 (() => {
                   const d = HAWKINS_DEPTH[activeLevel.calibration]
@@ -325,7 +369,7 @@ export default function VibrationMapScene({ lang, dict, recommendations }: Props
 
                       {tier && (
                         <button
-                          onClick={() => select({ kind: 'chakra', id: tier.id })}
+                          onClick={() => drill({ kind: 'chakra', id: tier.id })}
                           className="mt-4 inline-flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium"
                           style={{ background: `${tier.chakraColor}26`, color: '#fff', fontFamily: 'var(--font-ui)' }}
                         >
@@ -409,36 +453,86 @@ export default function VibrationMapScene({ lang, dict, recommendations }: Props
   )
 }
 
-/** A small, slowly-rotating lotus mandala for a chakra node. */
-function ChakraMandala({ color, petals, active }: { color: string; petals: number; active: boolean }) {
+/** The traditional central geometry of each chakra's yantra, by tier.level. */
+function yantraShape(level: number) {
+  switch (level) {
+    case 1: // Root — square enclosing a downward triangle
+      return (
+        <>
+          <rect x={13} y={13} width={14} height={14} />
+          <path d="M14,15 L26,15 L20,26 Z" />
+        </>
+      )
+    case 2: // Sacral — circle with a crescent moon
+      return (
+        <>
+          <circle cx={20} cy={20} r={6.5} />
+          <path d="M13.5,18 A8,8 0 0 0 26.5,18" fill="none" />
+        </>
+      )
+    case 3: // Solar Plexus — downward triangle
+      return <path d="M13,14 L27,14 L20,27 Z" />
+    case 4: // Heart — hexagram (two interlocking triangles)
+      return (
+        <>
+          <path d="M20,12 L12,25 L28,25 Z" />
+          <path d="M20,28 L12,15 L28,15 Z" />
+        </>
+      )
+    case 5: // Throat — downward triangle with inner circle
+      return (
+        <>
+          <path d="M13,14 L27,14 L20,27 Z" />
+          <circle cx={20} cy={19} r={3} />
+        </>
+      )
+    case 6: // Third Eye — downward triangle
+      return <path d="M13,15 L27,15 L20,28 Z" />
+    case 7: // Crown — concentric circles around the bindu
+      return (
+        <>
+          <circle cx={20} cy={20} r={6.5} />
+          <circle cx={20} cy={20} r={3.5} />
+        </>
+      )
+    default:
+      return null
+  }
+}
+
+/** A chakra yantra: lotus petals enclosing the chakra's sacred geometry and
+ *  a central bindu. Static and geometric for a refined, professional look. */
+function ChakraYantra({ level, color, petals, active }: { level: number; color: string; petals: number; active: boolean }) {
   return (
-    <motion.svg
+    <svg
       viewBox="0 0 40 40"
       className="h-full w-full"
-      style={{ filter: `drop-shadow(0 0 5px ${color})`, transformBox: 'fill-box', transformOrigin: 'center' }}
-      animate={{ rotate: 360 }}
-      transition={{ duration: 48, repeat: Infinity, ease: 'linear' }}
+      style={{ filter: `drop-shadow(0 0 4px ${color})` }}
       aria-hidden="true"
     >
+      {/* Lotus petals */}
       {Array.from({ length: petals }).map((_, i) => (
         <ellipse
           key={i}
           cx={20}
-          cy={8}
-          rx={2.3}
-          ry={5.2}
+          cy={6.5}
+          rx={1.8}
+          ry={4.4}
           fill={color}
-          fillOpacity={active ? 0.9 : 0.62}
+          fillOpacity={active ? 0.85 : 0.5}
           transform={`rotate(${(i / petals) * 360} 20 20)`}
         />
       ))}
-      <circle cx={20} cy={20} r={7.6} fill="none" stroke={color} strokeOpacity={0.85} strokeWidth={1} />
-      <circle cx={20} cy={20} r={5.4} fill={color} style={{ filter: 'brightness(1.35)' }} />
-      <circle cx={20} cy={20} r={2.4} fill="#fff" fillOpacity={0.92} />
-      {active && (
-        <circle cx={20} cy={20} r={11.5} fill="none" stroke="#fff" strokeOpacity={0.9} strokeWidth={0.8} />
-      )}
-    </motion.svg>
+      {/* Enclosing circle */}
+      <circle cx={20} cy={20} r={9} fill="none" stroke={color} strokeOpacity={0.8} strokeWidth={0.9} />
+      {/* Sacred geometry */}
+      <g fill={color} fillOpacity={0.18} stroke={color} strokeOpacity={0.95} strokeWidth={1} strokeLinejoin="round">
+        {yantraShape(level)}
+      </g>
+      {/* Bindu */}
+      <circle cx={20} cy={20} r={1.7} fill="#fff" fillOpacity={0.95} />
+      {active && <circle cx={20} cy={20} r={13} fill="none" stroke="#fff" strokeOpacity={0.9} strokeWidth={0.7} />}
+    </svg>
   )
 }
 
