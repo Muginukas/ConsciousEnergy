@@ -7,11 +7,13 @@ import {
   HawkinsLevel,
   HAWKINS_DEPTH,
   CHAKRA_DEPTH,
+  CHAKRA_CORRESPONDENCE,
   VIBRATION_TIERS,
   VibrationTier,
 } from '@/lib/vibration'
 import { Locale } from '@/lib/types'
 import type { Recommendation } from './SelfAssessment'
+import EnergyAvatar from './EnergyAvatar'
 
 type Props = {
   lang: string
@@ -217,40 +219,14 @@ export default function VibrationMapScene({ lang, dict, recommendations }: Props
         </div>
 
         {/* Chakra list — 7 tiers (crown → root) */}
-        <div className="flex flex-col justify-center gap-1.5">
-          {[...VIBRATION_TIERS]
-            .sort((a, b) => b.level - a.level)
-            .map((tier) => {
-              const on = active?.kind === 'chakra' && active.id === tier.id
-              return (
-                <button
-                  key={tier.id}
-                  onClick={() => (on ? close() : open({ kind: 'chakra', id: tier.id }))}
-                  className="flex items-center gap-3 rounded-lg px-2.5 py-2 text-left transition-colors"
-                  style={{ opacity: !active || on ? 1 : 0.55, background: on ? `${tier.chakraColor}22` : 'transparent' }}
-                  aria-pressed={on}
-                >
-                  <span
-                    className="h-3 w-3 shrink-0 rounded-full"
-                    style={{ backgroundColor: tier.chakraColor, boxShadow: `0 0 8px 1px ${tier.chakraColor}` }}
-                  />
-                  <span className="min-w-0">
-                    <span
-                      className="block truncate text-sm font-semibold"
-                      style={{ color: on ? '#fff' : 'rgba(255,255,255,0.9)', fontFamily: 'var(--font-display)' }}
-                    >
-                      {lt ? tier.labelLt : tier.label}
-                    </span>
-                    <span
-                      className="block truncate text-[0.7rem]"
-                      style={{ color: 'rgba(255,255,255,0.55)', fontFamily: 'var(--font-ui)' }}
-                    >
-                      {lt ? tier.chakraLt : tier.chakra} · {tier.solfeggioHz} Hz
-                    </span>
-                  </span>
-                </button>
-              )
-            })}
+        <div className="relative">
+          <EnergyAvatar
+            lang={lang}
+            activeChakraId={active?.kind === 'chakra' ? active.id : null}
+            onChakra={(id) =>
+              active?.kind === 'chakra' && active.id === id ? close() : open({ kind: 'chakra', id })
+            }
+          />
         </div>
       </div>
 
@@ -370,6 +346,7 @@ export default function VibrationMapScene({ lang, dict, recommendations }: Props
               {activeTier &&
                 (() => {
                   const cd = CHAKRA_DEPTH[activeTier.id]
+                  const co = CHAKRA_CORRESPONDENCE[activeTier.id]
                   return (
                     <>
                       <span
@@ -398,6 +375,23 @@ export default function VibrationMapScene({ lang, dict, recommendations }: Props
                           <Stat label={lt ? 'Vieta' : 'Location'} value={lt ? cd.locationLt : cd.location} color={activeTier.color} />
                           <Stat label="Solfeggio" value={`${activeTier.solfeggioHz} Hz`} color={activeTier.color} />
                         </div>
+                      )}
+                      {co && (
+                        <>
+                          <p
+                            className="mt-4 mb-2 text-[0.65rem] font-semibold uppercase tracking-widest"
+                            style={{ color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font-ui)' }}
+                          >
+                            {lt ? 'Atitikmenys' : 'Correspondences'}
+                          </p>
+                          <div className="grid grid-cols-2 gap-2">
+                            <Stat label={lt ? 'Spalva' : 'Colour'} value={lt ? co.colorNameLt : co.colorName} color={activeTier.color} />
+                            <Stat label={lt ? 'Nata' : 'Note'} value={co.note} color={activeTier.color} />
+                            <Stat label={lt ? 'Geometrija' : 'Geometry'} value={lt ? co.geometryLt : co.geometry} color={activeTier.color} />
+                            <Stat label={lt ? 'Emocija' : 'Emotion'} value={lt ? co.emotionLt : co.emotion} color={activeTier.color} />
+                            <Stat label={lt ? 'Būsena' : 'State'} value={lt ? co.stateLt : co.state} color={activeTier.color} />
+                          </div>
+                        </>
                       )}
                       {recommendations[activeTier.id]?.length > 0 && (
                         <div className="mt-3 flex flex-wrap gap-2">

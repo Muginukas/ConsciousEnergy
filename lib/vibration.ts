@@ -1002,3 +1002,98 @@ export const CHAKRA_DEPTH: Record<string, ChakraDepth> = {
     locationLt: 'Galvos viršus',
   },
 }
+
+/** Correspondences that show how each chakra weaves together colour, sound,
+ *  geometry, emotion and state of consciousness. Keyed by tier id. */
+export interface ChakraCorrespondence {
+  colorName: string
+  colorNameLt: string
+  /** Western musical note traditionally paired with the chakra. */
+  note: string
+  geometry: string
+  geometryLt: string
+  emotion: string
+  emotionLt: string
+  state: string
+  stateLt: string
+}
+
+export const CHAKRA_CORRESPONDENCE: Record<string, ChakraCorrespondence> = {
+  survival: {
+    colorName: 'Red',
+    colorNameLt: 'Raudona',
+    note: 'C',
+    geometry: 'Square',
+    geometryLt: 'Kvadratas',
+    emotion: 'Safety',
+    emotionLt: 'Saugumas',
+    state: 'Grounding',
+    stateLt: 'Įžeminimas',
+  },
+  desire: {
+    colorName: 'Orange',
+    colorNameLt: 'Oranžinė',
+    note: 'D',
+    geometry: 'Crescent',
+    geometryLt: 'Pusmėnulis',
+    emotion: 'Pleasure',
+    emotionLt: 'Malonumas',
+    state: 'Flow',
+    stateLt: 'Tėkmė',
+  },
+  power: {
+    colorName: 'Yellow',
+    colorNameLt: 'Geltona',
+    note: 'E',
+    geometry: 'Triangle',
+    geometryLt: 'Trikampis',
+    emotion: 'Confidence',
+    emotionLt: 'Pasitikėjimas',
+    state: 'Will',
+    stateLt: 'Valia',
+  },
+  heart: {
+    colorName: 'Green',
+    colorNameLt: 'Žalia',
+    note: 'F',
+    geometry: 'Hexagram',
+    geometryLt: 'Heksagrama',
+    emotion: 'Love',
+    emotionLt: 'Meilė',
+    state: 'Compassion',
+    stateLt: 'Užuojauta',
+  },
+  truth: {
+    colorName: 'Blue',
+    colorNameLt: 'Mėlyna',
+    note: 'G',
+    geometry: 'Triangle & circle',
+    geometryLt: 'Trikampis ir apskritimas',
+    emotion: 'Expression',
+    emotionLt: 'Saviraiška',
+    state: 'Truth',
+    stateLt: 'Tiesa',
+  },
+  insight: {
+    colorName: 'Indigo',
+    colorNameLt: 'Indigo',
+    note: 'A',
+    geometry: 'Triangle',
+    geometryLt: 'Trikampis',
+    emotion: 'Insight',
+    emotionLt: 'Įžvalga',
+    state: 'Intuition',
+    stateLt: 'Intuicija',
+  },
+  unity: {
+    colorName: 'Violet / White',
+    colorNameLt: 'Violetinė / Balta',
+    note: 'B',
+    geometry: 'Circle & bindu',
+    geometryLt: 'Apskritimas ir bindu',
+    emotion: 'Bliss',
+    emotionLt: 'Palaima',
+    state: 'Oneness',
+    stateLt: 'Vienovė',
+  },
+}
