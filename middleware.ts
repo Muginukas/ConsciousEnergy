@@ -11,7 +11,7 @@ function getLocale(request: NextRequest): string {
   return LOCALES.includes(preferred) ? preferred : DEFAULT_LOCALE
 }
 
-export async function proxy(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   const hasLocale = LOCALES.some(
     (l) => pathname.startsWith(`/${l}/`) || pathname === `/${l}`
@@ -53,5 +53,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next|favicon.ico|public|images|icons|.*\\..*).*)'],
+  matcher: ['/((?!_next|favicon.ico|public|images|.*\\..*).*)'],
 }
