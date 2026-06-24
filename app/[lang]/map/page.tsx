@@ -5,6 +5,7 @@ import { getTechniqueBySlug } from '@/lib/content'
 import { CATEGORIES } from '@/lib/categories'
 import { VIBRATION_TIERS } from '@/lib/vibration'
 import { Locale } from '@/lib/types'
+import VibrationMapScene from '@/components/map/VibrationMapScene'
 import UnifiedScale from '@/components/map/UnifiedScale'
 import ModelTabs from '@/components/map/ModelTabs'
 import SelfAssessment, { Recommendation } from '@/components/map/SelfAssessment'
@@ -67,7 +68,10 @@ export default async function MapPage(props: PageProps<'/[lang]/map'>) {
   const recommendations = buildRecommendations(locale)
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-12">
+    <>
+      <VibrationMapScene lang={lang} dict={m} recommendations={recommendations} />
+
+      <div className="max-w-5xl mx-auto px-4 py-12">
       <header className="mb-12 max-w-3xl">
         <p
           className="mb-2 text-sm font-semibold uppercase tracking-wide"
@@ -112,6 +116,7 @@ export default async function MapPage(props: PageProps<'/[lang]/map'>) {
           {m.disclaimer.text}
         </p>
       </section>
-    </div>
+      </div>
+    </>
   )
 }
