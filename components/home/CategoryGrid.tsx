@@ -1,10 +1,10 @@
 import Link from 'next/link'
-import { Wind, Moon, Flower2, Flame, Circle, Zap } from 'lucide-react'
+import { Wind, Moon, Flower2, Flame, Circle, Zap, Sprout } from 'lucide-react'
 import { CATEGORIES } from '@/lib/categories'
 import { CategorySlug } from '@/lib/types'
 
 const ICONS: Record<string, React.ComponentType<{ size?: number; color?: string }>> = {
-  Wind, Moon, Flower: Flower2, Flame, Circle, Zap,
+  Wind, Moon, Flower: Flower2, Flame, Circle, Zap, Sprout,
 }
 
 type Props = {

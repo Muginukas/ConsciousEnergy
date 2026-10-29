@@ -5,6 +5,7 @@ export type CategorySlug =
   | 'kundalini'
   | 'chakras'
   | 'energy'
+  | 'seed-energy'
 
 export type Difficulty = 'beginner' | 'intermediate' | 'advanced'
 

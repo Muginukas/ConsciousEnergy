@@ -67,6 +67,17 @@ export const CATEGORIES: Category[] = [
     color: '#6B8F71',
     icon: 'Zap',
   },
+  {
+    slug: 'seed-energy',
+    label: 'Seed Energy',
+    labelLt: 'Sėklos Energija',
+    description:
+      'Conserve, raise, and circulate sexual essence (Jing, Bindu) — retention, the orbit, and transmutation practices.',
+    descriptionLt:
+      'Sėklos (Jing, Bindu) išsaugojimas, kėlimas į viršų ir cirkuliavimas orbitoje — transmutacijos praktikos.',
+    color: '#8B4A62',
+    icon: 'Sprout',
+  },
 ]
 
 export const CATEGORY_MAP = Object.fromEntries(
