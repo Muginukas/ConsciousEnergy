@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-type Tab = 'signs' | 'natal' | 'hd'
+type Tab = 'signs' | 'natal' | 'hd' | 'name'
 
 export default function ZodiacTabs({ lang, active }: { lang: string; active: Tab }) {
   const lt = lang === 'lt'
@@ -8,6 +8,7 @@ export default function ZodiacTabs({ lang, active }: { lang: string; active: Tab
     { id: 'signs', href: `/${lang}/zodiac`, label: lt ? 'Zodiako ženklai' : 'Zodiac signs' },
     { id: 'natal', href: `/${lang}/zodiac/natal-chart`, label: lt ? 'Gimimo horoskopas' : 'Natal chart' },
     { id: 'hd', href: `/${lang}/zodiac/human-design`, label: 'Human Design' },
+    { id: 'name', href: `/${lang}/zodiac/name-vibration`, label: lt ? 'Vardo vibracija' : 'Name vibration' },
   ]
   return (
     <nav className="mb-10 flex gap-2 overflow-x-auto pb-1" style={{ fontFamily: 'var(--font-ui)' }}>
