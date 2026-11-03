@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entries.push({ url: `${BASE_URL}/${locale}/zodiac/natal-chart`, priority: 0.8 })
     entries.push({ url: `${BASE_URL}/${locale}/zodiac/human-design`, priority: 0.8 })
     entries.push({ url: `${BASE_URL}/${locale}/zodiac/name-vibration`, priority: 0.8 })
+    entries.push({ url: `${BASE_URL}/${locale}/food-pyramid`, priority: 0.8 })
 
     for (const sign of ZODIAC_SLUGS) {
       entries.push({ url: `${BASE_URL}/${locale}/zodiac/${sign}`, priority: 0.7 })
