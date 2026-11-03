@@ -16,6 +16,7 @@ import {
 } from '@/lib/zodiac'
 import CompatibilityChecker from '@/components/zodiac/CompatibilityChecker'
 import ZodiacTabs from '@/components/zodiac/ZodiacTabs'
+import { SIGN_DEEP } from '@/lib/zodiac-deep'
 import { MOON_IN, RISING_IN, SIGN_STYLE } from '@/lib/astro/natal-data'
 
 export async function generateStaticParams() {
@@ -268,6 +269,26 @@ export default async function SignPage(props: PageProps<'/[lang]/zodiac/[sign]'>
         <p className="text-lg leading-relaxed italic" style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}>
           {s.growth[locale]}
         </p>
+      </section>
+
+      <div className="grid gap-6 md:grid-cols-2 mb-10">
+        {([
+          [lt ? 'Ko jam reikia, kad būtų laimingas' : 'What they need to be happy', SIGN_DEEP[s.slug].needs[locale], 'var(--color-forest-700)'],
+          [lt ? 'Kaip su juo sutarti' : 'How to get along with them', SIGN_DEEP[s.slug].getAlong[locale], 'var(--color-forest-700)'],
+          [lt ? 'Šešėlis (kai patiria stresą)' : 'Shadow (under stress)', SIGN_DEEP[s.slug].shadow[locale], '#b45309'],
+          [lt ? 'Kas padeda gyti ir atsistatyti' : 'What helps them heal and rebalance', SIGN_DEEP[s.slug].healing[locale], 'var(--color-forest-700)'],
+        ] as const).map(([h, txt, col]) => (
+          <section key={h} className="rounded-xl p-6" style={{ ...card, borderLeft: `4px solid ${col}` }}>
+            <Heading>{h}</Heading>
+            <p className="leading-relaxed" style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}>{txt}</p>
+          </section>
+        ))}
+      </div>
+      <section className="mb-10 rounded-xl p-6 text-center" style={{ backgroundColor: 'var(--color-forest-900)' }}>
+        <p className="text-xs font-semibold uppercase tracking-wide mb-2" style={{ color: 'var(--color-gold-400)', fontFamily: 'var(--font-ui)' }}>
+          {lt ? 'Afirmacija' : 'Affirmation'}
+        </p>
+        <p className="text-2xl italic" style={{ color: '#fff', fontFamily: 'var(--font-display)' }}>„{SIGN_DEEP[s.slug].affirmation[locale]}“</p>
       </section>
 
       <div className="grid gap-6 md:grid-cols-2 mb-10">
