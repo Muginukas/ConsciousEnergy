@@ -6,6 +6,9 @@ const LOCALES = ['en', 'lt']
 const DEFAULT_LOCALE = 'en'
 
 function getLocale(request: NextRequest): string {
+  // An explicit choice made with the language switcher wins over the browser language.
+  const saved = request.cookies.get('NEXT_LOCALE')?.value
+  if (saved && LOCALES.includes(saved)) return saved
   const acceptLang = request.headers.get('accept-language') ?? ''
   const preferred = acceptLang.split(',')[0].split('-')[0].toLowerCase()
   return LOCALES.includes(preferred) ? preferred : DEFAULT_LOCALE
@@ -27,11 +30,19 @@ export async function middleware(request: NextRequest) {
   // setAll rebuilds `response` because cookies can only be attached to a
   // response that wraps the (possibly cookie-mutated) request.
   let response = NextResponse.next({ request })
+  const pathLocale = pathname.split('/')[1]
+  // Remember the language of the page being viewed, so bare URLs keep it next time.
+  const rememberLocale = (res: NextResponse) => {
+    if (request.cookies.get('NEXT_LOCALE')?.value !== pathLocale) {
+      res.cookies.set('NEXT_LOCALE', pathLocale, { path: '/', maxAge: 60 * 60 * 24 * 365, sameSite: 'lax' })
+    }
+    return res
+  }
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
   // Without Supabase config (e.g. a preview environment) just serve the page.
-  if (!supabaseUrl || !supabaseKey) return response
+  if (!supabaseUrl || !supabaseKey) return rememberLocale(response)
 
   const supabase = createServerClient(
     supabaseUrl,
@@ -63,7 +74,7 @@ export async function middleware(request: NextRequest) {
     // ignore — the page still renders, the user just appears signed out
   }
 
-  return response
+  return rememberLocale(response)
 }
 
 export const config = {

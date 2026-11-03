@@ -79,7 +79,7 @@ export default async function LangLayout(props: LayoutProps<'/[lang]'>) {
         <ServiceWorkerRegister />
         <Header lang={lang} dict={dict} />
         <main className="flex-1">{props.children}</main>
-        <Footer dict={dict} />
+        <Footer lang={lang} dict={dict} />
         <InstallPrompt dict={dict.installPrompt} />
       </body>
     </html>
