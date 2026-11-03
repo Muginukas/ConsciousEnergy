@@ -15,6 +15,8 @@ import {
   formatRange,
 } from '@/lib/zodiac'
 import CompatibilityChecker from '@/components/zodiac/CompatibilityChecker'
+import ZodiacTabs from '@/components/zodiac/ZodiacTabs'
+import { MOON_IN, RISING_IN, SIGN_STYLE } from '@/lib/astro/natal-data'
 
 export async function generateStaticParams() {
   return ['en', 'lt'].flatMap((lang) => ZODIAC_SIGNS.map((s) => ({ lang, sign: s.slug })))
@@ -77,6 +79,19 @@ export default async function SignPage(props: PageProps<'/[lang]/zodiac/[sign]'>
     .sort((a, b) => b.c.score - a.c.score)
   const best = ranked.filter((r) => r.c.score >= 85)
 
+  const lt = locale === 'lt'
+  const fmtDay = (d: Date) =>
+    d.toLocaleDateString(lt ? 'lt-LT' : 'en-GB', { month: 'long', day: 'numeric', timeZone: 'UTC' })
+  const startDate = Date.UTC(2001, s.start[0] - 1, s.start[1])
+  const endDate = Date.UTC(s.end[0] < s.start[0] ? 2002 : 2001, s.end[0] - 1, s.end[1])
+  const span = (endDate - startDate) / 86400000 + 1
+  const decans = [0, 1, 2].map((k) => {
+    const sub = ZODIAC_SIGNS[(idx + 4 * k) % 12]
+    const a = new Date(startDate + Math.round((span * k) / 3) * 86400000)
+    const b = new Date(startDate + (Math.round((span * (k + 1)) / 3) - 1) * 86400000)
+    return { k, sub, range: `${fmtDay(a)} – ${fmtDay(b)}`, degrees: `${k * 10}°–${k * 10 + 10}°` }
+  })
+
   const facts: [string, string][] = [
     [p.dates, formatRange(s, locale)],
     [p.element, el.name[locale]],
@@ -97,6 +112,7 @@ export default async function SignPage(props: PageProps<'/[lang]/zodiac/[sign]'>
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-12">
+      <ZodiacTabs lang={lang} active="signs" />
       <Link
         href={`/${lang}/zodiac`}
         className="mb-6 inline-flex items-center gap-1.5 text-sm font-medium"
@@ -197,6 +213,52 @@ export default async function SignPage(props: PageProps<'/[lang]/zodiac/[sign]'>
           </section>
         ))}
       </div>
+
+      <div className="grid gap-6 md:grid-cols-3 mb-10">
+        {([
+          [lt ? `Saulė ${s.name.lt} ženkle` : `Sun in ${s.name.en}`, SIGN_STYLE[s.slug][locale]],
+          [lt ? `Mėnulis ${s.name.lt} ženkle` : `Moon in ${s.name.en}`, MOON_IN[s.slug][locale]],
+          [lt ? `Ascendentas ${s.name.lt}` : `${s.name.en} Rising`, RISING_IN[s.slug][locale]],
+        ] as const).map(([h, txt]) => (
+          <section key={h} className="rounded-xl p-6" style={card}>
+            <Heading>{h}</Heading>
+            <p className="leading-relaxed" style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}>{txt}</p>
+          </section>
+        ))}
+      </div>
+      <p className="-mt-6 mb-10 text-sm" style={{ color: 'var(--color-text-muted)', fontFamily: 'var(--font-ui)' }}>
+        {lt ? 'Norite sužinoti savo Mėnulio ir Ascendento ženklus? ' : 'Want to know your Moon and Rising signs? '}
+        <Link href={`/${lang}/zodiac/natal-chart`} style={{ color: 'var(--color-forest-700)', fontWeight: 600 }}>
+          {lt ? 'Apskaičiuokite gimimo horoskopą →' : 'Calculate your natal chart →'}
+        </Link>
+      </p>
+
+      <section className="mb-10">
+        <Heading>{lt ? 'Dekanai' : 'Decans'}</Heading>
+        <p className="mb-4 max-w-2xl" style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}>
+          {lt
+            ? 'Kiekvienas ženklas padalytas į tris 10° dalis — dekanus. Kiekvieną papildomai valdo to paties elemento ženklas, suteikdamas savo atspalvį.'
+            : 'Each sign is divided into three 10° parts — decans. Each is co-ruled by a sign of the same element, adding its own flavour.'}
+        </p>
+        <div className="grid gap-4 md:grid-cols-3">
+          {decans.map((dc) => (
+            <div key={dc.k} className="rounded-xl p-5" style={card}>
+              <p className="text-xs font-semibold uppercase tracking-wide mb-1" style={{ color: 'var(--color-gold-600)', fontFamily: 'var(--font-ui)' }}>
+                {lt ? `${dc.k + 1} dekanas` : `Decan ${dc.k + 1}`} · {dc.degrees}
+              </p>
+              <p className="text-sm mb-2" style={{ color: 'var(--color-text-muted)', fontFamily: 'var(--font-ui)' }}>≈ {dc.range}</p>
+              <p className="font-semibold mb-1" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-text-primary)' }}>
+                {dc.sub.symbol} {dc.sub.name[locale]} · {dc.sub.ruler[locale]}
+              </p>
+              <p className="text-sm" style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}>
+                {dc.k === 0
+                  ? lt ? 'Gryniausia ženklo išraiška.' : 'The purest expression of the sign.'
+                  : `${lt ? 'Papildomos savybės' : 'Added qualities'}: ${dc.sub.keywords[locale].slice(0, 3).join(', ').toLowerCase()}.`}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
 
       <section
         className="mb-10 rounded-xl p-6"

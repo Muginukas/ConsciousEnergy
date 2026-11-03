@@ -6,6 +6,7 @@ import { Locale } from '@/lib/types'
 import { ELEMENTS, ELEMENT_MAP, MODALITIES, ZODIAC_SIGNS, formatRange } from '@/lib/zodiac'
 import SignFinder from '@/components/zodiac/SignFinder'
 import CompatibilityChecker from '@/components/zodiac/CompatibilityChecker'
+import ZodiacTabs from '@/components/zodiac/ZodiacTabs'
 
 export async function generateMetadata(props: PageProps<'/[lang]/zodiac'>): Promise<Metadata> {
   const { lang } = await props.params
@@ -28,6 +29,7 @@ export default async function ZodiacPage(props: PageProps<'/[lang]/zodiac'>) {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-12">
+      <ZodiacTabs lang={lang} active="signs" />
       <header className="mb-12 max-w-3xl">
         <p
           className="mb-2 text-sm font-semibold uppercase tracking-wide"
@@ -47,6 +49,42 @@ export default async function ZodiacPage(props: PageProps<'/[lang]/zodiac'>) {
       </header>
 
       <SignFinder lang={lang} dict={z} />
+
+      <section className="mb-16 grid gap-4 md:grid-cols-2">
+        {[
+          {
+            href: `/${lang}/zodiac/natal-chart`,
+            title: locale === 'lt' ? 'Gimimo horoskopas' : 'Natal Chart',
+            text:
+              locale === 'lt'
+                ? 'Saulės ženklas — tik pradžia. Pagal tikslų gimimo laiką ir vietą apskaičiuokite visas planetas, Ascendentą, namus ir aspektus su išsamiomis interpretacijomis.'
+                : 'Your Sun sign is just the beginning. From your exact birth time and place, calculate every planet, the Ascendant, houses and aspects with in-depth interpretations.',
+            icon: '☉☽',
+          },
+          {
+            href: `/${lang}/zodiac/human-design`,
+            title: 'Human Design',
+            text:
+              locale === 'lt'
+                ? 'Sužinokite savo tipą, strategiją, vidinį autoritetą, profilį ir inkarnacijos kryžių — su pilna BodyGraph schema, centrais, kanalais ir vartais.'
+                : 'Discover your type, strategy, inner authority, profile and incarnation cross — with a full BodyGraph, centers, channels and gates.',
+            icon: '◇',
+          },
+        ].map((c) => (
+          <Link
+            key={c.href}
+            href={c.href}
+            className="rounded-2xl p-6 transition-transform hover:-translate-y-0.5"
+            style={{ background: 'linear-gradient(135deg, var(--color-forest-50), var(--color-gold-50))', border: '1px solid var(--color-forest-200)' }}
+          >
+            <span className="text-3xl" style={{ color: 'var(--color-forest-700)' }} aria-hidden="true">{c.icon}</span>
+            <h2 className="text-2xl font-semibold mt-2 mb-2" style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-primary)' }}>
+              {c.title} →
+            </h2>
+            <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}>{c.text}</p>
+          </Link>
+        ))}
+      </section>
 
       {/* Twelve signs */}
       <section className="mb-16">
