@@ -3,6 +3,7 @@
     "home": "Pagrindinis",
     "techniques": "Technikos",
     "map": "Vibracijų žemėlapis",
+    "zodiac": "Zodiakas",
     "about": "Apie",
     "getApp": "Atsisiųsti programėlę",
     "language": "Kalba"
@@ -110,6 +111,73 @@
     "disclaimer": {
       "title": "Žemėlapis, o ne nuosprendis",
       "text": "Šios sistemos yra kontempliatyvios ir simbolinės, o ne moksliniai matavimai. Hawkinso kalibracijos ir Solfeggio dažniai yra dvasiniai modeliai, o savęs vertinimas atspindi tik šią akimirką. Naudok žemėlapį kaip kvietimą praktikuoti ir tyrinėti save — niekada kaip galutinį tavo vertės sprendimą."
+    }
+  },
+  "zodiac": {
+    "eyebrow": "Astrologija ir savęs pažinimas",
+    "title": "Zodiakas",
+    "intro": "Dvylika archetipų, keturi elementai, trys modalumai — zodiakas yra senovinis žmogaus prigimties žemėlapis. Sužinokite savo ženklą pagal gimimo datą, pažinkite jo stiprybes, šešėlius ir dvasines pamokas, pasitikrinkite suderinamumą ir atraskite praktikas, palaikančias jūsų energiją.",
+    "finder": {
+      "heading": "Sužinokite savo ženklą",
+      "intro": "Įveskite gimimo datą ir sužinokite savo Saulės ženklą, jo elementą bei kinų zodiako gyvūną.",
+      "label": "Gimimo data",
+      "submit": "Rodyti mano ženklą",
+      "yourSign": "Jūsų Saulės ženklas",
+      "cusp": "Gimėte netoli ženklų ribos — priklausomai nuo metų ir tikslaus laiko, galite turėti ir {sign} savybių. Tikslų atsakymą duoda pilnas gimimo horoskopas.",
+      "chinese": "Kinų zodiakas",
+      "chineseNote": "Kinų metai prasideda per Mėnulio Naujuosius metus (sausio pab. – vasario vid.). Jei gimėte sausį ar vasario pradžioje, pasitikrinkite ir ankstesnių metų gyvūną.",
+      "readMore": "Skaityti visą aprašymą",
+      "invalid": "Įveskite teisingą datą."
+    },
+    "signsHeading": "Dvylika ženklų",
+    "signsCaption": "Paspauskite ženklą, kad perskaitytumėte visą aprašymą.",
+    "elementsHeading": "Keturi elementai",
+    "elementsCaption": "Kiekvienas ženklas priklauso vienam elementui — pagrindiniam jo energijos temperamentui.",
+    "modalitiesHeading": "Trys modalumai",
+    "modalitiesCaption": "Modalumas parodo, kaip ženklas juda: pradeda, palaiko ar transformuoja.",
+    "compat": {
+      "heading": "Suderinamumas",
+      "intro": "Pasirinkite du ženklus ir pažiūrėkite, kaip susitinka jų energijos — remiantis klasikiniais zodiako rato aspektais.",
+      "first": "Pirmas ženklas",
+      "second": "Antras ženklas",
+      "aspect": "Aspektas",
+      "harmony": "Harmonija"
+    },
+    "profile": {
+      "dates": "Datos",
+      "element": "Elementas",
+      "modality": "Modalumas",
+      "ruler": "Valdanti planeta",
+      "house": "Natūralūs namai",
+      "motto": "Šūkis",
+      "archetype": "Archetipas",
+      "keywords": "Raktažodžiai",
+      "overview": "Apžvalga",
+      "strengths": "Stiprybės",
+      "challenges": "Iššūkiai",
+      "love": "Meilė ir santykiai",
+      "career": "Karjera ir pašaukimas",
+      "health": "Sveikata ir kūnas",
+      "body": "Kūno sritys",
+      "growth": "Dvasinė pamoka",
+      "correspondences": "Atitikmenys",
+      "colors": "Spalvos",
+      "stones": "Kristalai",
+      "metal": "Metalas",
+      "day": "Laiminga diena",
+      "numbers": "Laimingi skaičiai",
+      "bestMatches": "Harmoningiausi su",
+      "chakra": "Energijos centras",
+      "practices": "Praktikos šiam ženklui",
+      "practicesCaption": "Mūsų bibliotekos technikos, kurios balansuoja ir palaiko šio ženklo energiją.",
+      "back": "Visi ženklai",
+      "prev": "Ankstesnis",
+      "next": "Kitas",
+      "compatWith": "Suderinamumas su kitais ženklais"
+    },
+    "disclaimer": {
+      "title": "Veidrodis, o ne likimas",
+      "text": "Astrologija yra simbolinė, kontempliatyvi tradicija, o ne mokslas. Saulės ženklas — tik viena pilno gimimo horoskopo dalis (svarbūs ir Mėnulis, Ascendentas, planetos). Naudokite šiuos aprašymus kaip savirefleksijos paskatą, o ne kaip nekintančias etiketes."
     }
   },
   "footer": {
