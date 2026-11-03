@@ -53,6 +53,14 @@ const TEXT = {
       placidus: 'Placidus',
       equal: 'Equal (Placidus is undefined at this latitude)',
       southNode: 'South Node',
+      retroText: 'Retrograde: from Earth this planet appears to move backwards. Its energy works more inwardly — you process this area of life slowly, reflectively and in your own way.',
+      guideTitle: 'How to read your chart — in 1 minute',
+      guide: [
+        ['Planets = WHAT', 'Each planet is a part of you: the Sun is your core self, the Moon your feelings, Mercury your mind, Venus your love, Mars your drive, and so on.'],
+        ['Signs = HOW', 'The sign a planet is in shows its style. Venus in Aries loves boldly; Venus in Cancer loves tenderly.'],
+        ['Houses = WHERE', 'The 12 houses are areas of life — money, home, love, work, career… A planet in a house shows where that energy plays out.'],
+        ['Aspects = CONVERSATIONS', 'Angles between planets show which parts of you cooperate easily (trine, sextile) and which create tension and growth (square, opposition).'],
+      ],
     },
     hd: {
       type: 'Type',
@@ -139,6 +147,14 @@ const TEXT = {
       placidus: 'Placidus',
       equal: 'Lygiųjų namų (Placidus šioje platumoje neapibrėžtas)',
       southNode: 'Pietinis mazgas',
+      retroText: 'Retrogradinė: iš Žemės atrodo, kad planeta juda atgal. Jos energija veikia labiau į vidų — šią gyvenimo sritį apdorojate lėčiau, apmąstydami ir savaip.',
+      guideTitle: 'Kaip skaityti horoskopą — per 1 minutę',
+      guide: [
+        ['Planetos = KAS', 'Kiekviena planeta — jūsų dalis: Saulė — esmė, Mėnulis — jausmai, Merkurijus — protas, Venera — meilė, Marsas — veržlumas ir t. t.'],
+        ['Ženklai = KAIP', 'Ženklas, kuriame yra planeta, rodo jos stilių. Venera Avine myli drąsiai, Venera Vėžyje — švelniai.'],
+        ['Namai = KUR', '12 namų — gyvenimo sritys: pinigai, namai, meilė, darbas, karjera… Planeta namuose rodo, kur ta energija pasireiškia.'],
+        ['Aspektai = POKALBIAI', 'Kampai tarp planetų rodo, kurios jūsų dalys lengvai bendradarbiauja (trigonas, sekstilis), o kurios kelia įtampą ir augimą (kvadratas, opozicija).'],
+      ],
     },
     hd: {
       type: 'Tipas',
