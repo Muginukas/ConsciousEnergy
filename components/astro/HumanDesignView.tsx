@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { CENTER_IDS, CenterId, HdChart, channelKey, computeHumanDesign } from '@/lib/astro/humandesign'
 import { HD_ANGLES, HD_AUTHORITIES, HD_CENTERS, HD_CHANNELS, HD_DEFINITIONS, HD_GATES, HD_LINES, HD_PLANET_NAMES, HD_TYPES } from '@/lib/astro/hd-data'
 import { birthUtc } from '@/lib/astro/natal'
+import { AUTHORITY_DEEP, CENTER_DEEP, LINE_DEEP, TYPE_DEEP } from '@/lib/astro/hd-deep'
+import { channelInLife, gateInLife } from '@/lib/astro/hd-gates-deep'
 import { astroText } from '@/lib/astro/ui-text'
 import { Locale } from '@/lib/types'
 import BirthForm, { BirthData, loadBirthData } from './BirthForm'
@@ -52,6 +54,7 @@ export default function HumanDesignView({ lang }: { lang: string }) {
 function Result({ chart, data, locale }: { chart: HdChart; data: BirthData; locale: Locale }) {
   const t = astroText(locale).hd
   const type = HD_TYPES[chart.type]
+  const deep = TYPE_DEEP[chart.type]
   const auth = HD_AUTHORITIES[chart.authority]
   const def = HD_DEFINITIONS[chart.definition]
   const [pl, dl] = chart.profile
@@ -112,6 +115,18 @@ function Result({ chart, data, locale }: { chart: HdChart; data: BirthData; loca
         )}
       </header>
 
+      <section className="mb-10 rounded-2xl p-6" style={{ background: 'linear-gradient(135deg, var(--color-forest-50), var(--color-gold-50))', border: '1px solid var(--color-forest-200)' }}>
+        <h2 className="text-2xl font-semibold mb-4" style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-primary)' }}>{t.guideTitle}</h2>
+        <div className="grid gap-4 sm:grid-cols-2">
+          {t.guide.map(([h, txt]) => (
+            <div key={h}>
+              <p className="font-semibold mb-1" style={{ color: 'var(--color-forest-700)', fontFamily: 'var(--font-ui)' }}>{h}</p>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}>{txt}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Summary */}
       <section className="mb-12 grid gap-3 grid-cols-2 lg:grid-cols-4">
         {summary.map(([k, v, sub]) => (
@@ -166,11 +181,33 @@ function Result({ chart, data, locale }: { chart: HdChart; data: BirthData; loca
             <br />
             <strong>{t.signature}:</strong> {type.signature[locale]} · <strong>{t.notSelf}:</strong> {type.notSelf[locale]}
           </p>
+          <h3 className="mt-5 mb-1 font-semibold" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-forest-700)' }}>{t.daily}</h3>
+          <p className="text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}>{deep.daily[locale]}</p>
+          <h3 className="mt-4 mb-1 font-semibold" style={{ fontFamily: 'var(--font-ui)', color: '#b45309' }}>{t.signsLabel}</h3>
+          <ul className="list-disc pl-5 text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}>
+            {deep.signs[locale].map((x) => <li key={x}>{x}</li>)}
+          </ul>
+          <h3 className="mt-4 mb-1 font-semibold" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-forest-700)' }}>{t.tipsLabel}</h3>
+          <ul className="list-disc pl-5 text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}>
+            {deep.tips[locale].map((x) => <li key={x}>{x}</li>)}
+          </ul>
+          <p className="mt-4 text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}>
+            <strong>{t.loveLabel}:</strong> {deep.love[locale]}
+            <br />
+            <strong>{t.workLabel}:</strong> {deep.work[locale]}
+          </p>
         </div>
         <div className="flex flex-col gap-4">
           <div className="rounded-xl p-6" style={card}>
             <h3 className="text-xl font-semibold mb-2" style={{ fontFamily: 'var(--font-display)' }}>{t.authority}: {auth.name[locale]}</h3>
             <p className="leading-relaxed" style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}>{auth.description[locale]}</p>
+            <h4 className="mt-4 mb-1 font-semibold" style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-forest-700)' }}>{t.stepsLabel}</h4>
+            <ol className="list-decimal pl-5 text-sm leading-relaxed" style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}>
+              {AUTHORITY_DEEP[chart.authority].steps[locale].map((x) => <li key={x}>{x}</li>)}
+            </ol>
+            <p className="mt-3 text-sm italic" style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}>
+              <strong>{t.exampleLabel}:</strong> {AUTHORITY_DEEP[chart.authority].example[locale]}
+            </p>
           </div>
           <div className="rounded-xl p-6" style={card}>
             <h3 className="text-xl font-semibold mb-2" style={{ fontFamily: 'var(--font-display)' }}>{t.definition}: {def.name[locale]}</h3>
@@ -191,7 +228,7 @@ function Result({ chart, data, locale }: { chart: HdChart; data: BirthData; loca
               <strong style={{ color: color as string }}>
                 {line} — {HD_LINES[line as number].name[locale]}
               </strong>{' '}
-              ({label}): {HD_LINES[line as number].description[locale]}
+              ({label}): {LINE_DEEP[line as number][locale]}
             </p>
           ))}
         </div>
@@ -231,6 +268,15 @@ function Result({ chart, data, locale }: { chart: HdChart; data: BirthData; loca
                 </div>
                 <p className="text-xs mb-1" style={{ color: 'var(--color-text-muted)', fontFamily: 'var(--font-ui)' }}>{info.theme[locale]}</p>
                 <p className="text-sm" style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}>{on ? info.defined[locale] : info.open[locale]}</p>
+                {!on && (
+                  <p className="mt-2 text-sm italic" style={{ color: '#b45309', fontFamily: 'var(--font-body)' }}>
+                    {t.questionLabel}: {CENTER_DEEP[c].question[locale]}
+                  </p>
+                )}
+                <p className="mt-2 text-sm" style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}>
+                  <strong style={{ color: 'var(--color-forest-700)' }}>{t.tipLabel}:</strong> {CENTER_DEEP[c].tip[locale]}
+                </p>
+                <p className="mt-1 text-xs" style={{ color: 'var(--color-text-muted)', fontFamily: 'var(--font-ui)' }}>{t.bodyLabel}: {CENTER_DEEP[c].body[locale]}</p>
               </div>
             )
           })}
@@ -253,6 +299,11 @@ function Result({ chart, data, locale }: { chart: HdChart; data: BirthData; loca
                     {ch[0]}–{ch[1]} · {info.name[locale]}
                   </p>
                   <p className="text-sm" style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}>{info.description[locale]}</p>
+                  {channelInLife(channelKey(ch)) && (
+                    <p className="mt-2 text-sm" style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}>
+                      <strong style={{ color: 'var(--color-forest-700)' }}>{t.inLife}:</strong> {channelInLife(channelKey(ch))![locale]}
+                    </p>
+                  )}
                 </div>
               )
             })}
@@ -282,6 +333,9 @@ function Result({ chart, data, locale }: { chart: HdChart; data: BirthData; loca
               </div>
               <p className="text-xs mb-1 italic" style={{ color: 'var(--color-text-muted)', fontFamily: 'var(--font-ui)' }}>I Ching: {HD_GATES[gate].iching}</p>
               <p className="text-sm" style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}>{HD_GATES[gate].description[locale]}</p>
+              <p className="mt-1 text-sm" style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}>
+                <strong style={{ color: 'var(--color-forest-700)' }}>{t.inLife}:</strong> {gateInLife(gate)[locale]}
+              </p>
             </div>
           ))}
         </div>
