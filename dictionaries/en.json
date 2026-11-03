@@ -3,6 +3,7 @@
     "home": "Home",
     "techniques": "Techniques",
     "map": "Vibration Map",
+    "zodiac": "Zodiac",
     "about": "About",
     "getApp": "Get the App",
     "language": "Language"
@@ -110,6 +111,73 @@
     "disclaimer": {
       "title": "A Map, Not a Verdict",
       "text": "These frameworks are contemplative and symbolic, not scientific measurements. Hawkins’ calibrations and the Solfeggio frequencies are spiritual models, and the self-assessment reflects only this moment. Use the map as an invitation to practice and self-inquiry — never as a fixed judgment of your worth."
+    }
+  },
+  "zodiac": {
+    "eyebrow": "Astrology & Self-Knowledge",
+    "title": "The Zodiac",
+    "intro": "Twelve archetypes, four elements, three modalities — the zodiac is an ancient map of human nature. Find your sign by birth date, explore its strengths, shadows and spiritual lessons, check your compatibility, and discover practices that support your energy.",
+    "finder": {
+      "heading": "Find Your Sign",
+      "intro": "Enter your date of birth to discover your Sun sign, its element, and your Chinese zodiac animal.",
+      "label": "Date of birth",
+      "submit": "Show my sign",
+      "yourSign": "Your Sun sign",
+      "cusp": "You were born near the cusp — depending on the exact year and time, you may also carry qualities of {sign}. A full birth chart gives the precise answer.",
+      "chinese": "Chinese zodiac",
+      "chineseNote": "The Chinese year starts at Lunar New Year (late Jan – mid Feb). If you were born in January or early February, check the previous year’s animal too.",
+      "readMore": "Read the full profile",
+      "invalid": "Please enter a valid date."
+    },
+    "signsHeading": "The Twelve Signs",
+    "signsCaption": "Tap a sign to read its full profile.",
+    "elementsHeading": "The Four Elements",
+    "elementsCaption": "Every sign belongs to one element — the basic temperament of its energy.",
+    "modalitiesHeading": "The Three Modalities",
+    "modalitiesCaption": "Modality describes how a sign moves: starting, sustaining or transforming.",
+    "compat": {
+      "heading": "Compatibility",
+      "intro": "Choose two signs to see how their energies meet, based on the classical aspects of the zodiac wheel.",
+      "first": "First sign",
+      "second": "Second sign",
+      "aspect": "Aspect",
+      "harmony": "Harmony"
+    },
+    "profile": {
+      "dates": "Dates",
+      "element": "Element",
+      "modality": "Modality",
+      "ruler": "Ruling planet",
+      "house": "Natural house",
+      "motto": "Motto",
+      "archetype": "Archetype",
+      "keywords": "Keywords",
+      "overview": "Overview",
+      "strengths": "Strengths",
+      "challenges": "Challenges",
+      "love": "Love & Relationships",
+      "career": "Career & Calling",
+      "health": "Health & Body",
+      "body": "Body areas",
+      "growth": "Spiritual Lesson",
+      "correspondences": "Correspondences",
+      "colors": "Colours",
+      "stones": "Crystals",
+      "metal": "Metal",
+      "day": "Lucky day",
+      "numbers": "Lucky numbers",
+      "bestMatches": "Most harmonious with",
+      "chakra": "Energy focus",
+      "practices": "Practices for this sign",
+      "practicesCaption": "Techniques from our library that balance and support this sign’s energy.",
+      "back": "All signs",
+      "prev": "Previous",
+      "next": "Next",
+      "compatWith": "Compatibility with other signs"
+    },
+    "disclaimer": {
+      "title": "A Mirror, Not a Destiny",
+      "text": "Astrology is a symbolic, contemplative tradition — not a science. Your Sun sign is only one part of a full birth chart (Moon, Ascendant and planets matter too). Use these descriptions as prompts for self-reflection, never as fixed labels."
     }
   },
   "footer": {

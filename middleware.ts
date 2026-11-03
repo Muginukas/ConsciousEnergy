@@ -28,9 +28,14 @@ export async function middleware(request: NextRequest) {
   // response that wraps the (possibly cookie-mutated) request.
   let response = NextResponse.next({ request })
 
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  // Without Supabase config (e.g. a preview environment) just serve the page.
+  if (!supabaseUrl || !supabaseKey) return response
+
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    supabaseUrl,
+    supabaseKey,
     {
       cookies: {
         getAll() {
@@ -47,7 +52,16 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  await supabase.auth.getUser()
+  // Never let a slow or unreachable auth server block page rendering:
+  // cap the session refresh and fall through on timeout or error.
+  try {
+    await Promise.race([
+      supabase.auth.getUser(),
+      new Promise((resolve) => setTimeout(resolve, 3000)),
+    ])
+  } catch {
+    // ignore — the page still renders, the user just appears signed out
+  }
 
   return response
 }
