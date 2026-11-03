@@ -1,5 +1,6 @@
 'use client'
 
+import { DateInput } from '@/components/ui/MaskedInputs'
 import { useState } from 'react'
 import Link from 'next/link'
 import { Sparkles } from 'lucide-react'
@@ -203,7 +204,7 @@ export default function NameVibrationView({ lang }: { lang: string }) {
           </label>
           <label className="flex flex-col gap-1.5 sm:col-span-2">
             <span className="text-sm font-medium" style={{ color: 'var(--color-text-secondary)' }}>{t.birth}</span>
-            <input type="date" value={date} min="1900-01-01" max="2100-12-31" onChange={(e) => setDate(e.target.value)} className="rounded-xl px-4 py-3 text-base" style={inputStyle} />
+            <DateInput value={date} onChange={setDate} lang={lang} />
           </label>
         </div>
         {error && <p className="mt-3 text-sm" style={{ color: '#b91c1c' }}>{t.missing}</p>}

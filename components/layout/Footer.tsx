@@ -1,13 +1,14 @@
 import Link from 'next/link'
 
 type Props = {
+  lang: string
   dict: {
     footer: { disclaimer: string; copyright: string }
     nav: { home: string; techniques: string; map: string; zodiac: string; about: string; getApp: string }
   }
 }
 
-export default function Footer({ dict }: Props) {
+export default function Footer({ lang, dict }: Props) {
   return (
     <footer
       className="mt-auto py-12 px-4"
@@ -33,22 +34,22 @@ export default function Footer({ dict }: Props) {
 
         {/* Links */}
         <nav className="flex flex-col gap-2">
-          <Link href="/" className="text-sm opacity-70 hover:opacity-100 transition-opacity">
+          <Link href={`/${lang}`} className="text-sm opacity-70 hover:opacity-100 transition-opacity">
             {dict.nav.home}
           </Link>
-          <Link href="/techniques" className="text-sm opacity-70 hover:opacity-100 transition-opacity">
+          <Link href={`/${lang}/techniques`} className="text-sm opacity-70 hover:opacity-100 transition-opacity">
             {dict.nav.techniques}
           </Link>
-          <Link href="/map" className="text-sm opacity-70 hover:opacity-100 transition-opacity">
+          <Link href={`/${lang}/map`} className="text-sm opacity-70 hover:opacity-100 transition-opacity">
             {dict.nav.map}
           </Link>
-          <Link href="/zodiac" className="text-sm opacity-70 hover:opacity-100 transition-opacity">
+          <Link href={`/${lang}/zodiac`} className="text-sm opacity-70 hover:opacity-100 transition-opacity">
             {dict.nav.zodiac}
           </Link>
-          <Link href="/about" className="text-sm opacity-70 hover:opacity-100 transition-opacity">
+          <Link href={`/${lang}/about`} className="text-sm opacity-70 hover:opacity-100 transition-opacity">
             {dict.nav.about}
           </Link>
-          <Link href="/get-the-app" className="text-sm opacity-70 hover:opacity-100 transition-opacity">
+          <Link href={`/${lang}/get-the-app`} className="text-sm opacity-70 hover:opacity-100 transition-opacity">
             {dict.nav.getApp}
           </Link>
         </nav>
