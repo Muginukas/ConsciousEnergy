@@ -1,5 +1,6 @@
 'use client'
 
+import { DateInput } from '@/components/ui/MaskedInputs'
 import { useState } from 'react'
 import Link from 'next/link'
 import { AnimatePresence, motion } from 'framer-motion'
@@ -74,20 +75,7 @@ export default function SignFinder({ lang, dict }: { lang: string; dict: ZodiacD
             <span className="text-sm font-medium" style={{ color: 'var(--color-text-secondary)' }}>
               {f.label}
             </span>
-            <input
-              type="date"
-              required
-              value={value}
-              min="1900-01-01"
-              max="2100-12-31"
-              onChange={(e) => setValue(e.target.value)}
-              className="w-full rounded-xl px-4 py-3 text-base outline-none focus:ring-2"
-              style={{
-                border: '1px solid var(--color-earth-200)',
-                backgroundColor: '#fff',
-                color: 'var(--color-text-primary)',
-              }}
-            />
+            <DateInput value={value} onChange={setValue} lang={lang} required />
           </label>
           <button
             type="submit"

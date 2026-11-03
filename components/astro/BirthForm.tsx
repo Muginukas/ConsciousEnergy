@@ -1,5 +1,6 @@
 'use client'
 
+import { DateInput, TimeInput } from '@/components/ui/MaskedInputs'
 import { useRef, useState } from 'react'
 import { MapPin, Sparkles, Lock } from 'lucide-react'
 import { Place, searchPlaces } from '@/lib/astro/cities'
@@ -103,12 +104,12 @@ export default function BirthForm({
         </label>
         <label className="flex flex-col gap-1.5">
           <span className="text-sm font-medium" style={{ color: 'var(--color-text-secondary)' }}>{t.date}</span>
-          <input type="date" required value={date} min="1900-01-01" max="2100-12-31" onChange={(e) => setDate(e.target.value)} className="rounded-xl px-4 py-3 text-base" style={inputStyle} />
+          <DateInput value={date} onChange={setDate} lang={lang} required />
         </label>
         <div className="flex flex-col gap-1.5">
           <label className="flex flex-col gap-1.5">
             <span className="text-sm font-medium" style={{ color: 'var(--color-text-secondary)' }}>{t.time}</span>
-            <input type="time" value={time} disabled={timeUnknown} onChange={(e) => setTime(e.target.value)} className="rounded-xl px-4 py-3 text-base disabled:opacity-50" style={inputStyle} />
+            <TimeInput value={time} onChange={setTime} lang={lang} disabled={timeUnknown} />
           </label>
           <label className="flex items-center gap-2 text-sm" style={{ color: 'var(--color-text-secondary)' }}>
             <input type="checkbox" checked={timeUnknown} onChange={(e) => setTimeUnknown(e.target.checked)} />
