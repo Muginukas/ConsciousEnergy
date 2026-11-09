@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { hasLocale } from '@/lib/dictionaries'
+import FoodTabs from '@/components/food/FoodTabs'
 import {
   BODY_ANGSTROM,
   FOOD_TIERS,
@@ -151,6 +152,7 @@ export default async function FoodPyramidPage(props: PageProps<'/[lang]/food-pyr
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-12">
+      <FoodTabs lang={lang} active="pyramid" />
       <header className="mb-10 max-w-3xl">
         <p className="mb-2 text-sm font-semibold uppercase tracking-wide" style={{ ...ui, color: 'var(--color-gold-600)' }}>
           {lt ? 'Maisto vibracija' : 'Food vibration'}
