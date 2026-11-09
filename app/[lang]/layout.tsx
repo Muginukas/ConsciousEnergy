@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Cormorant_Garamond, Lora, DM_Sans } from 'next/font/google'
+import localFont from 'next/font/local'
 import '../globals.css'
 import { hasLocale } from '@/lib/dictionaries'
 import { getDictionary } from '@/lib/dictionaries'
@@ -9,23 +9,25 @@ import Footer from '@/components/layout/Footer'
 import ServiceWorkerRegister from '@/components/pwa/ServiceWorkerRegister'
 import InstallPrompt from '@/components/pwa/InstallPrompt'
 
-const cormorant = Cormorant_Garamond({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+// Fonts are self-hosted (app/fonts, OFL-licensed variable fonts subset to
+// Latin + Latin Extended) so builds never depend on fetching Google Fonts.
+const cormorant = localFont({
+  src: '../fonts/Cormorant-var.woff2',
+  weight: '300 700',
   variable: '--font-display',
   display: 'swap',
 })
 
-const lora = Lora({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
+const lora = localFont({
+  src: '../fonts/Lora-var.woff2',
+  weight: '400 700',
   variable: '--font-body',
   display: 'swap',
 })
 
-const dmSans = DM_Sans({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
+const dmSans = localFont({
+  src: '../fonts/DMSans-var.woff2',
+  weight: '100 1000',
   variable: '--font-ui',
   display: 'swap',
 })
