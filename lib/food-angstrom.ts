@@ -164,3 +164,142 @@ export const RAISE_TIPS: Bi[] = [
     lt: 'Valgykite ramiai ir su dėkingumu. Būsena, kurioje valgote, yra patiekalo dalis.',
   },
 ]
+
+/* ---------- What changes a food's vibration ---------- */
+
+export type LadderStep = { label: Bi; angstrom: number }
+
+export type Factor = {
+  id: string
+  icon: string
+  title: Bi
+  text: Bi
+  /** An illustrative example: how one food's value moves along this factor. */
+  example: Bi
+  steps: LadderStep[]
+}
+
+const st = (en: string, lt: string, angstrom: number): LadderStep => ({ label: { en, lt }, angstrom })
+
+export const FACTORS: Factor[] = [
+  {
+    id: 'cooking',
+    icon: '🔥',
+    title: { en: 'Heat and cooking method', lt: 'Karštis ir gaminimo būdas' },
+    text: {
+      en: 'The more heat and the longer it lasts, the lower the value. Simoneton found gentle steaming kept far more than boiling, and frying or deep-frying the least.',
+      lt: 'Kuo daugiau karščio ir kuo ilgiau, tuo žemesnė vertė. Simonetonas pastebėjo, kad švelniai garinant išlieka kur kas daugiau nei verdant, o kepant riebaluose — mažiausiai.',
+    },
+    example: { en: 'Carrot', lt: 'Morka' },
+    steps: [
+      st('Raw', 'Žalia', 8500),
+      st('Steamed 5 min', 'Garinta 5 min.', 6500),
+      st('Boiled 20 min', 'Virta 20 min.', 5000),
+      st('Fried', 'Kepta riebaluose', 3000),
+      st('Canned', 'Konservuota', 1000),
+    ],
+  },
+  {
+    id: 'time',
+    icon: '⏳',
+    title: { en: 'Time since harvest', lt: 'Laikas nuo derliaus' },
+    text: {
+      en: 'Vibration is highest at the moment of picking or milking and falls every hour after. Simoneton reported milk losing a large share of its value within hours.',
+      lt: 'Vibracija aukščiausia nuskynimo ar pamelžimo akimirką ir krenta kas valandą. Simonetonas rašė, kad pienas per kelias valandas netenka didelės dalies savo vertės.',
+    },
+    example: { en: 'Milk', lt: 'Pienas' },
+    steps: [
+      st('Just milked', 'Ką tik pamelžtas', 6500),
+      st('After 12 h', 'Po 12 val.', 5000),
+      st('After 24 h', 'Po paros', 4000),
+      st('Boiled', 'Virintas', 1500),
+      st('Pasteurised', 'Pasterizuotas', 0),
+    ],
+  },
+  {
+    id: 'ripeness',
+    icon: '🍑',
+    title: { en: 'Ripeness', lt: 'Prinokimas' },
+    text: {
+      en: 'Fruit ripened on the plant in sunlight reaches the peak; fruit picked green and ripened in storage never does. Overripe fruit drops again.',
+      lt: 'Saulėje ant augalo prinokęs vaisius pasiekia viršūnę; žalias nuskintas ir sandėlyje „nokintas“ — niekada. Pernokęs vaisius vėl krenta.',
+    },
+    example: { en: 'Peach', lt: 'Persikas' },
+    steps: [
+      st('Picked green', 'Nuskintas žalias', 5000),
+      st('Ripened in storage', 'Nokintas sandėlyje', 6500),
+      st('Tree-ripened', 'Prinokęs ant medžio', 9000),
+      st('Overripe', 'Pernokęs', 6000),
+    ],
+  },
+  {
+    id: 'refining',
+    icon: '⚙️',
+    title: { en: 'Refining and processing', lt: 'Rafinavimas ir perdirbimas' },
+    text: {
+      en: 'Every step that strips a food — bran from grain, molasses from sugar, life from oil — lowers it. Fully refined products come close to zero.',
+      lt: 'Kiekvienas žingsnis, kuris maistą „nuluobia“ — sėlenas nuo grūdo, melasą nuo cukraus, gyvybę iš aliejaus, — jį sumažina. Visiškai rafinuoti produktai artėja prie nulio.',
+    },
+    example: { en: 'Wheat', lt: 'Kvietys' },
+    steps: [
+      st('Sprouted grain', 'Daigintas grūdas', 9500),
+      st('Whole grain', 'Visas grūdas', 8500),
+      st('Wholemeal bread', 'Rupių miltų duona', 5000),
+      st('White bread', 'Balta duona', 2000),
+      st('Bleached flour', 'Balinti miltai', 0),
+    ],
+  },
+  {
+    id: 'living',
+    icon: '🌱',
+    title: { en: 'Sprouting and fermenting', lt: 'Daiginimas ir rauginimas' },
+    text: {
+      en: 'The two ways to raise a food. A sprouting seed is at its most alive; live fermentation keeps cabbage high long after harvest — until it is pasteurised.',
+      lt: 'Du būdai maistą pakelti. Dygstanti sėkla — gyviausia; gyvas rauginimas išlaiko kopūstą aukštai ilgai po derliaus — kol jo nepasterizuoja.',
+    },
+    example: { en: 'Cabbage', lt: 'Kopūstas' },
+    steps: [
+      st('Fresh', 'Šviežias', 8500),
+      st('Raw sauerkraut', 'Žali rauginti', 7500),
+      st('Stewed', 'Troškinti', 4500),
+      st('Pasteurised jar', 'Pasterizuoti stiklainyje', 2000),
+    ],
+  },
+]
+
+export const HISTORY: { title: Bi; text: Bi }[] = [
+  {
+    title: { en: 'Who was André Simoneton?', lt: 'Kas buvo André Simonetonas?' },
+    text: {
+      en: 'A French electrical engineer and radiesthesist. After recovering from illness through diet, he spent the 1930s and 40s measuring what he called the “vital radiation” of foods, and published his findings in “Radiations des aliments, ondes humaines et santé” (1949).',
+      lt: 'Prancūzų elektros inžinierius ir radiestezistas. Pasveikęs mitybos dėka, XX a. 4–5 dešimtmečiais jis matavo, ką vadino maisto „gyvybine spinduliuote“, ir išvadas paskelbė knygoje „Radiations des aliments, ondes humaines et santé“ (1949).',
+    },
+  },
+  {
+    title: { en: 'How he measured', lt: 'Kaip jis matavo' },
+    text: {
+      en: 'He used a pendulum with the biometer of physicist Antoine Bovis — a ruler graduated in ångströms, the unit of wavelength. A healthy body read about 6,500 Å; foods were compared against that line.',
+      lt: 'Jis naudojo švytuoklę ir fiziko Antoine’o Bovio biometrą — liniuotę, sugraduotą angstremais, bangos ilgio vienetu. Sveikas kūnas rodė apie 6 500 Å; maistas buvo lyginamas su šia riba.',
+    },
+  },
+  {
+    title: { en: 'His core idea', lt: 'Pagrindinė jo mintis' },
+    text: {
+      en: 'Food above the body’s level feeds our vitality; food below it borrows from it. So the aim is a diet whose overall vibration sits above 6,500 Å — mostly fresh, whole and alive.',
+      lt: 'Maistas virš kūno lygio maitina mūsų gyvybingumą, o žemiau jo — iš jo skolinasi. Tikslas — mityba, kurios bendra vibracija viršija 6 500 Å: daugiausia švieži, nesmulkinti, gyvi produktai.',
+    },
+  },
+  {
+    title: { en: 'How to read the values', lt: 'Kaip skaityti vertes' },
+    text: {
+      en: 'Radiesthesia is not a recognised scientific method and figures vary between sources. Read the numbers as a ranking of freshness and wholeness — which happens to agree well with modern advice to eat more fresh plants and fewer ultra-processed foods.',
+      lt: 'Radiestezija nėra pripažintas mokslinis metodas, o skaičiai šaltiniuose skiriasi. Skaitykite juos kaip šviežumo ir natūralumo reitingą — jis neblogai sutampa su šiuolaikiniu patarimu valgyti daugiau šviežių augalų ir mažiau ultraperdirbto maisto.',
+    },
+  },
+]
+
+/** The pyramid tier a given ångström value falls into. */
+export function tierOf(a: number): FoodTier {
+  if (a <= 0) return FOOD_TIERS.find((t) => t.id === 'dead')!
+  return FOOD_TIERS.find((t) => t.max > 0 && a >= t.min && a <= t.max) ?? FOOD_TIERS[0]
+}

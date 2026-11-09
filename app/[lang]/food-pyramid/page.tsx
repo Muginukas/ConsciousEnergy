@@ -2,9 +2,14 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { hasLocale } from '@/lib/dictionaries'
 import FoodTabs from '@/components/food/FoodTabs'
+import SectionNav from '@/components/food/SectionNav'
+import FactorLadders from '@/components/food/FactorLadders'
+import FoodEncyclopedia from '@/components/food/FoodEncyclopedia'
+import { CATEGORIES, FOODS } from '@/lib/food-db'
 import {
   BODY_ANGSTROM,
   FOOD_TIERS,
+  HISTORY,
   RAISE_TIPS,
   SCALE_MAX,
   type FoodTier,
@@ -167,7 +172,19 @@ export default async function FoodPyramidPage(props: PageProps<'/[lang]/food-pyr
         </p>
       </header>
 
-      <div className="grid gap-10 lg:grid-cols-2 lg:items-center mb-14">
+      <SectionNav
+        title={lt ? 'Turinys' : 'Contents'}
+        items={[
+          { id: 'piramide', label: lt ? 'Piramidė ir skalė' : 'Pyramid & scale' },
+          { id: 'pakopos', label: lt ? 'Keturios pakopos' : 'The four tiers' },
+          { id: 'veiksniai', label: lt ? 'Kas keičia vibraciją' : 'What changes vibration' },
+          { id: 'enciklopedija', label: lt ? 'Produktų enciklopedija' : 'Food encyclopedia' },
+          { id: 'patarimai', label: lt ? 'Kaip pakelti vibraciją' : 'Raising vibration' },
+          { id: 'istorija', label: lt ? 'Simonetono metodas' : 'Simoneton’s method' },
+        ]}
+      />
+
+      <div id="piramide" className="scroll-mt-24 grid gap-10 lg:grid-cols-2 lg:items-center mb-14">
         <Pyramid lt={lt} />
         <div>
           <h2 className="text-2xl font-semibold mb-4" style={display}>
@@ -182,13 +199,40 @@ export default async function FoodPyramidPage(props: PageProps<'/[lang]/food-pyr
         </div>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 mb-14">
+      <h2 id="pakopos" className="scroll-mt-24 text-3xl font-semibold mb-6" style={display}>
+        {lt ? 'Keturios pakopos' : 'The four tiers'}
+      </h2>
+      <div className="grid gap-6 md:grid-cols-2 mb-16">
         {FOOD_TIERS.map((tier) => (
           <TierCard key={tier.id} tier={tier} lt={lt} />
         ))}
       </div>
 
-      <section className="mb-14 rounded-2xl p-6" style={{ backgroundColor: 'var(--color-forest-50)', border: '1px solid var(--color-forest-200)' }}>
+      <section id="veiksniai" className="scroll-mt-24 mb-16">
+        <h2 className="text-3xl font-semibold mb-2" style={display}>
+          {lt ? 'Kas keičia maisto vibraciją' : 'What changes a food’s vibration'}
+        </h2>
+        <p className="mb-6 leading-relaxed max-w-3xl" style={body}>
+          {lt
+            ? 'Vertė nėra pastovi: tas pats produktas gali būti gyvas arba „negyvas“, priklausomai nuo to, kiek jis šviežias, prinokęs ir kaip paruoštas. Penki veiksniai ir kaip jie keičia vieno produkto vertę:'
+            : 'A value is not fixed: the same food can be alive or “dead” depending on how fresh and ripe it is and how it is prepared. Five factors, and how each moves one food’s value:'}
+        </p>
+        <FactorLadders lang={lang} />
+      </section>
+
+      <section id="enciklopedija" className="scroll-mt-24 mb-16">
+        <h2 className="text-3xl font-semibold mb-2" style={display}>
+          {lt ? 'Produktų enciklopedija' : 'Food encyclopedia'}
+        </h2>
+        <p className="mb-6 leading-relaxed max-w-3xl" style={body}>
+          {lt
+            ? `${FOODS.length} produktai, suskirstyti į ${CATEGORIES.length} kategorijų, su apytiksle vibracija angstremais. Ieškokite, filtruokite pagal kategoriją ar piramidės pakopą.`
+            : `${FOODS.length} foods in ${CATEGORIES.length} categories with their approximate vibration in ångströms. Search, or filter by category or pyramid tier.`}
+        </p>
+        <FoodEncyclopedia lang={lang} />
+      </section>
+
+      <section id="patarimai" className="scroll-mt-24 mb-16 rounded-2xl p-6" style={{ backgroundColor: 'var(--color-forest-50)', border: '1px solid var(--color-forest-200)' }}>
         <h2 className="text-2xl font-semibold mb-4" style={display}>
           {lt ? 'Kaip pakelti savo lėkštės vibraciją' : 'How to raise the vibration of your plate'}
         </h2>
@@ -205,6 +249,20 @@ export default async function FoodPyramidPage(props: PageProps<'/[lang]/food-pyr
             </li>
           ))}
         </ol>
+      </section>
+
+      <section id="istorija" className="scroll-mt-24 mb-14">
+        <h2 className="text-3xl font-semibold mb-6" style={display}>
+          {lt ? 'Simonetono metodas' : 'Simoneton’s method'}
+        </h2>
+        <div className="grid gap-5 sm:grid-cols-2">
+          {HISTORY.map((h) => (
+            <article key={h.title.en} className="rounded-2xl p-5" style={{ backgroundColor: 'var(--color-cream)', border: '1px solid var(--color-earth-200)' }}>
+              <h3 className="text-xl font-semibold mb-2" style={display}>{h.title[l]}</h3>
+              <p className="text-sm leading-relaxed" style={body}>{h.text[l]}</p>
+            </article>
+          ))}
+        </div>
       </section>
 
       <p className="text-sm leading-relaxed max-w-3xl" style={{ ...body, color: 'var(--color-text-muted)' }}>
