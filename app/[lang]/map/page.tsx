@@ -93,7 +93,9 @@ export default async function MapPage(props: PageProps<'/[lang]/map'>) {
 
       <ModelTabs lang={lang} dict={m} />
 
-      <SelfAssessment lang={lang} recommendations={recommendations} dict={m} />
+      <div id="assessment" className="scroll-mt-20">
+        <SelfAssessment lang={lang} recommendations={recommendations} dict={m} />
+      </div>
 
       <section
         className="p-6 rounded-xl"
