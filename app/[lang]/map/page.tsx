@@ -5,6 +5,7 @@ import { getTechniqueBySlug } from '@/lib/content'
 import { CATEGORIES } from '@/lib/categories'
 import { VIBRATION_TIERS } from '@/lib/vibration'
 import { Locale } from '@/lib/types'
+import DailyPath from '@/components/map/DailyPath'
 import UnifiedScale from '@/components/map/UnifiedScale'
 import ModelTabs from '@/components/map/ModelTabs'
 import SelfAssessment, { Recommendation } from '@/components/map/SelfAssessment'
@@ -88,6 +89,8 @@ export default async function MapPage(props: PageProps<'/[lang]/map'>) {
           {m.intro}
         </p>
       </header>
+
+      <DailyPath lang={lang} dict={m} />
 
       <UnifiedScale lang={lang} dict={m} />
 
