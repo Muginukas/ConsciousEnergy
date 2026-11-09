@@ -1,12 +1,13 @@
 import Link from 'next/link'
 
-type Tab = 'pyramid' | 'combining'
+type Tab = 'pyramid' | 'combining' | 'menu'
 
 export default function FoodTabs({ lang, active }: { lang: string; active: Tab }) {
   const lt = lang === 'lt'
   const tabs: { id: Tab; href: string; label: string }[] = [
     { id: 'pyramid', href: `/${lang}/food-pyramid`, label: lt ? 'Maisto piramidė' : 'Food pyramid' },
     { id: 'combining', href: `/${lang}/food-combining`, label: lt ? 'Maisto deriniai' : 'Food combining' },
+    { id: 'menu', href: `/${lang}/food-menu`, label: lt ? 'Simbiotinis meniu' : 'Symbiotic menu' },
   ]
   return (
     <nav className="mb-10 flex gap-2 overflow-x-auto pb-1" style={{ fontFamily: 'var(--font-ui)' }}>
