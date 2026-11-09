@@ -3,6 +3,9 @@ import type { Metadata } from 'next'
 import { hasLocale } from '@/lib/dictionaries'
 import FoodTabs from '@/components/food/FoodTabs'
 import SymbioticMenu from '@/components/food/SymbioticMenu'
+import DayPlans from '@/components/food/DayPlans'
+import SectionNav from '@/components/food/SectionNav'
+import { DAY_PLANS, MENU } from '@/lib/food-menu'
 
 export async function generateMetadata(props: PageProps<'/[lang]/food-menu'>): Promise<Metadata> {
   const { lang } = await props.params
@@ -42,7 +45,16 @@ export default async function FoodMenuPage(props: PageProps<'/[lang]/food-menu'>
         </p>
       </header>
 
-      <div className="grid gap-4 sm:grid-cols-2 mb-10">
+      <SectionNav
+        title={lt ? 'Turinys' : 'Contents'}
+        items={[
+          { id: 'vertes', label: lt ? 'Kaip skaičiuojamos vertės' : 'How values are calculated' },
+          { id: 'dienos', label: lt ? `Dienos planai (${DAY_PLANS.length})` : `Day plans (${DAY_PLANS.length})` },
+          { id: 'patiekalai', label: lt ? `Visi patiekalai (${MENU.length})` : `All dishes (${MENU.length})` },
+        ]}
+      />
+
+      <div id="vertes" className="scroll-mt-24 grid gap-4 sm:grid-cols-3 mb-14">
         <div className="rounded-2xl p-5" style={{ backgroundColor: 'var(--color-cream)', border: '1px solid var(--color-earth-200)' }}>
           <h2 className="text-xl font-semibold mb-1" style={display}>{lt ? 'Vibracija (Å)' : 'Vibration (Å)'}</h2>
           <p className="text-sm leading-relaxed" style={body}>
@@ -59,9 +71,30 @@ export default async function FoodMenuPage(props: PageProps<'/[lang]/food-menu'>
               : 'Every pair of food groups in the dish is checked against the combining table: symbiosis = 1, moderate = ½, conflict = 0. 100% means full symbiosis.'}
           </p>
         </div>
+        <div className="rounded-2xl p-5" style={{ backgroundColor: 'var(--color-cream)', border: '1px solid var(--color-earth-200)' }}>
+          <h2 className="text-xl font-semibold mb-1" style={display}>{lt ? 'Žymos' : 'Tags'}</h2>
+          <p className="text-sm leading-relaxed" style={body}>
+            {lt
+              ? 'Veganiškas, vegetariškas ir be glitimo — nustatoma automatiškai pagal ingredientus. Sezonas rodo, kada produktai švieži ir vietiniai.'
+              : 'Vegan, vegetarian and gluten-free are worked out automatically from the ingredients. The season shows when the produce is fresh and local.'}
+          </p>
+        </div>
       </div>
 
-      <SymbioticMenu lang={lang} />
+      <section id="dienos" className="scroll-mt-24 mb-16">
+        <h2 className="text-3xl font-semibold mb-2" style={display}>{lt ? 'Dienos planai' : 'Day plans'}</h2>
+        <p className="mb-6 leading-relaxed max-w-3xl" style={body}>
+          {lt
+            ? 'Visa diena iš meniu patiekalų, su tarpais tarp valgių pagal virškinimo laiką. Dienos vibracija — visų patiekalų vidurkis pagal gramus; paspauskite patiekalą, kad pamatytumėte jo kortelę.'
+            : 'A whole day from the menu, spaced by digestion time. The day’s vibration is the gram-weighted average of all its dishes; tap a dish to see its card.'}
+        </p>
+        <DayPlans lang={lang} />
+      </section>
+
+      <section id="patiekalai" className="scroll-mt-24">
+        <h2 className="text-3xl font-semibold mb-6" style={display}>{lt ? 'Visi patiekalai' : 'All dishes'}</h2>
+        <SymbioticMenu lang={lang} />
+      </section>
 
       <p className="mt-12 text-sm leading-relaxed max-w-3xl" style={{ ...body, color: 'var(--color-text-muted)' }}>
         {lt
