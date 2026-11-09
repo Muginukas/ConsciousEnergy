@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     template: '%s | ConsciousEnergy',
   },
   description:
-    'A curated library of breathwork, meditation, yoga, kundalini, and energy practices for expanded consciousness.',
+    'A holistic map of consciousness and energy: breathwork, meditation, yoga and energy practices, a vibration map, zodiac and numerology, and high-vibration food combining.',
   icons: {
     icon: '/icons/icon-192.png',
     apple: '/icons/apple-touch-icon.png',
@@ -57,6 +57,10 @@ export const metadata: Metadata = {
     'chakras',
     'consciousness',
     'energy practices',
+    'vibration',
+    'zodiac',
+    'human design',
+    'food combining',
   ],
   openGraph: {
     siteName: 'ConsciousEnergy',

@@ -7,6 +7,14 @@ const ICONS: Record<string, React.ComponentType<{ size?: number; color?: string 
   Wind, Moon, Flower: Flower2, Flame, Circle, Zap, Sprout,
 }
 
+/** Lithuanian plural of "technika": 1 technika, 2–9 technikos, 10–20 technikų. */
+function ltTechniques(n: number) {
+  const d = n % 10, t = n % 100
+  if (d === 1 && t !== 11) return 'technika'
+  if (d >= 2 && (t < 10 || t > 20)) return 'technikos'
+  return 'technikų'
+}
+
 type Props = {
   lang: string
   dict: { home: { categories: { title: string; subtitle: string } } }
@@ -14,6 +22,7 @@ type Props = {
 }
 
 export default function CategoryGrid({ lang, dict, counts }: Props) {
+  const lt = lang === 'lt'
   return (
     <section className="py-20 px-4" style={{ backgroundColor: 'var(--color-cream)' }}>
       <div className="max-w-7xl mx-auto">
@@ -56,14 +65,14 @@ export default function CategoryGrid({ lang, dict, counts }: Props) {
                   className="text-xl font-semibold mb-2"
                   style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-primary)' }}
                 >
-                  {cat.label}
+                  {lt ? cat.labelLt : cat.label}
                 </h3>
 
                 <p
                   className="text-sm leading-relaxed flex-1 mb-4"
                   style={{ color: 'var(--color-text-secondary)', fontFamily: 'var(--font-body)' }}
                 >
-                  {cat.description}
+                  {lt ? cat.descriptionLt : cat.description}
                 </p>
 
                 <div className="flex items-center justify-between">
@@ -71,7 +80,7 @@ export default function CategoryGrid({ lang, dict, counts }: Props) {
                     className="text-xs font-medium"
                     style={{ color: cat.color, fontFamily: 'var(--font-ui)' }}
                   >
-                    {count} technique{count !== 1 ? 's' : ''}
+                    {lt ? `${count} ${ltTechniques(count)}` : `${count} technique${count !== 1 ? 's' : ''}`}
                   </span>
                   <span
                     className="text-xs transition-transform group-hover:translate-x-1"
