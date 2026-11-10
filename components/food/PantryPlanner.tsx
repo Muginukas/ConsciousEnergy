@@ -298,7 +298,8 @@ export default function PantryPlanner({ lang }: { lang: string }) {
                   {analysis.conflicts.map((c) => (
                     <div key={`${c.ga}-${c.gb}`} className="rounded-xl p-4" style={{ backgroundColor: RATING_STYLE.bad.bg }}>
                       <p className="font-semibold" style={{ ...ui, color: RATING_STYLE.bad.color }}>
-                        ✕ {itemIcon(c.a)} {itemName(c.a, l)} + {itemIcon(c.b)} {itemName(c.b, l)}
+                        {lt ? 'Nedera vienoje lėkštėje: ' : 'Don’t share a plate: '}
+                        {itemIcon(c.a)} {itemName(c.a, l)} + {itemIcon(c.b)} {itemName(c.b, l)}
                       </p>
                       {c.note && <p className="mt-1 text-sm leading-snug" style={body}>{c.note[l]}</p>}
                       <div className="mt-2 text-sm" style={{ ...ui, color: 'var(--color-text-primary)' }}>
@@ -382,8 +383,8 @@ export default function PantryPlanner({ lang }: { lang: string }) {
             </h2>
             <p className="mb-5 text-sm" style={{ ...ui, color: 'var(--color-text-muted)' }}>
               {lt
-                ? 'Surikiuota pagal tai, kiek ingredientų jau turi. Visi receptai sudaryti pagal derinių principus.'
-                : 'Sorted by how many ingredients you already have. Every recipe follows the combining principles.'}
+                ? 'Pirmiausia — receptai iš to, ką jau turi. Kiekviename recepte matysi, ką turi namie (✓), ką reikės nupirkti (🛒) ir ką gali pakeisti tuo, kas yra. Visi receptai sudaryti pagal derinių principus.'
+                : 'Recipes from what you already have come first. Each shows what you have (✓), what to buy (🛒) and what you can swap for something at home. Every recipe follows the combining principles.'}
             </p>
             {matches.length === 0 ? (
               <p className="rounded-xl p-4 text-sm" style={{ ...card, ...body }}>
@@ -414,47 +415,106 @@ export default function PantryPlanner({ lang }: { lang: string }) {
   )
 }
 
+function IngredientLine({ id, amount, l, note }: { id: string; amount: string; l: L; note?: React.ReactNode }) {
+  return (
+    <li className="leading-snug">
+      <span style={{ color: 'var(--color-text-primary)' }}>
+        {itemIcon(id)} {itemName(id, l)}
+      </span>{' '}
+      <span style={{ color: 'var(--color-text-muted)' }}>— {amount}</span>
+      {note}
+    </li>
+  )
+}
+
 function RecipeCard({ m, l }: { m: RecipeMatch; l: L }) {
   const lt = l === 'lt'
   const r = m.recipe
   const complete = m.missing.length === 0
+  const amount = (id: string) => r.ingredients.find((i) => i.id === id)!.amount[l]
+  const haveList = r.ingredients.filter((i) => m.have.includes(i.id))
+  const pct = Math.round((m.haveRequired / m.required) * 100)
+  const harmonyWord =
+    r.harmony >= 80 ? (lt ? 'dera puikiai' : 'combines well') : lt ? 'dera saikingai' : 'combines moderately'
+
   return (
     <article className="flex flex-col rounded-2xl p-5" style={{ ...card, borderTop: `5px solid ${complete ? RATING_STYLE.good.color : 'var(--color-gold-400)'}` }}>
-      <div className="mb-2 flex flex-wrap items-center gap-1.5 text-[11px] font-semibold" style={ui}>
-        <span className="rounded-full px-2.5 py-1" style={{ backgroundColor: complete ? RATING_STYLE.good.bg : 'var(--color-gold-50)', color: complete ? RATING_STYLE.good.color : 'var(--color-gold-600)' }}>
-          {complete
-            ? lt ? '✓ Turi viską' : '✓ You have everything'
-            : lt ? `Trūksta: ${m.missing.length}` : `Missing: ${m.missing.length}`}
-        </span>
-        <span className="rounded-full px-2.5 py-1" style={{ backgroundColor: 'var(--color-earth-50)', color: 'var(--color-text-secondary)', border: '1px solid var(--color-earth-200)' }}>
-          ⏱ {r.minutes} min
-        </span>
-        <span className="rounded-full px-2.5 py-1" style={{ backgroundColor: 'var(--color-earth-50)', color: harmonyColor(r.harmony), border: '1px solid var(--color-earth-200)' }}>
-          {lt ? 'Harmonija' : 'Harmony'} {r.harmony}%
-        </span>
-      </div>
       <h3 className="text-xl font-semibold leading-tight" style={display}>
         <span aria-hidden="true">{r.icon}</span> {r.name[l]}
       </h3>
+      <p className="mt-1 text-xs" style={{ ...ui, color: 'var(--color-text-muted)' }}>
+        ⏱ {r.minutes} min · <span style={{ color: harmonyColor(r.harmony) }}>{lt ? 'Harmonija' : 'Harmony'} {r.harmony}% — {harmonyWord}</span>
+      </p>
 
-      <ul className="mt-3 space-y-1 text-sm" style={ui}>
-        {r.ingredients.map((i) => {
-          const has = m.have.includes(i.id)
-          return (
-            <li key={i.id} className="flex items-baseline gap-2">
-              <span className="w-4 shrink-0 text-center font-bold" style={{ color: has ? RATING_STYLE.good.color : i.optional ? 'var(--color-text-muted)' : RATING_STYLE.bad.color }}>
-                {has ? '✓' : i.optional ? '·' : '✕'}
-              </span>
-              <span style={{ color: has ? 'var(--color-text-primary)' : 'var(--color-text-secondary)' }}>
-                {itemName(i.id, l)} <span style={{ color: 'var(--color-text-muted)' }}>— {i.amount[l]}</span>
-                {i.optional && !has && <span style={{ color: 'var(--color-text-muted)' }}> ({lt ? 'nebūtina' : 'optional'})</span>}
-              </span>
-            </li>
-          )
-        })}
-      </ul>
+      {/* How much of it you have */}
+      <div className="mt-3 rounded-xl px-3 py-2.5" style={{ backgroundColor: complete ? RATING_STYLE.good.bg : 'var(--color-gold-50)' }}>
+        <p className="text-sm font-semibold" style={{ ...ui, color: complete ? RATING_STYLE.good.color : 'var(--color-gold-600)' }}>
+          {complete
+            ? lt ? '✓ Turi viską, ko reikia — gali gaminti dabar' : '✓ You have everything you need — cook it now'
+            : lt
+              ? `Turi ${m.haveRequired} iš ${m.required} pagrindinių produktų`
+              : `You have ${m.haveRequired} of ${m.required} main ingredients`}
+        </p>
+        {!complete && (
+          <div className="mt-1.5 h-1.5 overflow-hidden rounded-full" style={{ backgroundColor: 'var(--color-earth-200)' }}>
+            <div className="h-full rounded-full" style={{ width: `${pct}%`, backgroundColor: 'var(--color-gold-400)' }} />
+          </div>
+        )}
+      </div>
 
-      <p className="mt-3 text-sm leading-snug" style={body}>{r.why[l]}</p>
+      <div className="mt-4 space-y-3 text-sm" style={ui}>
+        {haveList.length > 0 && (
+          <div>
+            <p className="mb-1 text-xs font-bold uppercase tracking-wide" style={{ color: RATING_STYLE.good.color }}>
+              ✓ {lt ? 'Turi namie' : 'You have'}
+            </p>
+            <ul className="space-y-1 pl-1">
+              {haveList.map((i) => (
+                <IngredientLine key={i.id} id={i.id} amount={i.amount[l]} l={l} />
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {m.missing.length > 0 && (
+          <div>
+            <p className="mb-1 text-xs font-bold uppercase tracking-wide" style={{ color: RATING_STYLE.bad.color }}>
+              🛒 {lt ? 'Reikės nupirkti' : 'You’ll need to buy'}
+            </p>
+            <ul className="space-y-1 pl-1">
+              {m.missing.map((id) => (
+                <IngredientLine
+                  key={id}
+                  id={id}
+                  amount={amount(id)}
+                  l={l}
+                  note={
+                    m.subs[id] && (
+                      <span className="block text-xs" style={{ color: RATING_STYLE.good.color }}>
+                        ↳ {lt ? 'arba vietoj to dėk tai, ką turi: ' : 'or use what you have: '}
+                        {m.subs[id].map((x) => itemName(x, l).toLowerCase()).join(lt ? ' arba ' : ' or ')}
+                      </span>
+                    )
+                  }
+                />
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {m.missingOptional.length > 0 && (
+          <div>
+            <p className="mb-1 text-xs font-bold uppercase tracking-wide" style={{ color: 'var(--color-text-muted)' }}>
+              ＋ {lt ? 'Nebūtina — jei turi, įdėk' : 'Optional — add if you have it'}
+            </p>
+            <p className="pl-1 text-sm leading-snug" style={{ color: 'var(--color-text-secondary)' }}>
+              {m.missingOptional.map((id) => itemName(id, l).toLowerCase()).join(', ')}
+            </p>
+          </div>
+        )}
+      </div>
+
+      <p className="mt-4 text-sm leading-snug" style={body}>{r.why[l]}</p>
 
       <details className="mt-3">
         <summary className="cursor-pointer text-sm font-semibold" style={{ ...ui, color: 'var(--color-forest-700)' }}>

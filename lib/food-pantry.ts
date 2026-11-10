@@ -701,7 +701,482 @@ const RECIPE_DEFS: RecipeDef[] = [
     ],
     why: b('Vegetables with nuts and fat — all symbiosis. Beetroot supports the liver overnight.', 'Daržovės su riešutais ir riebalais — visa simbiozė. Burokėliai naktį palaiko kepenis.'),
   },
+  {
+    id: 'chicken-soup', icon: '🍲', meals: ['dinner', 'lunch'], minutes: 40,
+    name: b('Chicken and vegetable soup (no noodles)', 'Vištienos ir daržovių sriuba (be makaronų)'),
+    ingredients: [
+      ing('chicken', '300 g', '300 g'),
+      ing('carrot', '2', '2'),
+      ing('onion', '1', '1'),
+      ing('celery', '1–2 stalks', '1–2 stiebai', true),
+      ing('dill', 'a handful', 'saujelė', true),
+    ],
+    steps: [
+      b('Cover the chicken with 1.5 l of cold water, bring to the boil, skim, and simmer 20 minutes.', 'Vištieną užpilk 1,5 l šalto vandens, užvirink, nugriebk putas ir virk 20 min.'),
+      b('Add sliced carrots, onion and celery, salt and a bay leaf; cook 15 minutes more.', 'Sudėk pjaustytas morkas, svogūną ir salierą, druskos ir lauro lapą; virk dar 15 min.'),
+      b('Serve with lots of dill. Leave out noodles or bread so protein and starch don’t meet.', 'Patiek su gausiai krapų. Makaronų ar duonos nedėk — kad nesusitiktų baltymai ir krakmolas.'),
+    ],
+    why: b('A light, warming protein-and-vegetable soup — easy on digestion at night.', 'Lengva, šildanti baltymų ir daržovių sriuba — naktį nevargina virškinimo.'),
+  },
+  {
+    id: 'chicken-peppers', icon: '🍗', meals: ['dinner', 'lunch'], minutes: 25,
+    name: b('Pan-fried chicken with peppers and broccoli', 'Keptuvėje kepta vištiena su paprikomis ir brokoliais'),
+    ingredients: [
+      ing('chicken', '300 g', '300 g'),
+      ing('pepper', '1–2', '1–2'),
+      ing('broccoli', '½ head', '½ galvos'),
+      ing('onion', '1', '1', true),
+      ing('garlic', '2 cloves', '2 skiltelės', true),
+      ing('oil', '1 tbsp', '1 š.', true),
+    ],
+    steps: [
+      b('Cut the chicken into strips and fry in a hot pan with a little oil for 5–6 minutes.', 'Vištieną supjaustyk juostelėmis ir kepk įkaitintoje keptuvėje su trupučiu aliejaus 5–6 min.'),
+      b('Add pepper strips, broccoli florets, onion and garlic; fry 5 more minutes, stirring.', 'Sudėk paprikų juosteles, brokolių žiedynus, svogūną ir česnaką; kepk dar 5 min. maišydamas.'),
+      b('Season with salt, pepper and a pinch of paprika.', 'Pagardink druska, pipirais ir žiupsneliu maltos paprikos.'),
+    ],
+    why: b('Meat with vegetables, no side of rice or potatoes — a clean, light plate.', 'Mėsa su daržovėmis, be ryžių ar bulvių garnyro — švari, lengva lėkštė.'),
+  },
+  {
+    id: 'meatballs-tomato', icon: '🍅', meals: ['dinner', 'lunch'], minutes: 35,
+    name: b('Meatballs in tomato sauce with zucchini', 'Mėsos kukuliai pomidorų padaže su cukinija'),
+    ingredients: [
+      ing('meat', '400 g mince', '400 g faršo'),
+      ing('tomato', '4 (or a can)', '4 (arba skardinė)'),
+      ing('onion', '1', '1'),
+      ing('zucchini', '1', '1', true),
+      ing('garlic', '2 cloves', '2 skiltelės', true),
+      ing('parsley', 'a handful', 'saujelė', true),
+    ],
+    steps: [
+      b('Mix the mince with half the onion (grated), salt and herbs; roll into small balls.', 'Faršą sumaišyk su puse tarkuoto svogūno, druska ir žolelėmis; suformuok mažus kukulius.'),
+      b('Soften the rest of the onion and garlic, add tomatoes and diced zucchini, simmer 5 minutes.', 'Suminkštink likusį svogūną ir česnaką, sudėk pomidorus ir kubeliais pjaustytą cukiniją, troškink 5 min.'),
+      b('Lay the meatballs in the sauce, cover and simmer 15–20 minutes. Serve without pasta, with salad.', 'Sudėk kukulius į padažą, uždenk ir troškink 15–20 min. Patiek be makaronų, su salotomis.'),
+    ],
+    why: b('No breadcrumbs or pasta: meat stays with vegetables only.', 'Be džiūvėsėlių ir makaronų: mėsa lieka tik su daržovėmis.'),
+  },
+  {
+    id: 'fish-cakes', icon: '🐟', meals: ['dinner'], minutes: 25,
+    name: b('Fish cakes with dill', 'Žuvies kotletai su krapais'),
+    ingredients: [
+      ing('fish', '400 g fillet', '400 g filė'),
+      ing('eggs', '1', '1'),
+      ing('onion', '1', '1'),
+      ing('dill', 'a big handful', 'didelė sauja', true),
+      ing('oil', 'for the pan', 'kepimui', true),
+      ing('cucumber', 'for a side salad', 'salotoms šalia', true),
+    ],
+    steps: [
+      b('Finely chop or mince the fish with the onion; mix in the egg, dill, salt and pepper.', 'Žuvį su svogūnu smulkiai sukapok ar sumalk; įmaišyk kiaušinį, krapus, druską ir pipirus.'),
+      b('Shape small cakes with wet hands and fry 3–4 minutes each side (or bake at 200 °C for 15 minutes).', 'Šlapiomis rankomis suformuok kotletukus ir kepk po 3–4 min. iš kiekvienos pusės (arba 200 °C orkaitėje 15 min.).'),
+      b('Serve with cucumber salad.', 'Patiek su agurkų salotomis.'),
+    ],
+    why: b('Fish and egg are both protein — a fine pair. No flour or bread needed.', 'Žuvis ir kiaušinis — abu baltymai, dera. Miltų ar duonos nereikia.'),
+  },
+  {
+    id: 'herring-beet', icon: '🐟', meals: ['dinner', 'lunch'], minutes: 10,
+    name: b('Herring with beetroot and onion (no potatoes)', 'Silkė su burokėliais ir svogūnais (be bulvių)'),
+    ingredients: [
+      ing('herring', '2 fillets', '2 filė'),
+      ing('beet', '2 cooked', '2 virti'),
+      ing('onion', '1', '1'),
+      ing('oil', '1 tbsp', '1 š.', true),
+      ing('dill', 'a handful', 'saujelė', true),
+    ],
+    steps: [
+      b('Cut the herring into pieces, slice the onion into thin rings.', 'Silkę supjaustyk gabalėliais, svogūną — plonais žiedais.'),
+      b('Dice the beetroot, dress with oil; lay the herring and onion on top, sprinkle with dill.', 'Burokėlius supjaustyk kubeliais, apšlakstyk aliejumi; ant viršaus sudėk silkę ir svogūnus, pabarstyk krapais.'),
+    ],
+    why: b('The Lithuanian classic without boiled potatoes — fish with vegetables combines well.', 'Lietuviška klasika be virtų bulvių — žuvis su daržovėmis dera gerai.'),
+  },
+  {
+    id: 'egg-salad', icon: '🥗', meals: ['dinner', 'lunch'], minutes: 15,
+    name: b('Egg and cucumber salad with herbs', 'Kiaušinių ir agurkų salotos su žolelėmis'),
+    ingredients: [
+      ing('eggs', '3', '3'),
+      ing('cucumber', '1', '1'),
+      ing('lettuce', 'a bowl', 'dubenėlis'),
+      ing('radish', '4–5', '4–5', true),
+      ing('dill', 'a handful', 'saujelė', true),
+      ing('sourCream', '2 tbsp (or oil)', '2 š. (arba aliejaus)', true),
+    ],
+    steps: [
+      b('Hard-boil the eggs (9 minutes), cool and quarter them.', 'Kiaušinius virk kietai (9 min.), atvėsink ir supjaustyk ketvirčiais.'),
+      b('Mix salad leaves, cucumber, radishes and dill; top with the eggs and a spoon of sour cream.', 'Sumaišyk salotų lapus, agurką, ridikėlius ir krapus; ant viršaus sudėk kiaušinius ir šaukštą grietinės.'),
+    ],
+    why: b('Protein with fresh vegetables — light enough for a late dinner.', 'Baltymai su šviežiomis daržovėmis — pakankamai lengva ir vėlesnei vakarienei.'),
+  },
+  {
+    id: 'zucchini-bake', icon: '🧀', meals: ['dinner'], minutes: 35,
+    name: b('Zucchini and tomato bake with cheese', 'Cukinijų ir pomidorų apkepas su sūriu'),
+    ingredients: [
+      ing('zucchini', '2', '2'),
+      ing('tomato', '2–3', '2–3'),
+      ing('eggs', '2', '2'),
+      ing('cheese', '80 g', '80 g'),
+      ing('garlic', '1 clove', '1 skiltelė', true),
+      ing('parsley', 'a handful', 'saujelė', true),
+    ],
+    steps: [
+      b('Slice zucchini and tomatoes into rounds and layer them in a baking dish.', 'Cukinijas ir pomidorus supjaustyk griežinėliais ir sluoksniais sudėk į kepimo indą.'),
+      b('Whisk eggs with garlic, salt and herbs, pour over, top with grated cheese.', 'Kiaušinius išplak su česnaku, druska ir žolelėmis, užpilk ant daržovių, apibarstyk tarkuotu sūriu.'),
+      b('Bake at 190 °C for 25 minutes until golden.', 'Kepk 190 °C orkaitėje 25 min., kol paruduos.'),
+    ],
+    why: b('A warm, filling dinner without flour: eggs and cheese with vegetables.', 'Šilta, soti vakarienė be miltų: kiaušiniai ir sūris su daržovėmis.'),
+  },
+  {
+    id: 'tofu-veg', icon: '⬜', meals: ['dinner', 'lunch'], minutes: 20,
+    name: b('Tofu stir-fry with vegetables and ginger', 'Tofu su daržovėmis ir imbieru'),
+    ingredients: [
+      ing('tofu', '200 g', '200 g'),
+      ing('broccoli', '½ head', '½ galvos'),
+      ing('carrot', '1', '1'),
+      ing('pepper', '1', '1', true),
+      ing('ginger', '2 cm', '2 cm', true),
+      ing('garlic', '2 cloves', '2 skiltelės', true),
+      ing('oil', '1 tbsp', '1 š.'),
+    ],
+    steps: [
+      b('Press the tofu dry, cube it and fry until golden on all sides.', 'Tofu nusausink, supjaustyk kubeliais ir apkepk, kol pagels iš visų pusių.'),
+      b('Add carrot strips, broccoli, pepper, ginger and garlic; stir-fry 5 minutes.', 'Sudėk morkų juosteles, brokolius, papriką, imbierą ir česnaką; kepk maišydamas 5 min.'),
+      b('Season with soy sauce or salt.', 'Pagardink sojų padažu arba druska.'),
+    ],
+    why: b('Plant protein with vegetables and a little fat — full symbiosis.', 'Augaliniai baltymai su daržovėmis ir trupučiu riebalų — pilna simbiozė.'),
+  },
+  {
+    id: 'lentil-pumpkin-soup', icon: '🥣', meals: ['dinner', 'lunch'], minutes: 30,
+    name: b('Red lentil soup with pumpkin and ginger', 'Raudonųjų lęšių sriuba su moliūgu ir imbieru'),
+    ingredients: [
+      ing('lentils', '¾ cup', '¾ stiklinės'),
+      ing('pumpkin', '300 g', '300 g'),
+      ing('carrot', '1', '1'),
+      ing('onion', '1', '1'),
+      ing('ginger', '2 cm', '2 cm', true),
+      ing('oliveOil', '1 tbsp', '1 š.', true),
+    ],
+    steps: [
+      b('Soften onion, carrot and ginger in oil; add turmeric or cumin if you have them.', 'Aliejuje suminkštink svogūną, morką ir imbierą; jei turi, įberk ciberžolės ar kmynų.'),
+      b('Add diced pumpkin, rinsed lentils and 1 l of water; simmer 20 minutes.', 'Sudėk kubeliais pjaustytą moliūgą, nuplautus lęšius ir 1 l vandens; virk 20 min.'),
+      b('Blend smooth, salt to taste.', 'Sutrink iki vientisos masės, pasūdyk pagal skonį.'),
+    ],
+    why: b('Legumes with vegetables, gently spiced — creamy without any cream.', 'Ankštiniai su daržovėmis, švelniai pagardinti — kreminė be grietinėlės.'),
+  },
+  {
+    id: 'bean-beet-salad', icon: '🟣', meals: ['dinner', 'lunch'], minutes: 15,
+    name: b('Beetroot and bean salad with pickles (vinaigrette)', 'Burokėlių ir pupelių salotos su raugintais agurkais (vinegretas)'),
+    ingredients: [
+      ing('beet', '2 cooked', '2 virti'),
+      ing('beans', '1 can', '1 skardinė'),
+      ing('pickles', '2', '2'),
+      ing('onion', '½', '½', true),
+      ing('sauerkraut', 'a handful', 'sauja', true),
+      ing('oil', '2 tbsp', '2 š.'),
+    ],
+    steps: [
+      b('Dice the beetroot, pickles and onion; rinse the beans.', 'Burokėlius, agurkus ir svogūną supjaustyk kubeliais; pupeles nuplauk.'),
+      b('Mix everything with sauerkraut and oil, salt to taste.', 'Viską sumaišyk su raugintais kopūstais ir aliejumi, pasūdyk pagal skonį.'),
+    ],
+    why: b('Classic vinaigrette without potatoes: beans with vegetables, plus living ferments.', 'Klasikinis vinegretas be bulvių: pupelės su daržovėmis ir gyvi fermentai.'),
+  },
+  {
+    id: 'broccoli-soup', icon: '🥦', meals: ['dinner', 'lunch'], minutes: 25,
+    name: b('Creamy broccoli soup', 'Trinta brokolių sriuba'),
+    ingredients: [
+      ing('broccoli', '1 head', '1 galva'),
+      ing('onion', '1', '1'),
+      ing('potatoes', '1–2 (for creaminess)', '1–2 (tirštumui)'),
+      ing('butter', '1 tbsp', '1 š.'),
+      ing('garlic', '1 clove', '1 skiltelė', true),
+      ing('seeds', 'to sprinkle', 'pabarstyti', true),
+    ],
+    steps: [
+      b('Soften the onion and garlic in butter, add diced potato and 800 ml of water; cook 10 minutes.', 'Svieste suminkštink svogūną ir česnaką, sudėk kubeliais pjaustytą bulvę ir 800 ml vandens; virk 10 min.'),
+      b('Add broccoli florets and cook 7 more minutes — no longer, so it stays green.', 'Sudėk brokolių žiedynus ir virk dar 7 min. — ne ilgiau, kad liktų žali.'),
+      b('Blend, salt, serve with seeds.', 'Sutrink, pasūdyk, patiek su sėklomis.'),
+    ],
+    why: b('Vegetables with a little starch and butter — soft, soothing and filling.', 'Daržovės su trupučiu krakmolo ir sviesto — švelnu, ramina ir pasotina.'),
+  },
+  {
+    id: 'mushroom-soup', icon: '🍄', meals: ['dinner', 'lunch'], minutes: 30,
+    name: b('Mushroom soup with potatoes and dill', 'Grybų sriuba su bulvėmis ir krapais'),
+    ingredients: [
+      ing('mushrooms', '300 g', '300 g'),
+      ing('potatoes', '2–3', '2–3'),
+      ing('carrot', '1', '1'),
+      ing('onion', '1', '1'),
+      ing('butter', '1 tbsp', '1 š.', true),
+      ing('sourCream', 'to serve', 'patiekimui', true),
+      ing('dill', 'a handful', 'saujelė', true),
+    ],
+    steps: [
+      b('Fry onion and sliced mushrooms in butter for 5 minutes.', 'Svieste 5 min. pakepink svogūną ir pjaustytus grybus.'),
+      b('Add diced potatoes, grated carrot and 1.2 l of water; simmer 20 minutes, salt.', 'Sudėk kubeliais pjaustytas bulves, tarkuotą morką ir 1,2 l vandens; virk 20 min., pasūdyk.'),
+      b('Serve with a spoon of sour cream and dill.', 'Patiek su šaukštu grietinės ir krapais.'),
+    ],
+    why: b('Starch with vegetables and fat — a hearty soup that still combines well.', 'Krakmolas su daržovėmis ir riebalais — soti sriuba, kuri vis tiek dera.'),
+  },
+  {
+    id: 'borscht', icon: '🍲', meals: ['dinner', 'lunch'], minutes: 40,
+    name: b('Hot beetroot soup (vegetable borscht)', 'Karšti burokėlių barščiai (daržovių)'),
+    ingredients: [
+      ing('beet', '3 raw or cooked', '3 žali ar virti'),
+      ing('carrot', '1', '1'),
+      ing('onion', '1', '1'),
+      ing('cabbage', '¼ head', '¼ galvos', true),
+      ing('potatoes', '2', '2', true),
+      ing('sourCream', 'to serve', 'patiekimui', true),
+      ing('dill', 'a handful', 'saujelė', true),
+    ],
+    steps: [
+      b('Soften onion and grated carrot in a little oil.', 'Su trupučiu aliejaus suminkštink svogūną ir tarkuotą morką.'),
+      b('Add grated beetroot, shredded cabbage, diced potatoes and 1.5 l of water; simmer 25 minutes.', 'Sudėk tarkuotus burokėlius, smulkintus kopūstus, kubeliais pjaustytas bulves ir 1,5 l vandens; virk 25 min.'),
+      b('Season with salt, a splash of lemon or vinegar; serve with sour cream and dill.', 'Pagardink druska, trupučiu citrinos ar acto; patiek su grietine ir krapais.'),
+    ],
+    why: b('A vegetable soup without meat — beetroot and cabbage warm and cleanse.', 'Daržovių sriuba be mėsos — burokėliai ir kopūstai šildo ir valo.'),
+  },
+  {
+    id: 'sauerkraut-soup', icon: '🫙', meals: ['dinner', 'lunch'], minutes: 35,
+    name: b('Sauerkraut soup', 'Raugintų kopūstų sriuba'),
+    ingredients: [
+      ing('sauerkraut', '400 g', '400 g'),
+      ing('carrot', '1', '1'),
+      ing('onion', '1', '1'),
+      ing('potatoes', '2', '2', true),
+      ing('oil', '1 tbsp', '1 š.', true),
+      ing('dill', 'a handful', 'saujelė', true),
+    ],
+    steps: [
+      b('Soften onion and carrot in oil, add the sauerkraut and 1.2 l of water.', 'Aliejuje suminkštink svogūną ir morką, sudėk raugintus kopūstus ir 1,2 l vandens.'),
+      b('Add diced potatoes, a bay leaf and peppercorns; simmer 25 minutes.', 'Sudėk kubeliais pjaustytas bulves, lauro lapą ir pipirų; virk 25 min.'),
+      b('Before serving stir in a spoon of raw sauerkraut and dill.', 'Prieš patiekdamas įmaišyk šaukštą žalių raugintų kopūstų ir krapų.'),
+    ],
+    why: b('Warming and sour — good for digestion in the cold season.', 'Šildanti ir rūgštoka — gera virškinimui šaltuoju metų laiku.'),
+  },
+  {
+    id: 'stuffed-peppers', icon: '🫑', meals: ['dinner', 'lunch'], minutes: 50,
+    name: b('Peppers stuffed with rice and vegetables', 'Paprikos, įdarytos ryžiais ir daržovėmis'),
+    ingredients: [
+      ing('pepper', '4', '4'),
+      ing('rice', '¾ cup', '¾ stiklinės'),
+      ing('carrot', '1', '1'),
+      ing('onion', '1', '1'),
+      ing('tomato', '3 (or a can)', '3 (arba skardinė)'),
+      ing('oliveOil', '1 tbsp', '1 š.', true),
+      ing('parsley', 'a handful', 'saujelė', true),
+    ],
+    steps: [
+      b('Half-cook the rice (10 minutes). Soften onion and grated carrot in oil and mix with the rice and herbs.', 'Ryžius pusiau išvirk (10 min.). Aliejuje suminkštink svogūną ir tarkuotą morką, sumaišyk su ryžiais ir žolelėmis.'),
+      b('Cut the tops off the peppers, remove seeds and fill them with the rice.', 'Paprikoms nupjauk viršūnes, išimk sėklas ir prikimšk ryžių.'),
+      b('Stand them in a pot, pour over chopped tomatoes and a cup of water; cover and stew 30 minutes.', 'Sustatyk į puodą, užpilk pjaustytais pomidorais ir stikline vandens; uždengtas troškink 30 min.'),
+    ],
+    why: b('Rice with vegetables instead of mince — the combining-friendly version.', 'Ryžiai su daržovėmis vietoj faršo — derinius atitinkanti versija.'),
+  },
+  {
+    id: 'mushroom-rice', icon: '🍚', meals: ['dinner', 'lunch'], minutes: 30,
+    name: b('Mushroom rice (simple risotto)', 'Ryžiai su grybais (paprastas rizotas)'),
+    ingredients: [
+      ing('rice', '1 cup', '1 stiklinė'),
+      ing('mushrooms', '250 g', '250 g'),
+      ing('onion', '1', '1'),
+      ing('butter', '1 tbsp', '1 š.'),
+      ing('garlic', '1 clove', '1 skiltelė', true),
+      ing('parsley', 'a handful', 'saujelė', true),
+    ],
+    steps: [
+      b('Fry onion, garlic and mushrooms in butter for 5 minutes.', 'Svieste 5 min. pakepink svogūną, česnaką ir grybus.'),
+      b('Stir in the rice, then add 2½ cups of hot water a little at a time, stirring, for 18–20 minutes.', 'Įmaišyk ryžius, tada po truputį pilk 2½ stiklinės karšto vandens, maišydamas, 18–20 min.'),
+      b('Salt, add a knob of butter and parsley. No parmesan — keeps it light.', 'Pasūdyk, įdėk gabalėlį sviesto ir petražolių. Be parmezano — taip lengviau.'),
+    ],
+    why: b('Grain with mushrooms and butter — soft, calming evening food.', 'Kruopos su grybais ir sviestu — švelnus, raminantis vakaro maistas.'),
+  },
+  {
+    id: 'quinoa-veg', icon: '🌾', meals: ['dinner', 'lunch'], minutes: 25,
+    name: b('Quinoa with roasted vegetables', 'Bolivinė balanda su keptomis daržovėmis'),
+    ingredients: [
+      ing('quinoa', '¾ cup', '¾ stiklinės'),
+      ing('zucchini', '1', '1'),
+      ing('pepper', '1', '1'),
+      ing('tomato', '2', '2', true),
+      ing('oliveOil', '2 tbsp', '2 š.'),
+      ing('parsley', 'a handful', 'saujelė', true),
+    ],
+    steps: [
+      b('Rinse the quinoa and cook in 1½ cups of water for 15 minutes.', 'Bolivinę balandą nuplauk ir virk 1½ stiklinės vandens 15 min.'),
+      b('Roast chunks of zucchini and pepper with olive oil and salt at 200 °C for 20 minutes.', 'Cukinijų ir paprikų gabalėlius su alyvuogių aliejumi ir druska kepk 200 °C orkaitėje 20 min.'),
+      b('Mix with the quinoa, fresh tomatoes and parsley.', 'Sumaišyk su bolivine balanda, šviežiais pomidorais ir petražolėmis.'),
+    ],
+    why: b('A light, gluten-free grain with vegetables and olive oil.', 'Lengvos kruopos be glitimo su daržovėmis ir alyvuogių aliejumi.'),
+  },
+  {
+    id: 'mash-cabbage', icon: '🥔', meals: ['dinner', 'lunch'], minutes: 35,
+    name: b('Potato mash with stewed cabbage', 'Bulvių košė su troškintais kopūstais'),
+    ingredients: [
+      ing('potatoes', '5–6', '5–6'),
+      ing('cabbage', '½ head', '½ galvos'),
+      ing('onion', '1', '1'),
+      ing('butter', '1–2 tbsp', '1–2 š.'),
+      ing('carrot', '1', '1', true),
+      ing('dill', 'a handful', 'saujelė', true),
+    ],
+    steps: [
+      b('Boil the potatoes in salted water, mash with butter and a little of the cooking water (no milk needed).', 'Bulves išvirk pasūdytame vandenyje, sutrink su sviestu ir trupučiu nuoviro (pieno nereikia).'),
+      b('Stew shredded cabbage with onion and carrot for 20 minutes.', 'Smulkintus kopūstus troškink su svogūnu ir morka 20 min.'),
+      b('Serve together, sprinkled with dill.', 'Patiek kartu, pabarstęs krapais.'),
+    ],
+    why: b('Potatoes with vegetables and butter, instead of with a cutlet — a homely dish that combines.', 'Bulvės su daržovėmis ir sviestu vietoj kotleto — naminis patiekalas, kuris dera.'),
+  },
+  {
+    id: 'sweet-potato-spinach', icon: '🍠', meals: ['dinner', 'lunch'], minutes: 40,
+    name: b('Baked sweet potato with spinach and avocado', 'Keptas batatas su špinatais ir avokadu'),
+    ingredients: [
+      ing('sweetPotato', '2', '2'),
+      ing('spinach', '2 handfuls', '2 saujos'),
+      ing('avocado', '1', '1', true),
+      ing('oliveOil', '1 tbsp', '1 š.'),
+      ing('seeds', '1 tbsp', '1 š.', true),
+    ],
+    steps: [
+      b('Bake the sweet potatoes whole at 200 °C for 35–40 minutes until soft.', 'Batatus kepk sveikus 200 °C orkaitėje 35–40 min., kol suminkštės.'),
+      b('Wilt the spinach with olive oil and salt.', 'Špinatus suvytink su alyvuogių aliejumi ir druska.'),
+      b('Split the potatoes, fill with spinach and avocado, sprinkle with seeds.', 'Batatus perpjauk, įdėk špinatų ir avokado, pabarstyk sėklomis.'),
+    ],
+    why: b('Starch with greens and good fats — sweet, grounding and easy to digest.', 'Krakmolas su žalumynais ir gerais riebalais — saldu, įžeminanti ir lengvai virškinama.'),
+  },
+  {
+    id: 'ratatouille', icon: '🍆', meals: ['dinner', 'lunch'], minutes: 35,
+    name: b('Stewed zucchini, pepper and tomato (ratatouille style)', 'Troškintos cukinijos, paprikos ir pomidorai (ratatouille)'),
+    ingredients: [
+      ing('zucchini', '2', '2'),
+      ing('pepper', '1–2', '1–2'),
+      ing('tomato', '3–4', '3–4'),
+      ing('onion', '1', '1'),
+      ing('garlic', '2 cloves', '2 skiltelės', true),
+      ing('oliveOil', '2 tbsp', '2 š.'),
+    ],
+    steps: [
+      b('Soften onion and garlic in olive oil, add diced pepper and zucchini; cook 5 minutes.', 'Alyvuogių aliejuje suminkštink svogūną ir česnaką, sudėk kubeliais pjaustytas paprikas ir cukinijas; kepk 5 min.'),
+      b('Add chopped tomatoes, salt and dried herbs; cover and stew 20 minutes.', 'Sudėk pjaustytus pomidorus, druskos ir džiovintų žolelių; uždengęs troškink 20 min.'),
+      b('Eat on its own, or with a fried egg, buckwheat or fish — it goes with any one of them.', 'Valgyk vieną arba su kiaušiniu, grikiais ar žuvimi — dera su bet kuriuo vienu iš jų.'),
+    ],
+    why: b('Vegetables only — a universal partner for any single protein or grain.', 'Vien daržovės — universalus partneris bet kuriam vienam baltymui ar kruopoms.'),
+  },
+  {
+    id: 'roast-cauliflower', icon: '🥦', meals: ['dinner', 'lunch'], minutes: 30,
+    name: b('Roasted cauliflower with turmeric and garlic', 'Keptas žiedinis kopūstas su ciberžole ir česnaku'),
+    ingredients: [
+      ing('cauliflower', '1 head', '1 galva'),
+      ing('oliveOil', '2 tbsp', '2 š.'),
+      ing('garlic', '2 cloves', '2 skiltelės', true),
+      ing('parsley', 'a handful', 'saujelė', true),
+      ing('seeds', '1 tbsp', '1 š.', true),
+    ],
+    steps: [
+      b('Break the cauliflower into florets, toss with olive oil, garlic, salt, turmeric and black pepper.', 'Žiedinį kopūstą išardyk žiedynais, sumaišyk su alyvuogių aliejumi, česnaku, druska, ciberžole ir juodaisiais pipirais.'),
+      b('Roast at 210 °C for 20–25 minutes until golden at the edges.', 'Kepk 210 °C orkaitėje 20–25 min., kol kraštai paruduos.'),
+      b('Sprinkle with parsley and seeds.', 'Pabarstyk petražolėmis ir sėklomis.'),
+    ],
+    why: b('Vegetables and fat; black pepper makes turmeric many times more available.', 'Daržovės ir riebalai; juodieji pipirai kelis kartus padidina ciberžolės įsisavinimą.'),
+  },
+  {
+    id: 'cabbage-carrot-salad', icon: '🥬', meals: ['lunch', 'dinner'], minutes: 10,
+    name: b('Cabbage and carrot salad', 'Kopūstų ir morkų salotos'),
+    ingredients: [
+      ing('cabbage', '¼ head', '¼ galvos'),
+      ing('carrot', '2', '2'),
+      ing('oil', '1–2 tbsp', '1–2 š.'),
+      ing('dill', 'a handful', 'saujelė', true),
+      ing('lemon', '½', '½', true),
+    ],
+    steps: [
+      b('Finely shred the cabbage, sprinkle with salt and crush with your hands until it softens.', 'Kopūstus plonai supjaustyk, pabarstyk druska ir rankomis paspaudyk, kol suminkštės.'),
+      b('Add grated carrots, oil, dill and a little lemon juice.', 'Įdėk tarkuotų morkų, aliejaus, krapų ir trupučiu citrinos sulčių.'),
+    ],
+    why: b('A raw side that suits any main — fish, eggs, grains or potatoes.', 'Žalias priedas, tinkantis prie bet kurio pagrindinio — žuvies, kiaušinių, kruopų ar bulvių.'),
+  },
   // ---------- Breakfast & lunch ----------
+  {
+    id: 'scrambled-tomato', icon: '🍳', meals: ['breakfast', 'dinner'], minutes: 10,
+    name: b('Scrambled eggs with tomatoes and onion', 'Plakta kiaušinienė su pomidorais ir svogūnais'),
+    ingredients: [
+      ing('eggs', '2–3', '2–3'),
+      ing('tomato', '1–2', '1–2'),
+      ing('onion', '½', '½', true),
+      ing('butter', '1 tsp', '1 š-ėlis', true),
+      ing('parsley', 'a little', 'truputis', true),
+    ],
+    steps: [
+      b('Soften the onion in butter, add diced tomato for 2 minutes.', 'Svieste suminkštink svogūną, sudėk kubeliais pjaustytą pomidorą ir pakepink 2 min.'),
+      b('Pour in the beaten eggs and stir gently over low heat until just set. Eat without bread.', 'Supilk išplaktus kiaušinius ir švelniai maišyk ant mažos ugnies, kol sustings. Valgyk be duonos.'),
+    ],
+    why: b('Eggs with vegetables — quick protein that combines well.', 'Kiaušiniai su daržovėmis — greiti baltymai, kurie dera.'),
+  },
+  {
+    id: 'cottage-berries', icon: '🫐', meals: ['breakfast'], minutes: 5,
+    name: b('Cottage cheese with berries', 'Varškė su uogomis'),
+    ingredients: [
+      ing('cottage', '200 g', '200 g'),
+      ing('berries', 'a handful', 'sauja'),
+      ing('honey', '1 tsp', '1 š-ėlis', true),
+      ing('flax', '1 tbsp', '1 š.', true),
+    ],
+    steps: [
+      b('Top cottage cheese with berries (thawed if frozen), a little honey and flax.', 'Varškę papuošk uogomis (jei šaldytos — atšildytomis), trupučiu medaus ir sėmenimis.'),
+    ],
+    why: b('Protein with sour berries is moderate — better than with sweet jam or bread.', 'Baltymai su rūgščiomis uogomis dera saikingai — geriau nei su uogiene ar duona.'),
+  },
+  {
+    id: 'berries-nuts', icon: '🫐', meals: ['breakfast'], minutes: 5,
+    name: b('Berries with walnuts and seeds', 'Uogos su riešutais ir sėklomis'),
+    ingredients: [
+      ing('berries', '1 bowl', '1 dubenėlis'),
+      ing('walnuts', 'a handful', 'sauja'),
+      ing('seeds', '1 tbsp', '1 š.', true),
+    ],
+    steps: [
+      b('Mix berries with soaked walnuts and seeds. Eat slowly, on its own.', 'Sumaišyk uogas su mirkytais riešutais ir sėklomis. Valgyk lėtai, atskirai nuo kito maisto.'),
+    ],
+    why: b('Shelton’s favourite pairing: acid fruit helps nuts digest. Mostly raw — very high vibration.', 'Sheltono mėgstamas derinys: rūgštūs vaisiai padeda virškinti riešutus. Beveik viskas žalia — labai aukšta vibracija.'),
+  },
+  {
+    id: 'apple-walnuts', icon: '🍎', meals: ['breakfast'], minutes: 5,
+    name: b('Apple with walnuts and cinnamon', 'Obuolys su graikiniais riešutais ir cinamonu'),
+    ingredients: [
+      ing('apple', '1–2', '1–2'),
+      ing('walnuts', 'a handful', 'sauja'),
+      ing('honey', '1 tsp', '1 š-ėlis', true),
+    ],
+    steps: [
+      b('Slice the apple, add walnuts, sprinkle cinnamon, drizzle with a little honey.', 'Supjaustyk obuolį, įdėk riešutų, pabarstyk cinamonu, užlašink truputį medaus.'),
+    ],
+    why: b('Sour fruit + nuts — symbiosis. No bread or porridge alongside.', 'Rūgštūs vaisiai + riešutai — simbiozė. Be duonos ar košės šalia.'),
+  },
+  {
+    id: 'kefir-banana', icon: '🥤', meals: ['breakfast'], minutes: 5,
+    name: b('Kefir smoothie with banana and flax', 'Kefyro kokteilis su bananu ir sėmenimis'),
+    ingredients: [
+      ing('kefir', '1 glass', '1 stiklinė'),
+      ing('banana', '1', '1'),
+      ing('flax', '1 tbsp', '1 š.', true),
+    ],
+    steps: [
+      b('Blend everything and drink slowly, on its own.', 'Viską sutrink ir gerk lėtai, atskirai nuo kito maisto.'),
+    ],
+    why: b('Live kefir cultures plus banana and flax fibre that feeds them.', 'Gyvos kefyro kultūros ir banano bei sėmenų skaidulos, kuriomis jos minta.'),
+  },
+  {
+    id: 'millet-butter', icon: '🌾', meals: ['breakfast'], minutes: 25,
+    name: b('Millet porridge with butter and banana', 'Sorų košė su sviestu ir bananu'),
+    ingredients: [
+      ing('millet', '½ cup', '½ stiklinės'),
+      ing('butter', '1 tsp', '1 š-ėlis'),
+      ing('banana', '1', '1', true),
+      ing('seeds', '1 tbsp', '1 š.', true),
+    ],
+    steps: [
+      b('Rinse millet in hot water and cook in 1½ cups of water for 20 minutes.', 'Soras nuplauk karštu vandeniu ir virk 1½ stiklinės vandens 20 min.'),
+      b('Add butter, top with banana slices and seeds.', 'Įdėk sviesto, papuošk banano griežinėliais ir sėklomis.'),
+    ],
+    why: b('Warm, gluten-free grain with fat — sweet banana pairs with it, sour fruit would not.', 'Šiltos kruopos be glitimo su riebalais — saldus bananas dera, rūgštūs vaisiai — ne.'),
+  },
   {
     id: 'oats-banana', icon: '🥣', meals: ['breakfast'], minutes: 10,
     name: b('Oat porridge with banana and walnuts', 'Avižinė košė su bananu ir riešutais'),
@@ -798,13 +1273,44 @@ export const RECIPES: Recipe[] = RECIPE_DEFS.map((r) => {
   return { ...r, harmony: recipeHarmony(r) }
 })
 
+/**
+ * Families of pantry items that can stand in for each other in a recipe
+ * (any carrot-like vegetable for another, rice for buckwheat, salmon for white fish).
+ * Vegetables (non-seasoning) form one family automatically.
+ */
+const FAMILIES: string[][] = [
+  ['fish', 'salmon'],
+  ['chicken', 'meat'],
+  ['buckwheat', 'rice', 'millet', 'quinoa'],
+  ['potatoes', 'sweetPotato'],
+  ['lentils', 'beans', 'chickpeas'],
+  ['butter', 'oliveOil', 'oil'],
+  ['kefir', 'yogurt'],
+  ['walnuts', 'seeds'],
+  ['cottage', 'cheese'],
+]
+
+function familyOf(id: string): string[] {
+  const fam = FAMILIES.find((f) => f.includes(id))
+  if (fam) return fam
+  const p = PANTRY_BY_ID.get(id)
+  if (p && !p.condiment && pantryGroup(id) === 'veg' && id !== 'sauerkraut' && id !== 'pickles')
+    return PANTRY.filter((x) => !x.condiment && pantryGroup(x.id) === 'veg' && x.id !== 'sauerkraut' && x.id !== 'pickles').map((x) => x.id)
+  return [id]
+}
+
 export type RecipeMatch = {
   recipe: Recipe
   have: string[]
   missing: string[]
   missingOptional: string[]
-  /** Share of required ingredients the user has, 0–1. */
+  /** For a missing ingredient: things the user has that can replace it. */
+  subs: Record<string, string[]>
+  /** Share of required ingredients covered (owned = 1, replaceable = ¾), 0–1. */
   coverage: number
+  /** Required ingredients owned / total. */
+  haveRequired: number
+  required: number
 }
 
 /** Recipes for a meal ranked by how much of them the user already has. */
@@ -812,21 +1318,43 @@ export function matchRecipes(ids: string[], meal: Meal): RecipeMatch[] {
   const owned = new Set(ids)
   return RECIPES.filter((r) => r.meals.includes(meal))
     .map((recipe) => {
+      const inRecipe = new Set(recipe.ingredients.map((i) => i.id))
       const req = recipe.ingredients.filter((i) => !i.optional).map((i) => i.id)
       const opt = recipe.ingredients.filter((i) => i.optional).map((i) => i.id)
       const have = recipe.ingredients.map((i) => i.id).filter((id) => owned.has(id))
       const missing = req.filter((id) => !owned.has(id))
       const missingOptional = opt.filter((id) => !owned.has(id))
-      return { recipe, have, missing, missingOptional, coverage: (req.length - missing.length) / req.length }
+      const used = new Set<string>()
+      const subs: Record<string, string[]> = {}
+      for (const id of missing) {
+        const alt = familyOf(id).filter((x) => x !== id && owned.has(x) && !inRecipe.has(x) && !used.has(x)).slice(0, 2)
+        if (alt.length) {
+          subs[id] = alt
+          used.add(alt[0])
+        }
+      }
+      // A swap within a close family (rice for buckwheat) counts ¾; any-vegetable swaps ½.
+      const subScore = Object.keys(subs).reduce((t, id) => t + (FAMILIES.some((f) => f.includes(id)) ? 0.75 : 0.5), 0)
+      const haveRequired = req.length - missing.length
+      return {
+        recipe, have, missing, missingOptional, subs,
+        coverage: (haveRequired + subScore) / req.length,
+        haveRequired,
+        required: req.length,
+      }
     })
-    // Show a recipe when its main ingredient is at hand, or nearly all of it is.
-    .filter((m) => owned.has(m.recipe.ingredients[0].id) || m.coverage >= 0.75)
+    // Show a recipe when its main ingredient is at hand (or has a close stand-in), or most of it is.
+    .filter((m) => {
+      const main = m.recipe.ingredients[0].id
+      const closeSub = main in m.subs && FAMILIES.some((f) => f.includes(main))
+      return owned.has(main) || closeSub || m.haveRequired / m.required >= 0.6
+    })
     .sort(
       (a, b) =>
+        // Recipes built on something you have come first.
+        Number(owned.has(b.recipe.ingredients[0].id)) - Number(owned.has(a.recipe.ingredients[0].id)) ||
         b.coverage - a.coverage ||
         b.have.length - a.have.length ||
-        // Prefer recipes whose first (main) ingredient the user has.
-        Number(owned.has(b.recipe.ingredients[0].id)) - Number(owned.has(a.recipe.ingredients[0].id)) ||
         a.recipe.minutes - b.recipe.minutes,
     )
 }
