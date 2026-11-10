@@ -113,6 +113,7 @@ export default async function HomePage(props: PageProps<'/[lang]'>) {
         { href: `/${lang}/food-pyramid`, label: lt ? 'Maisto piramidė' : 'Food pyramid' },
         { href: `/${lang}/food-combining`, label: lt ? 'Maisto deriniai' : 'Food combining' },
         { href: `/${lang}/food-menu`, label: lt ? 'Simbiotinis meniu' : 'Symbiotic menu' },
+        { href: `/${lang}/food-kitchen`, label: lt ? 'Ką turiu namie' : 'From my kitchen' },
       ],
     },
   ]
