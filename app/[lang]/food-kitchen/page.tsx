@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import { hasLocale } from '@/lib/dictionaries'
 import FoodTabs from '@/components/food/FoodTabs'
-import PantryPlanner from '@/components/food/PantryPlanner'
+import KitchenModes from '@/components/food/KitchenModes'
 
 export async function generateMetadata(props: PageProps<'/[lang]/food-kitchen'>): Promise<Metadata> {
   const { lang } = await props.params
@@ -35,12 +35,12 @@ export default async function FoodKitchenPage(props: PageProps<'/[lang]/food-kit
         </h1>
         <p className="text-lg leading-relaxed" style={{ fontFamily: 'var(--font-body)', color: 'var(--color-text-secondary)' }}>
           {lt
-            ? 'Įrašyk, ką turi šaldytuve ir spintelėje, ir pasirink valgį. Patikrinsime, ar produktai dera vienoje lėkštėje, pasiūlysime, kaip suderinti ar ką pridėti, ir duosime kelis receptus iš to, ką jau turi.'
-            : 'Type what’s in your fridge and cupboard and choose a meal. We check whether the ingredients belong on one plate, suggest how to combine them or what to add, and give a few recipes from what you already have.'}
+            ? 'Du būdai rasti, ką gaminti. „Iš to, ką turiu“ — įrašyk produktus iš šaldytuvo ir spintelės: patikrinsime, ar jie dera vienoje lėkštėje, ir pasiūlysime receptų. „Pagal produktą“ — pasirink vieną produktą (pvz., grikius) ir pamatyk visus jo simbiotinius derinius bei receptus pusryčiams, pietums ir vakarienei.'
+            : 'Two ways to find what to cook. “From what I have” — enter what’s in your fridge and cupboard: we check whether it belongs on one plate and suggest recipes. “By ingredient” — choose one ingredient (e.g. buckwheat) and see all its symbiotic combinations and recipes for breakfast, lunch and dinner.'}
         </p>
       </header>
 
-      <PantryPlanner lang={lang} />
+      <KitchenModes lang={lang} />
 
       <p className="mt-12 text-sm leading-relaxed max-w-3xl" style={{ fontFamily: 'var(--font-body)', color: 'var(--color-text-muted)' }}>
         {lt
