@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-type Tab = 'pyramid' | 'combining' | 'menu'
+type Tab = 'pyramid' | 'combining' | 'menu' | 'kitchen'
 
 export default function FoodTabs({ lang, active }: { lang: string; active: Tab }) {
   const lt = lang === 'lt'
@@ -8,9 +8,10 @@ export default function FoodTabs({ lang, active }: { lang: string; active: Tab }
     { id: 'pyramid', href: `/${lang}/food-pyramid`, label: lt ? 'Maisto piramidė' : 'Food pyramid' },
     { id: 'combining', href: `/${lang}/food-combining`, label: lt ? 'Maisto deriniai' : 'Food combining' },
     { id: 'menu', href: `/${lang}/food-menu`, label: lt ? 'Simbiotinis meniu' : 'Symbiotic menu' },
+    { id: 'kitchen', href: `/${lang}/food-kitchen`, label: lt ? 'Ką turiu namie' : 'From my kitchen' },
   ]
   return (
-    <nav className="mb-10 flex gap-2 overflow-x-auto pb-1" style={{ fontFamily: 'var(--font-ui)' }}>
+    <nav className="mb-10 flex flex-wrap gap-2" style={{ fontFamily: 'var(--font-ui)' }}>
       {tabs.map((t) => (
         <Link
           key={t.id}
