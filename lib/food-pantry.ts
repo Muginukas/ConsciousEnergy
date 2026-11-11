@@ -40,7 +40,7 @@ const I = (id: string, icon: string, en: string, lt: string, foodId: string, ali
 export const PANTRY: PantryItem[] = [
   // Protein
   I('eggs', '🥚', 'Eggs', 'Kiaušiniai', 'eggs', ['kiaušinis', 'egg', 'omletas', 'kiaušinienė']),
-  I('cottage', '🥣', 'Cottage cheese', 'Varškė', 'cottage', ['curd', 'quark']),
+  I('cottage', '🤍', 'Cottage cheese', 'Varškė', 'cottage', ['curd', 'quark', 'varškės']),
   I('cheese', '🧀', 'Cheese', 'Sūris', 'hardCheese', ['sūrio']),
   I('chicken', '🍗', 'Chicken / turkey', 'Vištiena / kalakutiena', 'chicken', ['višta', 'kalakutiena', 'turkey', 'paukštiena']),
   I('meat', '🥩', 'Meat (pork, beef)', 'Mėsa (kiauliena, jautiena)', 'meatStewed', ['kiauliena', 'jautiena', 'faršas', 'mince', 'pork', 'beef']),
@@ -1525,6 +1525,102 @@ const RECIPE_DEFS: RecipeDef[] = [
     ],
     why: b('Sweet fruit with yogurt is moderate; sour berries with yogurt would clash.', 'Saldūs vaisiai su jogurtu dera saikingai; rūgščios uogos su jogurtu — nedera.'),
   },
+  // ---------- More cottage cheese ----------
+  {
+    id: 'cottage-sourcream', icon: '🤍', meals: ['breakfast', 'dinner'], minutes: 5,
+    name: b('Cottage cheese with sour cream and dill', 'Varškė su grietine ir krapais'),
+    ingredients: [
+      ing('cottage', '200 g', '200 g'),
+      ing('sourCream', '2 tbsp', '2 š.'),
+      ing('dill', 'a handful', 'saujelė'),
+      ing('cucumber', '½', '½', true),
+      ing('garlic', '½ clove', '½ skiltelės', true),
+    ],
+    steps: [
+      b('Mash cottage cheese with sour cream, chopped dill, a little garlic and salt.', 'Varškę sutrink su grietine, smulkintais krapais, trupučiu česnako ir druska.'),
+      b('Eat with cucumber slices or salad leaves instead of bread.', 'Valgyk su agurko griežinėliais ar salotų lapais vietoj duonos.'),
+    ],
+    why: b('The Lithuanian classic; protein with a little fat and herbs. Without bread it stays light.', 'Lietuviška klasika: baltymai su trupučiu riebalų ir žolelėmis. Be duonos lieka lengva.'),
+  },
+  {
+    id: 'cottage-apple', icon: '🍎', meals: ['breakfast'], minutes: 5,
+    name: b('Cottage cheese with grated apple and cinnamon', 'Varškė su tarkuotu obuoliu ir cinamonu'),
+    ingredients: [
+      ing('cottage', '200 g', '200 g'),
+      ing('apple', '1', '1'),
+      ing('cinnamon', 'a pinch', 'žiupsnelis', true),
+      ing('honey', '1 tsp', '1 š-ėlis', true),
+    ],
+    steps: [
+      b('Grate the apple into the cottage cheese, add cinnamon and a little honey; mix.', 'Į varškę sutarkuok obuolį, įberk cinamono, įdėk truputį medaus ir išmaišyk.'),
+    ],
+    why: b('Sour fruit with protein combines moderately — far lighter than curd with jam or bread.', 'Rūgštūs vaisiai su baltymais dera saikingai — daug lengviau nei varškė su uogiene ar duona.'),
+  },
+  {
+    id: 'cottage-avocado', icon: '🥑', meals: ['breakfast', 'lunch'], minutes: 10,
+    name: b('Cottage cheese and avocado spread with vegetable sticks', 'Varškės ir avokado užtepėlė su daržovių lazdelėmis'),
+    ingredients: [
+      ing('cottage', '150 g', '150 g'),
+      ing('avocado', '1', '1'),
+      ing('carrot', '2', '2'),
+      ing('cucumber', '1', '1', true),
+      ing('pepper', '1', '1', true),
+      ing('lemon', 'a squeeze', 'keli lašai', true),
+    ],
+    steps: [
+      b('Mash avocado with cottage cheese, lemon juice and salt.', 'Avokadą sutrink su varške, citrinos sultimis ir druska.'),
+      b('Dip carrot, cucumber and pepper sticks into it.', 'Valgyk padažydamas morkų, agurkų ir paprikų lazdeles.'),
+    ],
+    why: b('Protein and fat with raw vegetables — vegetables replace the bread.', 'Baltymai ir riebalai su žaliomis daržovėmis — daržovės atstoja duoną.'),
+  },
+  {
+    id: 'cottage-spinach-bake', icon: '🌿', meals: ['breakfast', 'dinner'], minutes: 35,
+    name: b('Cottage cheese and spinach bake', 'Varškės ir špinatų apkepas'),
+    ingredients: [
+      ing('cottage', '400 g', '400 g'),
+      ing('spinach', '3 handfuls', '3 saujos'),
+      ing('eggs', '2', '2'),
+      ing('cheese', '50 g, grated', '50 g, tarkuoto', true),
+      ing('garlic', '1 clove', '1 skiltelė', true),
+    ],
+    steps: [
+      b('Wilt the spinach with garlic, chop it and mix with cottage cheese, eggs and salt.', 'Špinatus suvytink su česnaku, susmulkink ir sumaišyk su varške, kiaušiniais ir druska.'),
+      b('Pour into a greased dish, sprinkle with cheese and bake at 180 °C for 25–30 minutes.', 'Supilk į riebalais išteptą indą, apibarstyk sūriu ir kepk 180 °C orkaitėje 25–30 min.'),
+    ],
+    why: b('A savoury curd bake without semolina or flour — protein with greens only.', 'Sūrus varškės apkepas be manų ar miltų — tik baltymai su žalumynais.'),
+  },
+  {
+    id: 'cottage-stuffed-peppers', icon: '🫑', meals: ['lunch', 'dinner'], minutes: 15,
+    name: b('Peppers and tomatoes stuffed with herbed cottage cheese', 'Paprikos ir pomidorai, įdaryti varške su žolelėmis'),
+    ingredients: [
+      ing('cottage', '250 g', '250 g'),
+      ing('pepper', '2', '2'),
+      ing('tomato', '2', '2', true),
+      ing('dill', 'a handful', 'saujelė', true),
+      ing('garlic', '1 clove', '1 skiltelė', true),
+    ],
+    steps: [
+      b('Mix cottage cheese with herbs, garlic and salt.', 'Varškę sumaišyk su žolelėmis, česnaku ir druska.'),
+      b('Halve the peppers, hollow out the tomatoes and fill them with the curd. Eat raw, or bake 15 minutes at 190 °C.', 'Paprikas perpjauk per pusę, pomidorus išskobk ir prikimšk varškės. Valgyk žalius arba kepk 15 min. 190 °C orkaitėje.'),
+    ],
+    why: b('Protein in a vegetable “cup” — a colourful, easy dinner.', 'Baltymai daržovių „puodelyje“ — spalvinga ir lengva vakarienė.'),
+  },
+  {
+    id: 'cottage-cold-soup', icon: '🥒', meals: ['lunch'], minutes: 10,
+    name: b('Cold cucumber and cottage cheese soup', 'Šalta agurkų ir varškės sriuba'),
+    ingredients: [
+      ing('cottage', '150 g', '150 g'),
+      ing('cucumber', '2', '2'),
+      ing('dill', 'a big handful', 'didelė sauja'),
+      ing('radish', '4', '4', true),
+      ing('garlic', '½ clove', '½ skiltelės', true),
+    ],
+    steps: [
+      b('Blend cottage cheese with one cucumber, garlic, salt and a glass of cold water until smooth.', 'Varškę sutrink su vienu agurku, česnaku, druska ir stikline šalto vandens iki vientisos masės.'),
+      b('Add the second cucumber and radishes, diced, and plenty of dill. Serve cold.', 'Įmaišyk kubeliais pjaustytą antrą agurką, ridikėlius ir gausiai krapų. Patiek šaltą.'),
+    ],
+    why: b('A summer soup with protein and vegetables only — refreshing and light.', 'Vasaros sriuba tik iš baltymų ir daržovių — gaivi ir lengva.'),
+  },
   // ---------- Legumes ----------
   {
     id: 'hummus-veg', icon: '🧆', meals: ['lunch'], minutes: 10,
@@ -1897,32 +1993,46 @@ export function matchRecipes(ids: string[], meal: Meal): RecipeMatch[] {
 /* ---------- Explore by base ingredient ---------- */
 
 /** Main ingredients you can explore, with the pantry ids that count as them. */
-export const BASES: { id: string; ids: string[] }[] = [
-  { id: 'buckwheat', ids: ['buckwheat', 'greenBuckwheat', 'buckwheatFlour'] },
-  { id: 'oats', ids: ['oats'] },
-  { id: 'millet', ids: ['millet'] },
-  { id: 'rice', ids: ['rice'] },
-  { id: 'quinoa', ids: ['quinoa'] },
-  { id: 'potatoes', ids: ['potatoes', 'sweetPotato'] },
-  { id: 'pasta', ids: ['pasta'] },
-  { id: 'bread', ids: ['bread'] },
-  { id: 'eggs', ids: ['eggs'] },
-  { id: 'cottage', ids: ['cottage'] },
-  { id: 'cheese', ids: ['cheese'] },
-  { id: 'chicken', ids: ['chicken'] },
-  { id: 'meat', ids: ['meat'] },
-  { id: 'fish', ids: ['fish', 'salmon', 'herring'] },
-  { id: 'lentils', ids: ['lentils'] },
-  { id: 'beans', ids: ['beans'] },
-  { id: 'chickpeas', ids: ['chickpeas'] },
-  { id: 'tofu', ids: ['tofu'] },
-  { id: 'pumpkin', ids: ['pumpkin'] },
-  { id: 'cabbage', ids: ['cabbage', 'sauerkraut'] },
-  { id: 'zucchini', ids: ['zucchini'] },
-  { id: 'mushrooms', ids: ['mushrooms'] },
-  { id: 'beet', ids: ['beet'] },
-  { id: 'banana', ids: ['banana'] },
-  { id: 'kefir', ids: ['kefir', 'yogurt'] },
+export type BaseShelf = 'grains' | 'protein' | 'legumes' | 'veg' | 'fruitDairy'
+
+export const BASE_SHELVES: { id: BaseShelf; name: Bi }[] = [
+  { id: 'grains', name: b('Grains, potatoes & bread', 'Kruopos, bulvės ir duona') },
+  { id: 'protein', name: b('Eggs, dairy, meat & fish', 'Kiaušiniai, varškė, mėsa ir žuvis') },
+  { id: 'legumes', name: b('Legumes', 'Ankštiniai') },
+  { id: 'veg', name: b('Vegetables & mushrooms', 'Daržovės ir grybai') },
+  { id: 'fruitDairy', name: b('Fruit & fermented milk', 'Vaisiai ir rauginti pieno produktai') },
+]
+
+/** Main ingredients you can explore, with the pantry ids that count as them. */
+export const BASES: { id: string; ids: string[]; shelf: BaseShelf }[] = [
+  { id: 'buckwheat', ids: ['buckwheat', 'greenBuckwheat', 'buckwheatFlour'], shelf: 'grains' },
+  { id: 'oats', ids: ['oats'], shelf: 'grains' },
+  { id: 'millet', ids: ['millet'], shelf: 'grains' },
+  { id: 'rice', ids: ['rice'], shelf: 'grains' },
+  { id: 'quinoa', ids: ['quinoa'], shelf: 'grains' },
+  { id: 'potatoes', ids: ['potatoes', 'sweetPotato'], shelf: 'grains' },
+  { id: 'pasta', ids: ['pasta'], shelf: 'grains' },
+  { id: 'bread', ids: ['bread'], shelf: 'grains' },
+  { id: 'eggs', ids: ['eggs'], shelf: 'protein' },
+  { id: 'cottage', ids: ['cottage'], shelf: 'protein' },
+  { id: 'cheese', ids: ['cheese'], shelf: 'protein' },
+  { id: 'chicken', ids: ['chicken'], shelf: 'protein' },
+  { id: 'meat', ids: ['meat'], shelf: 'protein' },
+  { id: 'fish', ids: ['fish', 'salmon', 'herring'], shelf: 'protein' },
+  { id: 'lentils', ids: ['lentils'], shelf: 'legumes' },
+  { id: 'beans', ids: ['beans'], shelf: 'legumes' },
+  { id: 'chickpeas', ids: ['chickpeas'], shelf: 'legumes' },
+  { id: 'tofu', ids: ['tofu'], shelf: 'legumes' },
+  { id: 'pumpkin', ids: ['pumpkin'], shelf: 'veg' },
+  { id: 'cabbage', ids: ['cabbage', 'sauerkraut'], shelf: 'veg' },
+  { id: 'zucchini', ids: ['zucchini'], shelf: 'veg' },
+  { id: 'mushrooms', ids: ['mushrooms'], shelf: 'veg' },
+  { id: 'beet', ids: ['beet'], shelf: 'veg' },
+  { id: 'spinach', ids: ['spinach'], shelf: 'veg' },
+  { id: 'banana', ids: ['banana'], shelf: 'fruitDairy' },
+  { id: 'apple', ids: ['apple'], shelf: 'fruitDairy' },
+  { id: 'berries', ids: ['berries'], shelf: 'fruitDairy' },
+  { id: 'kefir', ids: ['kefir', 'yogurt'], shelf: 'fruitDairy' },
 ]
 
 export type Combo = {

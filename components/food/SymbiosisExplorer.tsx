@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react'
 import { FOOD_GROUPS, RATING_STYLE, getPair, type GroupId, type Rating } from '@/lib/food-combining'
 import { MEALS, type Meal } from '@/lib/food-menu'
-import { BASES, PANTRY, PANTRY_BY_ID, combosForBase, pantryGroup, recipeCountForBase, type Recipe } from '@/lib/food-pantry'
+import { BASES, BASE_SHELVES, PANTRY, PANTRY_BY_ID, combosForBase, normalize, pantryGroup, recipeCountForBase, type Recipe } from '@/lib/food-pantry'
 import { harmonyColor } from './Meter'
 
 type L = 'en' | 'lt'
@@ -31,6 +31,7 @@ export default function SymbiosisExplorer({ lang }: { lang: string }) {
   const lt = l === 'lt'
   const [baseId, setBaseId] = useState('buckwheat')
   const [meal, setMeal] = useState<Meal | 'all'>('all')
+  const [query, setQuery] = useState('')
 
   const bases = useMemo(() => BASES.map((b) => ({ ...b, count: recipeCountForBase(b.id) })).filter((b) => b.count > 0), [])
   const base = BASES.find((b) => b.id === baseId)!
@@ -41,6 +42,16 @@ export default function SymbiosisExplorer({ lang }: { lang: string }) {
     [baseId],
   )
 
+  // Search by any name or alias of the base's pantry items ("varškė", "varškės", "curd").
+  const q = normalize(query)
+  const matchesQuery = (b: (typeof BASES)[number]) =>
+    !q ||
+    b.ids.some((id) => {
+      const p = PANTRY_BY_ID.get(id)
+      return !!p && [p.name.lt, p.name.en, ...(p.aliases ?? [])].some((n) => normalize(n).split(/\s+/).some((w) => w.startsWith(q.slice(0, Math.max(3, q.length - 2)))))
+    })
+  const shown = bases.filter(matchesQuery)
+
   const byRating = (r: Rating) => FOOD_GROUPS.filter((g) => getPair(baseGroup, g.id).rating === r)
 
   return (
@@ -49,23 +60,53 @@ export default function SymbiosisExplorer({ lang }: { lang: string }) {
       <p className="mb-2 text-sm font-semibold" style={{ ...ui, color: 'var(--color-text-secondary)' }}>
         {lt ? '1. Pasirink pagrindinį produktą' : '1. Choose a main ingredient'}
       </p>
-      <div className="mb-8 flex flex-wrap gap-2">
-        {bases.map((b) => {
-          const active = b.id === baseId
+      <input
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder={lt ? '🔍 Ieškok produkto, pvz.: varškė' : '🔍 Search, e.g. cottage cheese'}
+        aria-label={lt ? 'Ieškoti produkto' : 'Search ingredient'}
+        className="mb-4 w-full rounded-xl px-4 py-3 text-base outline-none focus:ring-2"
+        style={{ ...ui, ...card, color: 'var(--color-text-primary)' }}
+        autoComplete="off"
+      />
+      <div className="mb-8 space-y-4">
+        {shown.length === 0 && (
+          <p className="text-sm" style={{ ...ui, color: 'var(--color-text-muted)' }}>
+            {lt ? 'Tokio produkto receptų dar nėra.' : 'No recipes for that ingredient yet.'}
+          </p>
+        )}
+        {BASE_SHELVES.map((shelf) => {
+          const items = shown.filter((b) => b.shelf === shelf.id)
+          if (items.length === 0) return null
           return (
-            <button
-              key={b.id}
-              onClick={() => setBaseId(b.id)}
-              aria-pressed={active}
-              className="rounded-full px-3 py-1.5 text-sm transition-colors"
-              style={
-                active
-                  ? { ...ui, backgroundColor: 'var(--color-forest-700)', color: 'var(--color-cream)' }
-                  : { ...ui, ...card, color: 'var(--color-text-secondary)' }
-              }
-            >
-              {itemIcon(b.id)} {itemName(b.id, l)} <span style={{ opacity: 0.7 }}>({b.count})</span>
-            </button>
+            <div key={shelf.id}>
+              <p className="mb-1.5 text-xs font-semibold uppercase tracking-wide" style={{ ...ui, color: 'var(--color-text-muted)' }}>
+                {shelf.name[l]}
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {items.map((b) => {
+                  const active = b.id === baseId
+                  return (
+                    <button
+                      key={b.id}
+                      onClick={() => {
+                        setBaseId(b.id)
+                        setQuery('')
+                      }}
+                      aria-pressed={active}
+                      className="rounded-full px-3 py-1.5 text-sm transition-colors"
+                      style={
+                        active
+                          ? { ...ui, backgroundColor: 'var(--color-forest-700)', color: 'var(--color-cream)' }
+                          : { ...ui, ...card, color: 'var(--color-text-secondary)' }
+                      }
+                    >
+                      {itemIcon(b.id)} {itemName(b.id, l)} <span style={{ opacity: 0.7 }}>({b.count})</span>
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
           )
         })}
       </div>
