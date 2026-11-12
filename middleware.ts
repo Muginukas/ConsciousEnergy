@@ -2,13 +2,15 @@ import { createServerClient } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-const LOCALES = ['en', 'lt']
-const DEFAULT_LOCALE = 'en'
+const LOCALES = ['lt', 'en']
+// Most users are Lithuanian, so Lithuanian is the default. A visitor who
+// switches language keeps that choice via the NEXT_LOCALE cookie.
+const DEFAULT_LOCALE = 'lt'
+const LOCALE_COOKIE = 'NEXT_LOCALE'
 
 function getLocale(request: NextRequest): string {
-  const acceptLang = request.headers.get('accept-language') ?? ''
-  const preferred = acceptLang.split(',')[0].split('-')[0].toLowerCase()
-  return LOCALES.includes(preferred) ? preferred : DEFAULT_LOCALE
+  const saved = request.cookies.get(LOCALE_COOKIE)?.value
+  return saved && LOCALES.includes(saved) ? saved : DEFAULT_LOCALE
 }
 
 export async function middleware(request: NextRequest) {

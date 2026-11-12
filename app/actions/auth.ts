@@ -5,7 +5,7 @@ import { createClient } from '@/lib/supabase/server'
 
 function getLang(formData: FormData): string {
   const lang = formData.get('lang')
-  return lang === 'lt' ? 'lt' : 'en'
+  return lang === 'en' ? 'en' : 'lt'
 }
 
 export async function signIn(formData: FormData) {

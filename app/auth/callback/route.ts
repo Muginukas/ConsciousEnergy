@@ -14,5 +14,5 @@ export async function GET(request: Request) {
     }
   }
 
-  return NextResponse.redirect(`${origin}/en/auth/login`)
+  return NextResponse.redirect(`${origin}/lt/auth/login`)
 }
