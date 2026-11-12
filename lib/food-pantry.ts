@@ -15,6 +15,7 @@ import { FOOD_GROUPS, getPair, type GroupId, type Rating } from './food-combinin
 import { food } from './food-db'
 import type { Meal } from './food-menu'
 import { EXTRA_RECIPES } from './food-recipes-extra'
+import { SWEET_RECIPES } from './food-recipes-sweet'
 
 const b = (en: string, lt: string): Bi => ({ en, lt })
 
@@ -108,6 +109,7 @@ export const PANTRY: PantryItem[] = [
   I('almonds', '🌰', 'Almonds', 'Migdolai', 'almonds', ['migdolas']),
   I('sesame', '⚪', 'Sesame / tahini', 'Sezamas / tahinis', 'sesame', ['sezamo', 'tahini', 'tahinis']),
   I('chia', '⚫', 'Chia seeds', 'Chia sėklos', 'chia', ['čija', 'šalavijų']),
+  I('coconut', '🥥', 'Coconut flakes', 'Kokoso drožlės', 'coconut', ['kokoso', 'drožlės', 'kokosas', 'coconut']),
   // Dairy
   I('kefir', '🥛', 'Kefir', 'Kefyras', 'kefir', ['rūgpienis', 'pasukos']),
   I('yogurt', '🥛', 'Yogurt', 'Jogurtas', 'yogurt'),
@@ -118,10 +120,14 @@ export const PANTRY: PantryItem[] = [
   I('pear', '🍐', 'Pears', 'Kriaušės', 'pear', ['kriaušė']),
   I('orange', '🍊', 'Oranges', 'Apelsinai', 'orange', ['apelsinas', 'mandarinai', 'citrusai']),
   I('plum', '🟣', 'Plums', 'Slyvos', 'plum', ['slyva']),
-  I('driedFruit', '🍇', 'Raisins / dates', 'Razinos / datulės', 'raisins', ['razinos', 'datulės', 'džiovinti vaisiai', 'dates', 'raisins', 'figos']),
+  I('dates', '🟤', 'Dates', 'Datulės', 'dates', ['datulė', 'datulių', 'medjool', 'dates']),
+  I('driedFruit', '🍇', 'Raisins / dried fruit', 'Razinos / džiovinti vaisiai', 'raisins', ['razinos', 'džiovinti vaisiai', 'raisins', 'figos', 'džiovinti abrikosai']),
   I('berries', '🫐', 'Berries', 'Uogos', 'frozenBerries', ['mėlynės', 'braškės', 'avietės', 'spanguolės']),
   I('lemon', '🍋', 'Lemon', 'Citrina', 'lemon', ['citrinos', 'laimas', 'lime'], true),
   I('honey', '🍯', 'Honey', 'Medus', 'honey'),
+  I('mapleSyrup', '🍁', 'Maple syrup', 'Klevų sirupas', 'mapleSyrup', ['sirupas', 'klevų']),
+  I('cacao', '🍫', 'Cacao powder', 'Kakava', 'rawCacao', ['kakavos', 'kakavą', 'cacao', 'cocoa', 'kakavos milteliai']),
+  I('darkChocolate', '🍫', 'Dark chocolate', 'Juodasis šokoladas', 'darkChocolate', ['šokoladas', 'šokolado', 'šokoladą', 'chocolate', 'juodasis']),
   I('cinnamon', '🟫', 'Cinnamon / spices', 'Cinamonas / prieskoniai', 'spices', ['cinamonas', 'kardamonas', 'ciberžolė', 'prieskoniai'], true),
 ]
 
@@ -138,9 +144,10 @@ export const SHELVES: PantryShelf[] = [
   { id: 'starch', name: b('Grains & potatoes', 'Grūdai ir bulvės'), items: ['buckwheat', 'greenBuckwheat', 'buckwheatFlour', 'rice', 'oats', 'millet', 'quinoa', 'pasta', 'bread', 'potatoes', 'sweetPotato'] },
   { id: 'veg', name: b('Vegetables', 'Daržovės'), items: ['carrot', 'onion', 'garlic', 'cabbage', 'beet', 'zucchini', 'pumpkin', 'tomato', 'cucumber', 'pepper', 'broccoli', 'cauliflower', 'spinach', 'kale', 'sorrel', 'nettle', 'asparagus', 'lettuce', 'mushrooms', 'radish', 'celery', 'peas', 'sauerkraut', 'pickles', 'dill', 'parsley', 'ginger'] },
   { id: 'fat', name: b('Fats', 'Riebalai'), items: ['butter', 'oliveOil', 'oil', 'coconutOil', 'sourCream', 'avocado'] },
-  { id: 'nuts', name: b('Nuts & seeds', 'Riešutai ir sėklos'), items: ['walnuts', 'almonds', 'seeds', 'flax', 'sesame', 'chia'] },
+  { id: 'nuts', name: b('Nuts & seeds', 'Riešutai ir sėklos'), items: ['walnuts', 'almonds', 'seeds', 'flax', 'sesame', 'chia', 'coconut'] },
   { id: 'dairy', name: b('Milk & kefir', 'Pienas ir kefyras'), items: ['kefir', 'yogurt', 'milk'] },
-  { id: 'fruit', name: b('Fruit & sweet', 'Vaisiai ir saldu'), items: ['apple', 'pear', 'orange', 'plum', 'banana', 'driedFruit', 'berries', 'lemon', 'honey', 'cinnamon'] },
+  { id: 'fruit', name: b('Fruit & sweet', 'Vaisiai ir saldu'), items: ['apple', 'pear', 'orange', 'plum', 'banana', 'dates', 'driedFruit', 'berries', 'lemon'] },
+  { id: 'sweet', name: b('Sweet & cacao', 'Saldu ir kakava'), items: ['honey', 'mapleSyrup', 'cacao', 'darkChocolate', 'cinnamon'] },
 ]
 
 /* ---------- Free-text matching ("kiaušiniai, grikiai") ---------- */
@@ -207,6 +214,7 @@ const MEAL_WORDS: [string, Meal][] = [
   ['pusryc', 'breakfast'], ['breakfast', 'breakfast'], ['ryt', 'breakfast'],
   ['piet', 'lunch'], ['lunch', 'lunch'],
   ['vakar', 'dinner'], ['dinner', 'dinner'], ['supper', 'dinner'],
+  ['desert', 'snack'], ['uzkand', 'snack'], ['snack', 'snack'], ['saldum', 'snack'],
 ]
 
 /** A word like "vakarienė" or "pietums" names a meal, not an ingredient. */
@@ -319,7 +327,22 @@ export function goodPartners(g: GroupId): GroupId[] {
 
 /* ---------- Meal guidance ---------- */
 
+/** Meals as the kitchen pages name them ("snack" is the desserts & snacks shelf). */
+export const KITCHEN_MEALS: { id: Meal; icon: string; label: Bi; dative: string }[] = [
+  { id: 'breakfast', icon: '🌅', label: b('Breakfast', 'Pusryčiai'), dative: 'pusryčiams' },
+  { id: 'lunch', icon: '☀️', label: b('Lunch', 'Pietūs'), dative: 'pietums' },
+  { id: 'dinner', icon: '🌙', label: b('Dinner', 'Vakarienė'), dative: 'vakarienei' },
+  { id: 'snack', icon: '🍫', label: b('Desserts & snacks', 'Desertai ir užkandžiai'), dative: 'desertui ar užkandžiui' },
+]
+export const kitchenMeal = (id: Meal) => KITCHEN_MEALS.find((m) => m.id === id)!
+
 export const MEAL_TIPS: Partial<Record<Meal, Bi[]>> = {
+  snack: [
+    b('Eat sweets between meals, not straight after a big lunch — then they don’t ferment behind slower food.', 'Saldumynus valgyk tarp valgių, ne iškart po sočių pietų — tada jie nerūgsta už lėčiau virškinamo maisto.'),
+    b('Dates, honey and ripe fruit give natural sweetness; nuts and seeds beside them slow the sugar.', 'Datulės, medus ir prinokę vaisiai — natūralus saldumas; riešutai ir sėklos šalia sulėtina cukraus įsisavinimą.'),
+    b('Raw cacao is rich in magnesium; choose chocolate with at least 70% cacao.', 'Žalia kakava gausi magnio; rinkis šokoladą, kuriame bent 70 % kakavos.'),
+    b('Dates don’t pair with cottage cheese, eggs or legumes — keep sweet fruit for its own moment.', 'Datulės nedera su varške, kiaušiniais ar ankštiniais — saldžiems vaisiams skirk atskirą metą.'),
+  ],
   breakfast: [
     b('Start light: fruit on its own, or a porridge with fat and seeds.', 'Pradėk lengvai: vaisiai atskirai arba košė su riebalais ir sėklomis.'),
     b('Eggs or cottage cheese go best with vegetables, not with bread.', 'Kiaušiniai ar varškė geriausiai dera su daržovėmis, ne su duona.'),
@@ -1207,7 +1230,7 @@ const RECIPE_DEFS: RecipeDef[] = [
     why: b('Banana binds instead of egg — so no protein–starch clash. Gluten-free.', 'Bananas suriša vietoj kiaušinio — todėl nėra baltymų ir krakmolo konflikto. Be glitimo.'),
   },
   {
-    id: 'bw-granola', icon: '🥣', meals: ['breakfast'], minutes: 30,
+    id: 'bw-granola', icon: '🥣', meals: ['breakfast', 'snack'], minutes: 30,
     name: b('Buckwheat granola with seeds and honey', 'Grikių granola su sėklomis ir medumi'),
     ingredients: [
       ing('greenBuckwheat', '1 cup', '1 stiklinė'),
@@ -1528,7 +1551,7 @@ const RECIPE_DEFS: RecipeDef[] = [
     why: b('No semolina or flour — protein with vegetable only, so it sits light.', 'Be manų ar miltų — tik baltymai su daržove, todėl negula sunkiai.'),
   },
   {
-    id: 'yogurt-banana', icon: '🍌', meals: ['breakfast'], minutes: 3,
+    id: 'yogurt-banana', icon: '🍌', meals: ['breakfast', 'snack'], minutes: 3,
     name: b('Yogurt with banana and flax', 'Jogurtas su bananu ir sėmenimis'),
     ingredients: [
       ing('yogurt', '200 g', '200 g'),
@@ -1558,7 +1581,7 @@ const RECIPE_DEFS: RecipeDef[] = [
     why: b('The Lithuanian classic; protein with a little fat and herbs. Without bread it stays light.', 'Lietuviška klasika: baltymai su trupučiu riebalų ir žolelėmis. Be duonos lieka lengva.'),
   },
   {
-    id: 'cottage-apple', icon: '🍎', meals: ['breakfast'], minutes: 5,
+    id: 'cottage-apple', icon: '🍎', meals: ['breakfast', 'snack'], minutes: 5,
     name: b('Cottage cheese with grated apple and cinnamon', 'Varškė su tarkuotu obuoliu ir cinamonu'),
     ingredients: [
       ing('cottage', '200 g', '200 g'),
@@ -1572,7 +1595,7 @@ const RECIPE_DEFS: RecipeDef[] = [
     why: b('Sour fruit with protein combines moderately — far lighter than curd with jam or bread.', 'Rūgštūs vaisiai su baltymais dera saikingai — daug lengviau nei varškė su uogiene ar duona.'),
   },
   {
-    id: 'cottage-avocado', icon: '🥑', meals: ['breakfast', 'lunch'], minutes: 10,
+    id: 'cottage-avocado', icon: '🥑', meals: ['breakfast', 'lunch', 'snack'], minutes: 10,
     name: b('Cottage cheese and avocado spread with vegetable sticks', 'Varškės ir avokado užtepėlė su daržovių lazdelėmis'),
     ingredients: [
       ing('cottage', '150 g', '150 g'),
@@ -1638,7 +1661,7 @@ const RECIPE_DEFS: RecipeDef[] = [
   },
   // ---------- Legumes ----------
   {
-    id: 'hummus-veg', icon: '🧆', meals: ['lunch'], minutes: 10,
+    id: 'hummus-veg', icon: '🧆', meals: ['lunch', 'snack'], minutes: 10,
     name: b('Hummus with vegetable sticks', 'Humusas su daržovių lazdelėmis'),
     ingredients: [
       ing('chickpeas', '1 can', '1 skardinė'),
@@ -1757,7 +1780,7 @@ const RECIPE_DEFS: RecipeDef[] = [
     why: b('Eggs with vegetables — quick protein that combines well.', 'Kiaušiniai su daržovėmis — greiti baltymai, kurie dera.'),
   },
   {
-    id: 'cottage-berries', icon: '🫐', meals: ['breakfast'], minutes: 5,
+    id: 'cottage-berries', icon: '🫐', meals: ['breakfast', 'snack'], minutes: 5,
     name: b('Cottage cheese with berries', 'Varškė su uogomis'),
     ingredients: [
       ing('cottage', '200 g', '200 g'),
@@ -1770,7 +1793,7 @@ const RECIPE_DEFS: RecipeDef[] = [
     why: b('Protein with sour berries is moderate — better than with sweet jam or bread.', 'Baltymai su rūgščiomis uogomis dera saikingai — geriau nei su uogiene ar duona.'),
   },
   {
-    id: 'berries-nuts', icon: '🫐', meals: ['breakfast'], minutes: 5,
+    id: 'berries-nuts', icon: '🫐', meals: ['breakfast', 'snack'], minutes: 5,
     name: b('Berries with walnuts and seeds', 'Uogos su riešutais ir sėklomis'),
     ingredients: [
       ing('berries', '1 bowl', '1 dubenėlis'),
@@ -1783,7 +1806,7 @@ const RECIPE_DEFS: RecipeDef[] = [
     why: b('Shelton’s favourite pairing: acid fruit helps nuts digest. Mostly raw — very high vibration.', 'Sheltono mėgstamas derinys: rūgštūs vaisiai padeda virškinti riešutus. Beveik viskas žalia — labai aukšta vibracija.'),
   },
   {
-    id: 'apple-walnuts', icon: '🍎', meals: ['breakfast'], minutes: 5,
+    id: 'apple-walnuts', icon: '🍎', meals: ['breakfast', 'snack'], minutes: 5,
     name: b('Apple with walnuts and cinnamon', 'Obuolys su graikiniais riešutais ir cinamonu'),
     ingredients: [
       ing('apple', '1–2', '1–2'),
@@ -1796,7 +1819,7 @@ const RECIPE_DEFS: RecipeDef[] = [
     why: b('Sour fruit + nuts — symbiosis. No bread or porridge alongside.', 'Rūgštūs vaisiai + riešutai — simbiozė. Be duonos ar košės šalia.'),
   },
   {
-    id: 'kefir-banana', icon: '🥤', meals: ['breakfast'], minutes: 5,
+    id: 'kefir-banana', icon: '🥤', meals: ['breakfast', 'snack'], minutes: 5,
     name: b('Kefir smoothie with banana and flax', 'Kefyro kokteilis su bananu ir sėmenimis'),
     ingredients: [
       ing('kefir', '1 glass', '1 stiklinė'),
@@ -1961,7 +1984,7 @@ function recipeAngstrom(r: RecipeDef): number {
   return round50(parts.reduce((s, x) => s + x.a * x.g, 0) / grams)
 }
 
-export const RECIPES: Recipe[] = [...RECIPE_DEFS, ...EXTRA_RECIPES].map((r) => {
+export const RECIPES: Recipe[] = [...RECIPE_DEFS, ...EXTRA_RECIPES, ...SWEET_RECIPES].map((r) => {
   for (const i of r.ingredients) if (!PANTRY_BY_ID.has(i.id)) throw new Error(`Unknown pantry item ${i.id} in ${r.id}`)
   const angstrom = recipeAngstrom(r)
   return { ...r, harmony: recipeHarmony(r), angstrom, tierId: tierOf(angstrom).id }
@@ -1980,7 +2003,10 @@ const FAMILIES: string[][] = [
   ['lentils', 'beans', 'chickpeas'],
   ['butter', 'oliveOil', 'oil', 'coconutOil'],
   ['kefir', 'yogurt'],
-  ['walnuts', 'almonds', 'seeds', 'sesame'],
+  ['walnuts', 'almonds', 'seeds', 'sesame', 'coconut'],
+  ['dates', 'driedFruit'],
+  ['honey', 'mapleSyrup'],
+  ['cacao', 'darkChocolate'],
   ['orange', 'berries', 'plum'],
   ['cottage', 'cheese'],
 ]
@@ -2057,9 +2083,10 @@ export function matchRecipes(ids: string[], meal: Meal): RecipeMatch[] {
 /* ---------- Explore by base ingredient ---------- */
 
 /** Main ingredients you can explore, with the pantry ids that count as them. */
-export type BaseShelf = 'grains' | 'protein' | 'legumes' | 'veg' | 'fruitDairy'
+export type BaseShelf = 'sweet' | 'grains' | 'protein' | 'legumes' | 'veg' | 'fruitDairy'
 
 export const BASE_SHELVES: { id: BaseShelf; name: Bi }[] = [
+  { id: 'sweet', name: b('For desserts: dates & cacao', 'Desertams: datulės ir kakava') },
   { id: 'grains', name: b('Grains, potatoes & bread', 'Kruopos, bulvės ir duona') },
   { id: 'protein', name: b('Eggs, dairy, meat & fish', 'Kiaušiniai, varškė, mėsa ir žuvis') },
   { id: 'legumes', name: b('Legumes', 'Ankštiniai') },
@@ -2069,6 +2096,8 @@ export const BASE_SHELVES: { id: BaseShelf; name: Bi }[] = [
 
 /** Main ingredients you can explore, with the pantry ids that count as them. */
 export const BASES: { id: string; ids: string[]; shelf: BaseShelf; label?: Bi }[] = [
+  { id: 'dates', ids: ['dates'], shelf: 'sweet' },
+  { id: 'cacao', ids: ['cacao', 'darkChocolate'], shelf: 'sweet', label: b('Cacao & chocolate', 'Kakava ir šokoladas') },
   { id: 'buckwheat', ids: ['buckwheat', 'greenBuckwheat', 'buckwheatFlour'], shelf: 'grains' },
   { id: 'oats', ids: ['oats'], shelf: 'grains' },
   { id: 'millet', ids: ['millet'], shelf: 'grains' },

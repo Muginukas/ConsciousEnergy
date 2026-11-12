@@ -35,8 +35,8 @@ export default async function FoodKitchenPage(props: PageProps<'/[lang]/food-kit
         </h1>
         <p className="text-lg leading-relaxed" style={{ fontFamily: 'var(--font-body)', color: 'var(--color-text-secondary)' }}>
           {lt
-            ? 'Du būdai rasti, ką gaminti. „Iš to, ką turiu“ — įrašyk produktus iš šaldytuvo ir spintelės: patikrinsime, ar jie dera vienoje lėkštėje, ir pasiūlysime receptų. „Pagal produktą“ — pasirink vieną produktą (pvz., grikius) ir pamatyk visus jo simbiotinius derinius bei receptus pusryčiams, pietums ir vakarienei.'
-            : 'Two ways to find what to cook. “From what I have” — enter what’s in your fridge and cupboard: we check whether it belongs on one plate and suggest recipes. “By ingredient” — choose one ingredient (e.g. buckwheat) and see all its symbiotic combinations and recipes for breakfast, lunch and dinner.'}
+            ? 'Du būdai rasti, ką gaminti. „Iš to, ką turiu“ — įrašyk produktus iš šaldytuvo ir spintelės: patikrinsime, ar jie dera vienoje lėkštėje, ir pasiūlysime receptų. „Pagal produktą“ — pasirink vieną produktą (pvz., grikius) ir pamatyk visus jo simbiotinius derinius bei receptus pusryčiams, pietums, vakarienei bei desertams ir užkandžiams.'
+            : 'Two ways to find what to cook. “From what I have” — enter what’s in your fridge and cupboard: we check whether it belongs on one plate and suggest recipes. “By ingredient” — choose one ingredient (e.g. buckwheat) and see all its symbiotic combinations and recipes for breakfast, lunch, dinner, desserts and snacks.'}
         </p>
       </header>
 
