@@ -16,7 +16,8 @@ import {
   suggest,
   type RecipeMatch,
 } from '@/lib/food-pantry'
-import { Meter, harmonyColor } from './Meter'
+import { BODY_ANGSTROM, FOOD_TIERS, SCALE_MAX } from '@/lib/food-angstrom'
+import { Meter, fmtA, harmonyColor } from './Meter'
 
 type L = 'en' | 'lt'
 const ui = { fontFamily: 'var(--font-ui)' }
@@ -435,16 +436,38 @@ function RecipeCard({ m, l }: { m: RecipeMatch; l: L }) {
   const haveList = r.ingredients.filter((i) => m.have.includes(i.id))
   const pct = Math.round((m.haveRequired / m.required) * 100)
   const harmonyWord =
-    r.harmony >= 80 ? (lt ? 'dera puikiai' : 'combines well') : lt ? 'dera saikingai' : 'combines moderately'
+    r.harmony === 100
+      ? lt ? 'Pilna simbiozė — dera puikiai' : 'Full symbiosis — combines perfectly'
+      : r.harmony >= 80
+        ? lt ? 'Dera puikiai' : 'Combines well'
+        : r.harmony >= 50
+          ? lt ? 'Dera saikingai' : 'Combines moderately'
+          : lt ? 'Sunkesnis derinys' : 'A heavier combination'
+  const tier = FOOD_TIERS.find((t) => t.id === r.tierId)!
 
   return (
     <article className="flex flex-col rounded-2xl p-5" style={{ ...card, borderTop: `5px solid ${complete ? RATING_STYLE.good.color : 'var(--color-gold-400)'}` }}>
       <h3 className="text-xl font-semibold leading-tight" style={display}>
         <span aria-hidden="true">{r.icon}</span> {r.name[l]}
       </h3>
-      <p className="mt-1 text-xs" style={{ ...ui, color: 'var(--color-text-muted)' }}>
-        ⏱ {r.minutes} min · <span style={{ color: harmonyColor(r.harmony) }}>{lt ? 'Harmonija' : 'Harmony'} {r.harmony}% — {harmonyWord}</span>
-      </p>
+      <div className="mt-1 flex flex-wrap items-center gap-2 text-xs" style={{ ...ui, color: 'var(--color-text-muted)' }}>
+        <span>⏱ {r.minutes} min</span>
+        <span className="rounded-full px-2 py-0.5 text-[11px] font-semibold" style={{ backgroundColor: tier.color, color: tier.textColor }}>
+          {tier.title[l]}
+        </span>
+      </div>
+
+      <div className="mt-3 grid gap-3">
+        <Meter
+          label={lt ? 'Vibracija' : 'Vibration'}
+          value={`${fmtA(r.angstrom)} Å`}
+          pct={(r.angstrom / SCALE_MAX) * 100}
+          marker={(BODY_ANGSTROM / SCALE_MAX) * 100}
+          color={tier.color}
+          note={r.angstrom >= BODY_ANGSTROM ? (lt ? 'Virš kūno 6 500 Å — pakelia' : 'Above the body’s 6,500 Å — lifts') : lt ? 'Žemiau kūno 6 500 Å — palaiko' : 'Below the body’s 6,500 Å — sustains'}
+        />
+        <Meter label={lt ? 'Harmonija' : 'Harmony'} value={`${r.harmony}%`} pct={r.harmony} color={harmonyColor(r.harmony)} note={harmonyWord} />
+      </div>
 
       {/* How much of it you have */}
       <div className="mt-3 rounded-xl px-3 py-2.5" style={{ backgroundColor: complete ? RATING_STYLE.good.bg : 'var(--color-gold-50)' }}>
