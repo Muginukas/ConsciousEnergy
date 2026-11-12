@@ -10,7 +10,7 @@
  * from which it takes its food-combining group and ångström value.
  */
 
-import type { Bi } from './food-angstrom'
+import { tierOf, type Bi, type FoodTier } from './food-angstrom'
 import { FOOD_GROUPS, getPair, type GroupId, type Rating } from './food-combining'
 import { food } from './food-db'
 import type { Meal } from './food-menu'
@@ -351,9 +351,12 @@ export type Recipe = {
   why: Bi
   /** Computed from the non-condiment ingredients. */
   harmony: number
+  /** Gram-weighted ångström value of the required ingredients (estimated weights). */
+  angstrom: number
+  tierId: FoodTier['id']
 }
 
-type RecipeDef = Omit<Recipe, 'harmony'>
+type RecipeDef = Omit<Recipe, 'harmony' | 'angstrom' | 'tierId'>
 
 const ing = (id: string, en: string, lt: string, optional = false): RecipeIngredient => ({ id, amount: b(en, lt), optional })
 
@@ -1911,9 +1914,57 @@ function recipeHarmony(r: RecipeDef): number {
   return harmonyOf(groups).harmony
 }
 
+/** Approximate weight of one piece of an item, in grams. */
+const PIECE_G: Record<string, number> = {
+  eggs: 55, apple: 150, banana: 120, pear: 150, carrot: 80, onion: 100, tomato: 120, cucumber: 150,
+  pepper: 150, potatoes: 150, sweetPotato: 200, beet: 150, zucchini: 250, avocado: 150, lemon: 60,
+  radish: 15, mushrooms: 20, pickles: 60, sauerkraut: 100, herring: 80, fish: 150, salmon: 150,
+  chicken: 150, meat: 150, garlic: 5, broccoli: 400, cauliflower: 600, cabbage: 1000, lettuce: 200,
+}
+/** Approximate weight of a cup / glass of an item, in grams. */
+const CUP_G: Record<string, number> = { oats: 90, berries: 150, walnuts: 100, seeds: 130, lettuce: 50, spinach: 30, kefir: 240, yogurt: 240, milk: 240 }
+
+/** Turns a free-text amount ("1–2", "½ cup", "200 g fillet", "a handful") into estimated grams. */
+export function amountGrams(id: string, text: string): number {
+  const t = text.toLowerCase().replace(/\(.*?\)/g, '').split(' or ')[0].trim()
+  const num = (x: string) =>
+    x.split(/[–-]/).map((v) => {
+      const m = v.trim().match(/^(\d+)?\s*([½¼¾])?/)!
+      return (m[1] ? +m[1] : 0) + ({ '½': 0.5, '¼': 0.25, '¾': 0.75 }[m[2] ?? ''] ?? 0)
+    }).reduce((a, v, _, arr) => a + v / arr.length, 0)
+  const lead = t.match(/^[\d½¼¾][\d½¼¾–\- ]*/)
+  const n = lead ? num(lead[0]) || 1 : 1
+  if (/\bg\b/.test(t) && lead) return n
+  if (t.includes('tbsp')) return n * 15
+  if (t.includes('tsp')) return n * 5
+  if (t.includes('cup') || t.includes('glass')) return n * (CUP_G[id] ?? 180)
+  if (t.includes('can')) return n * 240
+  if (t.includes('big handful')) return 45
+  if (t.includes('handful')) return n * 30
+  if (t.includes('bowl')) return n * 200
+  if (t.includes('clove')) return n * 5
+  if (t.includes('slice')) return n * 40
+  if (t.includes('stalk')) return n * 40
+  if (t.includes(' cm')) return n * 5
+  if (t.includes('head')) return n * (PIECE_G[id] ?? 400)
+  if (t.includes('fillet')) return n * (PIECE_G[id] ?? 120)
+  if (t.includes('pinch') || t.includes('leaves')) return 2
+  if (!lead) return 10 // "a little", "to serve", "for the pan", "a squeeze"
+  return n * (PIECE_G[id] ?? 100)
+}
+
+const round50 = (n: number) => Math.round(n / 50) * 50
+
+function recipeAngstrom(r: RecipeDef): number {
+  const parts = r.ingredients.filter((i) => !i.optional).map((i) => ({ a: food(PANTRY_BY_ID.get(i.id)!.foodId).angstrom, g: amountGrams(i.id, i.amount.en) }))
+  const grams = parts.reduce((s, x) => s + x.g, 0)
+  return round50(parts.reduce((s, x) => s + x.a * x.g, 0) / grams)
+}
+
 export const RECIPES: Recipe[] = [...RECIPE_DEFS, ...EXTRA_RECIPES].map((r) => {
   for (const i of r.ingredients) if (!PANTRY_BY_ID.has(i.id)) throw new Error(`Unknown pantry item ${i.id} in ${r.id}`)
-  return { ...r, harmony: recipeHarmony(r) }
+  const angstrom = recipeAngstrom(r)
+  return { ...r, harmony: recipeHarmony(r), angstrom, tierId: tierOf(angstrom).id }
 })
 
 /**
