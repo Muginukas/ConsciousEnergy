@@ -14,6 +14,7 @@ import type { Bi } from './food-angstrom'
 import { FOOD_GROUPS, getPair, type GroupId, type Rating } from './food-combining'
 import { food } from './food-db'
 import type { Meal } from './food-menu'
+import { EXTRA_RECIPES } from './food-recipes-extra'
 
 const b = (en: string, lt: string): Bi => ({ en, lt })
 
@@ -47,6 +48,7 @@ export const PANTRY: PantryItem[] = [
   I('fish', '🐟', 'White fish', 'Balta žuvis', 'fishSteamed', ['žuvis', 'menkė', 'lydeka', 'cod']),
   I('salmon', '🍣', 'Salmon', 'Lašiša', 'salmon', ['upėtakis', 'trout']),
   I('herring', '🐟', 'Herring', 'Silkė', 'herring'),
+  I('shrimp', '🦐', 'Shrimp', 'Krevetės', 'shrimp', ['krevetė', 'jūros gėrybės', 'prawns']),
   // Legumes
   I('lentils', '🫘', 'Lentils', 'Lęšiai', 'lentils'),
   I('beans', '🫘', 'Beans', 'Pupelės', 'beans'),
@@ -78,6 +80,10 @@ export const PANTRY: PantryItem[] = [
   I('broccoli', '🥦', 'Broccoli', 'Brokoliai', 'broccoliSteamed', ['brokolis']),
   I('cauliflower', '🥦', 'Cauliflower', 'Žiediniai kopūstai', 'cauliflower', ['kalafioras', 'žiedinis']),
   I('spinach', '🌿', 'Spinach', 'Špinatai', 'spinach'),
+  I('kale', '🥬', 'Kale', 'Lapiniai kopūstai', 'kale', ['kale', 'garbanotieji']),
+  I('sorrel', '🌿', 'Sorrel', 'Rūgštynės', 'sorrel', ['rūgštynių']),
+  I('nettle', '🌱', 'Young nettles', 'Dilgėlės', 'nettle', ['dilgėlė', 'dilgėlių']),
+  I('asparagus', '🌱', 'Asparagus', 'Šparagai', 'asparagus', ['šparagas']),
   I('lettuce', '🥗', 'Salad leaves', 'Salotos', 'lettuce', ['salotų', 'rukola', 'rocket']),
   I('mushrooms', '🍄', 'Mushrooms', 'Grybai', 'mushrooms', ['pievagrybiai', 'baravykai', 'champignons']),
   I('radish', '🔴', 'Radishes', 'Ridikėliai', 'radish', ['ridikai']),
@@ -92,12 +98,16 @@ export const PANTRY: PantryItem[] = [
   I('butter', '🧈', 'Butter', 'Sviestas', 'butter', ['ghi', 'ghee']),
   I('oliveOil', '🫒', 'Olive oil', 'Alyvuogių aliejus', 'oliveOil', ['alyvuogių']),
   I('oil', '🌻', 'Sunflower / rapeseed oil', 'Aliejus (saulėgrąžų, rapsų)', 'sunflowerOil', ['aliejus', 'oil', 'rapsų']),
+  I('coconutOil', '🥥', 'Coconut oil', 'Kokosų aliejus', 'coconutOil', ['kokosų']),
   I('sourCream', '🥛', 'Sour cream', 'Grietinė', 'sourCream', ['grietinėlė', 'cream']),
   I('avocado', '🥑', 'Avocado', 'Avokadas', 'avocado'),
   // Nuts & seeds
   I('walnuts', '🌰', 'Walnuts', 'Graikiniai riešutai', 'walnuts', ['riešutai', 'nuts']),
   I('seeds', '🌻', 'Sunflower / pumpkin seeds', 'Saulėgrąžos / moliūgų sėklos', 'pumpkinSeeds', ['sėklos', 'saulėgrąžos', 'seeds']),
   I('flax', '🟤', 'Flaxseed', 'Linų sėmenys', 'flax', ['sėmenys']),
+  I('almonds', '🌰', 'Almonds', 'Migdolai', 'almonds', ['migdolas']),
+  I('sesame', '⚪', 'Sesame / tahini', 'Sezamas / tahinis', 'sesame', ['sezamo', 'tahini', 'tahinis']),
+  I('chia', '⚫', 'Chia seeds', 'Chia sėklos', 'chia', ['čija', 'šalavijų']),
   // Dairy
   I('kefir', '🥛', 'Kefir', 'Kefyras', 'kefir', ['rūgpienis', 'pasukos']),
   I('yogurt', '🥛', 'Yogurt', 'Jogurtas', 'yogurt'),
@@ -106,6 +116,8 @@ export const PANTRY: PantryItem[] = [
   I('apple', '🍎', 'Apples', 'Obuoliai', 'apple', ['obuolys']),
   I('banana', '🍌', 'Bananas', 'Bananai', 'banana', ['bananas']),
   I('pear', '🍐', 'Pears', 'Kriaušės', 'pear', ['kriaušė']),
+  I('orange', '🍊', 'Oranges', 'Apelsinai', 'orange', ['apelsinas', 'mandarinai', 'citrusai']),
+  I('plum', '🟣', 'Plums', 'Slyvos', 'plum', ['slyva']),
   I('driedFruit', '🍇', 'Raisins / dates', 'Razinos / datulės', 'raisins', ['razinos', 'datulės', 'džiovinti vaisiai', 'dates', 'raisins', 'figos']),
   I('berries', '🫐', 'Berries', 'Uogos', 'frozenBerries', ['mėlynės', 'braškės', 'avietės', 'spanguolės']),
   I('lemon', '🍋', 'Lemon', 'Citrina', 'lemon', ['citrinos', 'laimas', 'lime'], true),
@@ -121,14 +133,14 @@ export function pantryGroup(id: string): GroupId | null {
 }
 
 export const SHELVES: PantryShelf[] = [
-  { id: 'protein', name: b('Protein', 'Baltymai'), items: ['eggs', 'cottage', 'cheese', 'chicken', 'meat', 'fish', 'salmon', 'herring'] },
+  { id: 'protein', name: b('Protein', 'Baltymai'), items: ['eggs', 'cottage', 'cheese', 'chicken', 'meat', 'fish', 'salmon', 'herring', 'shrimp'] },
   { id: 'legumes', name: b('Legumes', 'Ankštiniai'), items: ['lentils', 'beans', 'chickpeas', 'tofu'] },
   { id: 'starch', name: b('Grains & potatoes', 'Grūdai ir bulvės'), items: ['buckwheat', 'greenBuckwheat', 'buckwheatFlour', 'rice', 'oats', 'millet', 'quinoa', 'pasta', 'bread', 'potatoes', 'sweetPotato'] },
-  { id: 'veg', name: b('Vegetables', 'Daržovės'), items: ['carrot', 'onion', 'garlic', 'cabbage', 'beet', 'zucchini', 'pumpkin', 'tomato', 'cucumber', 'pepper', 'broccoli', 'cauliflower', 'spinach', 'lettuce', 'mushrooms', 'radish', 'celery', 'peas', 'sauerkraut', 'pickles', 'dill', 'parsley', 'ginger'] },
-  { id: 'fat', name: b('Fats', 'Riebalai'), items: ['butter', 'oliveOil', 'oil', 'sourCream', 'avocado'] },
-  { id: 'nuts', name: b('Nuts & seeds', 'Riešutai ir sėklos'), items: ['walnuts', 'seeds', 'flax'] },
+  { id: 'veg', name: b('Vegetables', 'Daržovės'), items: ['carrot', 'onion', 'garlic', 'cabbage', 'beet', 'zucchini', 'pumpkin', 'tomato', 'cucumber', 'pepper', 'broccoli', 'cauliflower', 'spinach', 'kale', 'sorrel', 'nettle', 'asparagus', 'lettuce', 'mushrooms', 'radish', 'celery', 'peas', 'sauerkraut', 'pickles', 'dill', 'parsley', 'ginger'] },
+  { id: 'fat', name: b('Fats', 'Riebalai'), items: ['butter', 'oliveOil', 'oil', 'coconutOil', 'sourCream', 'avocado'] },
+  { id: 'nuts', name: b('Nuts & seeds', 'Riešutai ir sėklos'), items: ['walnuts', 'almonds', 'seeds', 'flax', 'sesame', 'chia'] },
   { id: 'dairy', name: b('Milk & kefir', 'Pienas ir kefyras'), items: ['kefir', 'yogurt', 'milk'] },
-  { id: 'fruit', name: b('Fruit & sweet', 'Vaisiai ir saldu'), items: ['apple', 'pear', 'banana', 'driedFruit', 'berries', 'lemon', 'honey', 'cinnamon'] },
+  { id: 'fruit', name: b('Fruit & sweet', 'Vaisiai ir saldu'), items: ['apple', 'pear', 'orange', 'plum', 'banana', 'driedFruit', 'berries', 'lemon', 'honey', 'cinnamon'] },
 ]
 
 /* ---------- Free-text matching ("kiaušiniai, grikiai") ---------- */
@@ -1899,7 +1911,7 @@ function recipeHarmony(r: RecipeDef): number {
   return harmonyOf(groups).harmony
 }
 
-export const RECIPES: Recipe[] = RECIPE_DEFS.map((r) => {
+export const RECIPES: Recipe[] = [...RECIPE_DEFS, ...EXTRA_RECIPES].map((r) => {
   for (const i of r.ingredients) if (!PANTRY_BY_ID.has(i.id)) throw new Error(`Unknown pantry item ${i.id} in ${r.id}`)
   return { ...r, harmony: recipeHarmony(r) }
 })
@@ -1910,14 +1922,15 @@ export const RECIPES: Recipe[] = RECIPE_DEFS.map((r) => {
  * Vegetables (non-seasoning) form one family automatically.
  */
 const FAMILIES: string[][] = [
-  ['fish', 'salmon'],
+  ['fish', 'salmon', 'shrimp'],
   ['chicken', 'meat'],
   ['buckwheat', 'greenBuckwheat', 'rice', 'millet', 'quinoa'],
   ['potatoes', 'sweetPotato'],
   ['lentils', 'beans', 'chickpeas'],
-  ['butter', 'oliveOil', 'oil'],
+  ['butter', 'oliveOil', 'oil', 'coconutOil'],
   ['kefir', 'yogurt'],
-  ['walnuts', 'seeds'],
+  ['walnuts', 'almonds', 'seeds', 'sesame'],
+  ['orange', 'berries', 'plum'],
   ['cottage', 'cheese'],
 ]
 
@@ -2000,11 +2013,11 @@ export const BASE_SHELVES: { id: BaseShelf; name: Bi }[] = [
   { id: 'protein', name: b('Eggs, dairy, meat & fish', 'Kiaušiniai, varškė, mėsa ir žuvis') },
   { id: 'legumes', name: b('Legumes', 'Ankštiniai') },
   { id: 'veg', name: b('Vegetables & mushrooms', 'Daržovės ir grybai') },
-  { id: 'fruitDairy', name: b('Fruit & fermented milk', 'Vaisiai ir rauginti pieno produktai') },
+  { id: 'fruitDairy', name: b('Fruit, nuts & fermented milk', 'Vaisiai, riešutai ir rauginti pieno produktai') },
 ]
 
 /** Main ingredients you can explore, with the pantry ids that count as them. */
-export const BASES: { id: string; ids: string[]; shelf: BaseShelf }[] = [
+export const BASES: { id: string; ids: string[]; shelf: BaseShelf; label?: Bi }[] = [
   { id: 'buckwheat', ids: ['buckwheat', 'greenBuckwheat', 'buckwheatFlour'], shelf: 'grains' },
   { id: 'oats', ids: ['oats'], shelf: 'grains' },
   { id: 'millet', ids: ['millet'], shelf: 'grains' },
@@ -2018,7 +2031,7 @@ export const BASES: { id: string; ids: string[]; shelf: BaseShelf }[] = [
   { id: 'cheese', ids: ['cheese'], shelf: 'protein' },
   { id: 'chicken', ids: ['chicken'], shelf: 'protein' },
   { id: 'meat', ids: ['meat'], shelf: 'protein' },
-  { id: 'fish', ids: ['fish', 'salmon', 'herring'], shelf: 'protein' },
+  { id: 'fish', ids: ['fish', 'salmon', 'herring', 'shrimp'], shelf: 'protein', label: b('Fish & seafood', 'Žuvis ir jūros gėrybės') },
   { id: 'lentils', ids: ['lentils'], shelf: 'legumes' },
   { id: 'beans', ids: ['beans'], shelf: 'legumes' },
   { id: 'chickpeas', ids: ['chickpeas'], shelf: 'legumes' },
@@ -2028,11 +2041,20 @@ export const BASES: { id: string; ids: string[]; shelf: BaseShelf }[] = [
   { id: 'zucchini', ids: ['zucchini'], shelf: 'veg' },
   { id: 'mushrooms', ids: ['mushrooms'], shelf: 'veg' },
   { id: 'beet', ids: ['beet'], shelf: 'veg' },
-  { id: 'spinach', ids: ['spinach'], shelf: 'veg' },
+  { id: 'spinach', ids: ['spinach', 'kale', 'sorrel', 'nettle'], shelf: 'veg', label: b('Spinach & leafy greens', 'Špinatai ir lapiniai žalumynai') },
+  { id: 'cauliflower', ids: ['cauliflower'], shelf: 'veg' },
+  { id: 'broccoli', ids: ['broccoli'], shelf: 'veg' },
+  { id: 'carrot', ids: ['carrot'], shelf: 'veg' },
+  { id: 'tomato', ids: ['tomato'], shelf: 'veg' },
+  { id: 'pepper', ids: ['pepper'], shelf: 'veg' },
+  { id: 'cucumber', ids: ['cucumber'], shelf: 'veg' },
+  { id: 'avocado', ids: ['avocado'], shelf: 'veg' },
   { id: 'banana', ids: ['banana'], shelf: 'fruitDairy' },
   { id: 'apple', ids: ['apple'], shelf: 'fruitDairy' },
-  { id: 'berries', ids: ['berries'], shelf: 'fruitDairy' },
-  { id: 'kefir', ids: ['kefir', 'yogurt'], shelf: 'fruitDairy' },
+  { id: 'berries', ids: ['berries', 'orange'], shelf: 'fruitDairy', label: b('Berries & citrus', 'Uogos ir citrusai') },
+  { id: 'pear', ids: ['pear'], shelf: 'fruitDairy' },
+  { id: 'walnuts', ids: ['walnuts', 'almonds', 'seeds', 'chia', 'sesame'], shelf: 'fruitDairy', label: b('Nuts & seeds', 'Riešutai ir sėklos') },
+  { id: 'kefir', ids: ['kefir', 'yogurt'], shelf: 'fruitDairy', label: b('Kefir & yogurt', 'Kefyras ir jogurtas') },
 ]
 
 export type Combo = {

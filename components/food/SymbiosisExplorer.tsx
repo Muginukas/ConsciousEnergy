@@ -101,7 +101,7 @@ export default function SymbiosisExplorer({ lang }: { lang: string }) {
                           : { ...ui, ...card, color: 'var(--color-text-secondary)' }
                       }
                     >
-                      {itemIcon(b.id)} {itemName(b.id, l)} <span style={{ opacity: 0.7 }}>({b.count})</span>
+                      {itemIcon(b.id)} {b.label?.[l] ?? itemName(b.id, l)} <span style={{ opacity: 0.7 }}>({b.count})</span>
                     </button>
                   )
                 })}
@@ -114,7 +114,7 @@ export default function SymbiosisExplorer({ lang }: { lang: string }) {
       {/* Symbiosis map for the base */}
       <section className="mb-10 rounded-2xl p-5 sm:p-6" style={card}>
         <h2 className="mb-1 text-2xl font-semibold" style={display}>
-          {itemIcon(base.id)} {lt ? `Su kuo dera ${itemName(base.id, l).toLowerCase()}?` : `What goes with ${itemName(base.id, l).toLowerCase()}?`}
+          {itemIcon(base.id)} {lt ? `Su kuo dera ${(base.label?.[l] ?? itemName(base.id, l)).toLowerCase()}?` : `What goes with ${(base.label?.[l] ?? itemName(base.id, l)).toLowerCase()}?`}
         </h2>
         <p className="mb-4 text-sm" style={{ ...ui, color: 'var(--color-text-muted)' }}>
           {lt ? 'Grupė: ' : 'Group: '}
