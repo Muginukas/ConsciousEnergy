@@ -2,8 +2,8 @@
 
 import { useMemo, useState } from 'react'
 import { FOOD_GROUPS, RATING_STYLE, getPair, type GroupId, type Rating } from '@/lib/food-combining'
-import { MEALS, type Meal } from '@/lib/food-menu'
-import { BASES, BASE_SHELVES, PANTRY, PANTRY_BY_ID, combosForBase, normalize, pantryGroup, recipeCountForBase, type Recipe } from '@/lib/food-pantry'
+import type { Meal } from '@/lib/food-menu'
+import { BASES, BASE_SHELVES, kitchenMeal, PANTRY, PANTRY_BY_ID, combosForBase, normalize, pantryGroup, recipeCountForBase, type Recipe } from '@/lib/food-pantry'
 import { harmonyColor } from './Meter'
 
 type L = 'en' | 'lt'
@@ -12,7 +12,7 @@ const body = { fontFamily: 'var(--font-body)', color: 'var(--color-text-secondar
 const display = { fontFamily: 'var(--font-display)', color: 'var(--color-text-primary)' }
 const card = { backgroundColor: 'var(--color-cream)', border: '1px solid var(--color-earth-200)' }
 
-const MEAL_FILTERS: (Meal | 'all')[] = ['all', 'breakfast', 'lunch', 'dinner']
+const MEAL_FILTERS: (Meal | 'all')[] = ['all', 'breakfast', 'lunch', 'dinner', 'snack']
 const RATINGS: Rating[] = ['good', 'ok', 'bad']
 
 const group = (g: GroupId) => FOOD_GROUPS.find((x) => x.id === g)!
@@ -35,7 +35,8 @@ export default function SymbiosisExplorer({ lang }: { lang: string }) {
 
   const bases = useMemo(() => BASES.map((b) => ({ ...b, count: recipeCountForBase(b.id) })).filter((b) => b.count > 0), [])
   const base = BASES.find((b) => b.id === baseId)!
-  const baseGroup = pantryGroup(base.ids[0])!
+  // Cacao, chocolate, honey and syrup carry no combining group.
+  const baseGroup = pantryGroup(base.ids[0])
   const combos = useMemo(() => combosForBase(baseId, meal), [baseId, meal])
   const counts = useMemo(
     () => Object.fromEntries(MEAL_FILTERS.map((m) => [m, combosForBase(baseId, m).reduce((n, c) => n + c.recipes.length, 0)])),
@@ -52,7 +53,7 @@ export default function SymbiosisExplorer({ lang }: { lang: string }) {
     })
   const shown = bases.filter(matchesQuery)
 
-  const byRating = (r: Rating) => FOOD_GROUPS.filter((g) => getPair(baseGroup, g.id).rating === r)
+  const byRating = (r: Rating) => (baseGroup ? FOOD_GROUPS.filter((g) => getPair(baseGroup, g.id).rating === r) : [])
 
   return (
     <div>
@@ -116,6 +117,24 @@ export default function SymbiosisExplorer({ lang }: { lang: string }) {
         <h2 className="mb-1 text-2xl font-semibold" style={display}>
           {itemIcon(base.id)} {lt ? `Su kuo dera ${(base.label?.[l] ?? itemName(base.id, l)).toLowerCase()}?` : `What goes with ${(base.label?.[l] ?? itemName(base.id, l)).toLowerCase()}?`}
         </h2>
+        {!baseGroup ? (
+          <div className="mt-3 space-y-2 text-sm leading-relaxed" style={body}>
+            <p>
+              {lt
+                ? 'Kakava, šokoladas, medus ir sirupas neturi savo derinių grupės — patys jokio konflikto nesukelia. Svarbu, su kuo juos sujungi:'
+                : 'Cacao, chocolate, honey and syrup have no combining group of their own — they cause no clash by themselves. What matters is what you pair them with:'}
+            </p>
+            <ul className="list-disc space-y-1 pl-5">
+              <li>{lt ? '✓ Puikiai: su datulėmis, bananais, riešutais, sėklomis, avokadu, kokosu.' : '✓ Great with dates, bananas, nuts, seeds, avocado, coconut.'}</li>
+              <li>{lt ? '~ Saikingai: su kruopomis (avižomis, grikiais) ir pienu ar kefyru.' : '~ Moderate with grains (oats, buckwheat) and milk or kefir.'}</li>
+              <li>{lt ? '✕ Venk: saldumynų iškart po mėsos, žuvies ar kiaušinių — cukrus už lėtų baltymų rūgsta.' : '✕ Avoid sweets straight after meat, fish or eggs — sugar held behind slow protein ferments.'}</li>
+            </ul>
+            <p style={{ color: 'var(--color-text-muted)' }}>
+              {lt ? 'Rinkis žalią kakavą ir juodąjį šokoladą (70 %+); medų dėk tik į šiltą, ne karštą maistą.' : 'Choose raw cacao and dark chocolate (70%+); add honey only to warm, not hot, food.'}
+            </p>
+          </div>
+        ) : (
+        <>
         <p className="mb-4 text-sm" style={{ ...ui, color: 'var(--color-text-muted)' }}>
           {lt ? 'Grupė: ' : 'Group: '}
           {group(baseGroup).icon} {group(baseGroup).name[l]}
@@ -153,6 +172,8 @@ export default function SymbiosisExplorer({ lang }: { lang: string }) {
             )
           })}
         </div>
+        </>
+        )}
       </section>
 
       {/* Meal filter */}
@@ -162,7 +183,7 @@ export default function SymbiosisExplorer({ lang }: { lang: string }) {
       <div className="mb-6 flex flex-wrap gap-2">
         {MEAL_FILTERS.map((m) => {
           const active = m === meal
-          const label = m === 'all' ? (lt ? 'Visi' : 'All') : `${MEALS.find((x) => x.id === m)!.icon} ${MEALS.find((x) => x.id === m)!.label[l]}`
+          const label = m === 'all' ? (lt ? 'Visi' : 'All') : `${kitchenMeal(m).icon} ${kitchenMeal(m).label[l]}`
           return (
             <button
               key={m}
@@ -225,7 +246,7 @@ function ExploreCard({ r, l }: { r: Recipe; l: L }) {
         <span aria-hidden="true">{r.icon}</span> {r.name[l]}
       </h4>
       <p className="mt-1 text-xs" style={{ ...ui, color: 'var(--color-text-muted)' }}>
-        ⏱ {r.minutes} min · {r.meals.map((m) => MEALS.find((x) => x.id === m)!.label[l]).join(', ')}
+        ⏱ {r.minutes} min · {r.meals.map((m) => kitchenMeal(m).label[l]).join(', ')}
       </p>
       <div className="mt-3 text-sm" style={ui}>
         <p className="mb-1 text-xs font-bold uppercase tracking-wide" style={{ color: 'var(--color-text-muted)' }}>

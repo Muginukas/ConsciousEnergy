@@ -2,9 +2,10 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { FOOD_GROUPS, RATING_STYLE, type GroupId } from '@/lib/food-combining'
-import { MEALS, type Meal } from '@/lib/food-menu'
+import type { Meal } from '@/lib/food-menu'
 import {
   MEAL_TIPS,
+  kitchenMeal,
   PANTRY,
   PANTRY_BY_ID,
   SHELVES,
@@ -25,9 +26,8 @@ const body = { fontFamily: 'var(--font-body)', color: 'var(--color-text-secondar
 const display = { fontFamily: 'var(--font-display)', color: 'var(--color-text-primary)' }
 const card = { backgroundColor: 'var(--color-cream)', border: '1px solid var(--color-earth-200)' }
 
-const PLANNER_MEALS: Meal[] = ['breakfast', 'lunch', 'dinner']
+const PLANNER_MEALS: Meal[] = ['breakfast', 'lunch', 'dinner', 'snack']
 const STORE_KEY = 'ce-pantry-v1'
-const MEAL_DATIVE_LT: Partial<Record<Meal, string>> = { breakfast: 'pusryčiams', lunch: 'pietums', dinner: 'vakarienei' }
 const EXAMPLE = ['eggs', 'buckwheat', 'onion', 'carrot', 'butter']
 
 const groupName = (g: GroupId, l: L) => FOOD_GROUPS.find((x) => x.id === g)!.name[l]
@@ -104,7 +104,7 @@ export default function PantryPlanner({ lang }: { lang: string }) {
 
   const visible = showAll ? matches : matches.slice(0, 6)
   const tips = MEAL_TIPS[meal] ?? []
-  const mealLabel = lt ? MEAL_DATIVE_LT[meal] : MEALS.find((m) => m.id === meal)!.label[l].toLowerCase()
+  const mealLabel = lt ? kitchenMeal(meal).dative : kitchenMeal(meal).label[l].toLowerCase()
 
   return (
     <div>
@@ -114,7 +114,7 @@ export default function PantryPlanner({ lang }: { lang: string }) {
       </p>
       <div className="mb-8 flex flex-wrap gap-2" role="tablist">
         {PLANNER_MEALS.map((id) => {
-          const m = MEALS.find((x) => x.id === id)!
+          const m = kitchenMeal(id)
           const active = id === meal
           return (
             <button
@@ -283,9 +283,11 @@ export default function PantryPlanner({ lang }: { lang: string }) {
             )}
 
             {analysis.conflicts.length === 0 ? (
-              <div className="rounded-xl p-4" style={{ backgroundColor: RATING_STYLE.good.bg }}>
-                <p className="font-semibold" style={{ ...ui, color: RATING_STYLE.good.color }}>
-                  ✓ {lt ? 'Puikiai dera — gali gaminti vieną patiekalą.' : 'A good match — you can cook it as one dish.'}
+              <div className="rounded-xl p-4" style={{ backgroundColor: analysis.harmony >= 80 ? RATING_STYLE.good.bg : RATING_STYLE.ok.bg }}>
+                <p className="font-semibold" style={{ ...ui, color: analysis.harmony >= 80 ? RATING_STYLE.good.color : RATING_STYLE.ok.color }}>
+                  {analysis.harmony >= 80
+                    ? lt ? '✓ Puikiai dera — gali gaminti vieną patiekalą.' : '✓ A good match — you can cook it as one dish.'
+                    : lt ? '~ Dera — konfliktų nėra, bet deriniai saikingi.' : '~ It works — no conflicts, but the pairs are moderate.'}
                 </p>
                 {analysis.pairs.some((p) => p.rating === 'ok') && (
                   <p className="mt-1 text-sm" style={body}>
@@ -366,7 +368,7 @@ export default function PantryPlanner({ lang }: { lang: string }) {
             {tips.length > 0 && (
               <div className="mt-6 rounded-xl px-4 py-3" style={{ backgroundColor: 'var(--color-gold-50)', border: '1px solid var(--color-gold-200)' }}>
                 <p className="mb-1 text-xs font-semibold uppercase tracking-wide" style={{ ...ui, color: 'var(--color-gold-600)' }}>
-                  {MEALS.find((m) => m.id === meal)!.icon} {lt ? `Patarimai ${mealLabel}` : `Tips for ${mealLabel}`}
+                  {kitchenMeal(meal).icon} {lt ? `Patarimai ${mealLabel}` : `Tips for ${mealLabel}`}
                 </p>
                 <ul className="list-disc space-y-1 pl-5 text-sm" style={{ ...body, color: 'var(--color-earth-700)' }}>
                   {tips.map((t, i) => (
