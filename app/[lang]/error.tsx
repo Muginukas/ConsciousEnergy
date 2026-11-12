@@ -15,8 +15,8 @@ export default function Error({
   }, [error])
 
   const lang = typeof window !== 'undefined'
-    ? window.location.pathname.split('/')[1] ?? 'en'
-    : 'en'
+    ? window.location.pathname.split('/')[1] || 'lt'
+    : 'lt'
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] px-4 text-center">
