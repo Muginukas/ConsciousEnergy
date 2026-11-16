@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-type Tab = 'pyramid' | 'combining' | 'menu' | 'kitchen'
+type Tab = 'pyramid' | 'combining' | 'menu' | 'kitchen' | 'scanner'
 
 export default function FoodTabs({ lang, active }: { lang: string; active: Tab }) {
   const lt = lang === 'lt'
@@ -9,6 +9,7 @@ export default function FoodTabs({ lang, active }: { lang: string; active: Tab }
     { id: 'combining', href: `/${lang}/food-combining`, label: lt ? 'Maisto deriniai' : 'Food combining' },
     { id: 'menu', href: `/${lang}/food-menu`, label: lt ? 'Simbiotinis meniu' : 'Symbiotic menu' },
     { id: 'kitchen', href: `/${lang}/food-kitchen`, label: lt ? 'Ką turiu namie' : 'From my kitchen' },
+    { id: 'scanner', href: `/${lang}/food-scanner`, label: lt ? 'Ingredientų skaitiklis' : 'Ingredient scanner' },
   ]
   return (
     <nav className="mb-10 flex flex-wrap gap-2" style={{ fontFamily: 'var(--font-ui)' }}>
