@@ -22,6 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entries.push({ url: `${BASE_URL}/${locale}/food-combining`, priority: 0.8 })
     entries.push({ url: `${BASE_URL}/${locale}/food-menu`, priority: 0.8 })
     entries.push({ url: `${BASE_URL}/${locale}/food-kitchen`, priority: 0.8 })
+    entries.push({ url: `${BASE_URL}/${locale}/food-scanner`, priority: 0.8 })
 
     for (const sign of ZODIAC_SLUGS) {
       entries.push({ url: `${BASE_URL}/${locale}/zodiac/${sign}`, priority: 0.7 })
