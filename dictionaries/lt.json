@@ -140,7 +140,7 @@
       "yourSign": "Jūsų Saulės ženklas",
       "cusp": "Gimėte netoli ženklų ribos — priklausomai nuo metų ir tikslaus laiko, galite turėti ir {sign} savybių. Tikslų atsakymą duoda pilnas gimimo horoskopas.",
       "chinese": "Kinų zodiakas",
-      "chineseNote": "Kinų metai prasideda per Mėnulio Naujuosius metus (sausio pab. – vasario vid.). Jei gimėte sausį ar vasario pradžioje, pasitikrinkite ir ankstesnių metų gyvūną.",
+      "chineseNote": "Kinų metai prasideda per Mėnulio Naujuosius metus (sausio pab. – vasario vid.). Naudojame tikslią jūsų gimimo metų datą, todėl gimusieji sausį ir vasarį gauna teisingą gyvūną.",
       "readMore": "Skaityti visą aprašymą",
       "invalid": "Įveskite teisingą datą."
     },

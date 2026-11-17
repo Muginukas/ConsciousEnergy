@@ -6,3 +6,4 @@ import dynamic from 'next/dynamic'
 export const NatalChartClient = dynamic(() => import('./NatalChartView'), { ssr: false })
 export const HumanDesignClient = dynamic(() => import('./HumanDesignView'), { ssr: false })
 export const NameVibrationClient = dynamic(() => import('./NameVibrationView'), { ssr: false })
+export const FiveElementsClient = dynamic(() => import('../zodiac/FiveElementsView'), { ssr: false })
