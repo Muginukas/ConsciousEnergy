@@ -50,7 +50,7 @@ export default async function ZodiacPage(props: PageProps<'/[lang]/zodiac'>) {
 
       <SignFinder lang={lang} dict={z} />
 
-      <section className="mb-16 grid gap-4 md:grid-cols-2">
+      <section className="mb-16 grid gap-4 md:grid-cols-3">
         {[
           {
             href: `/${lang}/zodiac/natal-chart`,
@@ -60,6 +60,15 @@ export default async function ZodiacPage(props: PageProps<'/[lang]/zodiac'>) {
                 ? 'Saulės ženklas — tik pradžia. Pagal tikslų gimimo laiką ir vietą apskaičiuokite visas planetas, Ascendentą, namus ir aspektus su išsamiomis interpretacijomis.'
                 : 'Your Sun sign is just the beginning. From your exact birth time and place, calculate every planet, the Ascendant, houses and aspects with in-depth interpretations.',
             icon: '☉☽',
+          },
+          {
+            href: `/${lang}/zodiac/five-elements`,
+            title: locale === 'lt' ? 'Kinų penki elementai' : 'Chinese Five Elements',
+            text:
+              locale === 'lt'
+                ? 'Medis, Ugnis, Žemė, Metalas, Vanduo: raskite savo kinų elementą ir gyvūną, sužinokite, ką jums reiškia 2026 Ugnies Arklio metai ir kaip elementai vienas kitą kuria bei tramdo.'
+                : 'Wood, Fire, Earth, Metal, Water: find your Chinese element and animal, what the 2026 Fire Horse year means for you and how the elements create and control each other.',
+            icon: '五行',
           },
           {
             href: `/${lang}/zodiac/human-design`,

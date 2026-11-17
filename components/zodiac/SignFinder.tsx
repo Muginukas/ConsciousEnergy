@@ -7,11 +7,11 @@ import { ArrowRight, Sparkles } from 'lucide-react'
 import {
   ELEMENT_MAP,
   MODALITY_MAP,
-  chineseZodiac,
   cuspNeighbour,
   formatRange,
   signForDate,
 } from '@/lib/zodiac'
+import { chineseYearForDate } from '@/lib/wuxing'
 import { Locale } from '@/lib/types'
 import type { ZodiacDict } from './types'
 
@@ -50,7 +50,13 @@ export default function SignFinder({ lang, dict }: { lang: string; dict: ZodiacD
 
   const sign = result ? signForDate(result.month, result.day) : null
   const cusp = result ? cuspNeighbour(result.month, result.day) : null
-  const chinese = result ? chineseZodiac(result.year) : null
+  // Exact Lunar New Year boundary, so Jan/Feb births get the right animal and element
+  const chinese = result
+    ? (() => {
+        const { cy } = chineseYearForDate(result)
+        return { animal: cy.animal, element: cy.element.name, year: cy.year }
+      })()
+    : null
   const element = sign ? ELEMENT_MAP[sign.element] : null
 
   return (
@@ -200,10 +206,17 @@ export default function SignFinder({ lang, dict }: { lang: string; dict: ZodiacD
                   {chinese.animal.traits[locale]}
                 </p>
                 {result && result.month <= 2 && (
-                  <p className="text-xs leading-relaxed" style={{ color: 'var(--color-text-muted)', fontFamily: 'var(--font-ui)' }}>
+                  <p className="text-xs leading-relaxed mb-3" style={{ color: 'var(--color-text-muted)', fontFamily: 'var(--font-ui)' }}>
                     {f.chineseNote}
                   </p>
                 )}
+                <Link
+                  href={`/${lang}/zodiac/five-elements`}
+                  className="inline-flex items-center gap-1 text-sm font-medium"
+                  style={{ color: 'var(--color-forest-700)', fontFamily: 'var(--font-ui)' }}
+                >
+                  {locale === 'lt' ? 'Penki elementai ir jūsų metai' : 'The five elements and your year'} <ArrowRight size={14} />
+                </Link>
               </div>
             </motion.div>
           )}

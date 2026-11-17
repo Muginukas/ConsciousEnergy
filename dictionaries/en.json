@@ -140,7 +140,7 @@
       "yourSign": "Your Sun sign",
       "cusp": "You were born near the cusp — depending on the exact year and time, you may also carry qualities of {sign}. A full birth chart gives the precise answer.",
       "chinese": "Chinese zodiac",
-      "chineseNote": "The Chinese year starts at Lunar New Year (late Jan – mid Feb). If you were born in January or early February, check the previous year’s animal too.",
+      "chineseNote": "The Chinese year starts at Lunar New Year (late Jan – mid Feb). We use the exact date for your birth year, so January and February births get the right animal.",
       "readMore": "Read the full profile",
       "invalid": "Please enter a valid date."
     },
